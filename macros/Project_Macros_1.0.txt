@@ -1,0 +1,153 @@
+// Macro file
+
+// ------------ BITMAP IDX ------------
+// IDX		NOTES
+// 1  		Splash bmp index
+// 2  		Load bar black background
+// 3  		Load bar green bar
+// 4  		Load bar green bar
+// 5 -> 19	Load bar images (assuming 10 slots with 4 bar width)
+// ------------------------------------
+
+#define show_splash
+*SPL 1
+#end
+
+// Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time)
+#define load_bar_full
+xi 5 `0` `1`
+w `2`
+xi 6 `0` `1`
+w `2`
+xi 7 `0` `1`
+w `2`
+xi 8 `0` `1`
+w `2`
+xi 9 `0` `1`
+w `2`
+xi 10 `0` `1`
+w `2`
+xi 11 `0` `1`
+w `2`
+xi 12 `0` `1`
+w `2`
+xi 13 `0` `1`
+w `2`
+xi 14 `0` `1`
+w `2`
+xi 15 `0` `1`
+w `2`
+xi 16 `0` `1`
+w `2`
+xi 17 `0` `1`
+w `2`
+xi 18 `0` `1`
+w `2`
+xi 19 `0` `1`
+w `2`
+:repeat
+#end
+
+// Load bar with start at `0`->(x) and `1`->(y) `2`->(Offset between green bars) `3`->(Wait time)
+#define load_bar
+set i0 `0` 				// Initialize location
+set i1 `(`2`*1`)`		// 1 bar offset
+set i2 `(`2`*2)`		// 2 bar offset
+set i3 `(`2`*3)`		// 3 bar offset
+set i4 `(`2`*4)`		// 4 bar offset
+
+// Load black bar
+xi 2 `0` `1`
+w `3`
+
+// Load green bars
+xi 3 `i0` `1`			// Load first bar
+w `3`
+
+
+set i0 `(`i0`+`2`)`		// Location of second bar
+xi 3 `i0` `1`	
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of third bar
+xi 3 `i0` `1`	
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of fourth bar
+xi 3 `i0` `1`	
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 5th bar, overwrite 1st bar
+set i5 `(`i0`-`i4`)		// Location of 1st bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 6th bar, overwrite 2nd bar
+set i5 `(`i0`-`i4`)		// Location of 2nd bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 7th bar, overwrite 3rd bar
+set i5 `(`i0`-`i4`)		// Location of 3rd bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 8th bar, overwrite 4th bar
+set i5 `(`i0`-`i4`)		// Location of 4th bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 9th bar, overwrite 5th bar
+set i5 `(`i0`-`i4`)		// Location of 5th bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`		// Location of 10th bar, overwrite 6th bar
+set i5 `(`i0`-`i4`)		// Location of 6th bar
+xi 3 `i0` `1`
+xi 4 `i5` `1`		
+w `3`
+
+set i0 `(`i0`+`2`)`
+set i5 `(`i0`-`i4`)		// Location of 7th bar
+xi 4 `i5` `1`			// Overwrite the 7th bar
+w `3`
+
+set i0 `(`i0`+`2`)`
+set i5 `(`i0`-`i4`)		// Location of 8th bar
+xi 4 `i5` `1`			// Overwrite the 8th bar
+w `3`
+
+set i0 `(`i0`+`2`)`
+set i5 `(`i0`-`i4`)		// Location of 9th bar
+xi 4 `i5` `1`			// Overwrite the 9th bar
+w `3`
+
+set i0 `(`i0`+`2`)`
+set i5 `(`i0`-`i4`)		// Location of 10th bar
+xi 4 `i5` `1`			// Overwrite the 10th bar
+w `3`
+:repeat
+#end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
