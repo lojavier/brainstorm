@@ -6,45 +6,38 @@
 // 2  		Load bar black background
 // 3  		Load bar green bar
 // 4  		Load bar green bar
-// 5 -> 19	Load bar images (assuming 10 slots with 4 bar width)
 // ------------------------------------
 
 #define show_splash
 *SPL 1
 #end
 
-// Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time)
+// Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
 #define load_bar_full
-xi 5 `0` `1`
+xi `(`3`+0)` `0` `1`
 w `2`
-xi 6 `0` `1`
+xi `(`3`+1)` `0` `1`
 w `2`
-xi 7 `0` `1`
+xi `(`3`+2)` `0` `1`
 w `2`
-xi 8 `0` `1`
+xi `(`3`+3)` `0` `1`
 w `2`
-xi 9 `0` `1`
+xi `(`3`+4)` `0` `1`
 w `2`
-xi 10 `0` `1`
+xi `(`3`+5)` `0` `1`
 w `2`
-xi 11 `0` `1`
+xi `(`3`+6)` `0` `1`
 w `2`
-xi 12 `0` `1`
+xi `(`3`+7)` `0` `1`
 w `2`
-xi 13 `0` `1`
+xi `(`3`+8)` `0` `1`
 w `2`
-xi 14 `0` `1`
+xi `(`3`+9)` `0` `1`
 w `2`
-xi 15 `0` `1`
+xi `(`3`+10)` `0` `1`
 w `2`
-xi 16 `0` `1`
-w `2`
-xi 17 `0` `1`
-w `2`
-xi 18 `0` `1`
-w `2`
-xi 19 `0` `1`
-w `2`
+xi `(`3`+11)` `0` `1`
+w `2``
 :repeat
 #end
 
@@ -134,20 +127,3 @@ xi 4 `i5` `1`			// Overwrite the 10th bar
 w `3`
 :repeat
 #end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
