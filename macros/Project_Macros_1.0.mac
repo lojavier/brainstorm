@@ -1,5 +1,19 @@
 // Macro file
 
+// ------------ MACRO COMMANDS ------------
+// Splash Screen			*SPL <number>
+// Clear Screen				Z
+// Display Bitmap Image 	xi <index> x y
+// Clear All Hotspot		xc all
+// Clear Hotspot			xc <n>
+// Define Hotspot			x <n> x0 y0 x1 y1
+// 
+// 
+// 
+// Set Font 				f <fontName>
+// Text Display 			t “text string” x y T
+// ----------------------------------------
+
 // ------------ BITMAP IDX ------------
 // IDX		NOTES
 // 1  		Splash page
@@ -40,4 +54,28 @@ w `2`
 xi `(`3`+11)` `0` `1`
 w `2``
 :repeat
+#end
+
+#define define_hotspots_login
+xc all
+// 1
+x 131 200 200 270 270
+// 2
+x 132 290 200 360 270
+// 3
+x 133 380 200 450 270
+// 4
+x 134 200 295 270 365
+// 5
+x 135 290 295 360 365
+// 6
+x 136 380 295 450 365
+// 7
+x 137 200 390 270 460
+// 8
+x 138 290 390 360 460
+// 9
+x 139 380 390 450 460
+// 0
+x 140 100 100 150 460
 #end
