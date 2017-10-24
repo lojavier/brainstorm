@@ -79,3 +79,21 @@ x 139 380 390 450 460
 // 0
 x 140 100 100 150 460
 #end
+
+#define define_hotspots_laser
+xc all
+// 1
+x 131 200 200 270 270
+#end
+#define define_hotspots_motor
+xc all
+// 1
+x 131 200 200 270 270
+#end
+
+#define define_hotspots_temperature
+xc all
+// 1
+x 131 200 200 270 270
+#end
+
