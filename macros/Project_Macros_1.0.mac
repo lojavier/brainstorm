@@ -7,9 +7,9 @@
 // Clear All Hotspot		xc all
 // Clear Hotspot			xc <n>
 // Define Hotspot			x <n> x0 y0 x1 y1
-// 
-// 
-// 
+// Wait						w <number of milliseconds>
+// Touch Macro Assign Quiet	xmq <touch index> <macro index | name> [<macro2 index>]
+// Output String (Main)		out “<text string>”
 // Set Font 				f <fontName>
 // Text Display 			t “text string” x y T
 // ----------------------------------------
