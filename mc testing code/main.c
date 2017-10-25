@@ -128,6 +128,12 @@ void uart0Init(void)
    SFRPAGE = SFRPAGE_SAVE;                                      				// Restore SFRPAGE
 }
 
+void disableWatchdog(void)
+{
+	WDTCN = 0xDE;                       				        				// Disable watchdog timer
+    WDTCN = 0xAD;
+}
+
 void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 {
    	char SFRPAGE_SAVE = SFRPAGE;
@@ -151,7 +157,7 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 			}
          	else 																// If it is CR character, it marks end of command
 		 	{																
-				if(tsRxBuffer[0] == '{')
+				if(tsRxBuffer[0] == '{')                                        // Splash screen indicator
 				{
 					if(tsRxBuffer[1] == 'c' && tsRxBuffer[2] == 'm' && tsRxBuffer[3] == 'p' && tsRxBuffer[4] == 'e' && tsRxBuffer[5] == '}')
 					{
@@ -277,38 +283,41 @@ void sendCommand(const char * s)
 	SFRPAGE = SFRPAGE_SAVE;                                      				// Restore SFRPAGE
 }
 
-int main()
+void main()
 {
 	int i = 0;
-  char str[64];
-  systemClockInit();
+    char str[64];
+    
+    disableWatchdog();
+    systemClockInit();
 	portInit();
 	enableInterrupts();
 	uart0Init();
+    
     tsLastCharGone = 1;
     tsTxOut = tsTxIn = 0;
     tsTxEmpty = 1;
+			sprintf(str, "z\r");
+        sendCommand(str);
+					sprintf(str, "bd 1 290 210 1 \"start\" 10 -60 4 4\r");
+        sendCommand(str);
+        sprintf(str, "xm 1 1\r");
+        sendCommand(str);
     
 	while(1)
 	{
 
-				sprintf(str, "z\r");
-        sendCommand(str);
         
         i = 0;
         
         while(i < 10000)
             i++;
-				
-				sprintf(str, "bd 1 290 210 1 \"start\" 10 -60 4 4\r");
-        sendCommand(str);
-        sprintf(str, "xm 1 1\r");
-        sendCommand(str);
-        i = 0;
         
-        while(i < 10000)
-            i++;
-			
 
+        
+        i = 0;
+        
+        while(i < 10000)
+            i++;
 	}
 }
