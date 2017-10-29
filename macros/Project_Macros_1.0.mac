@@ -1,0 +1,172 @@
+// Macro file
+
+// ---------------- MACRO COMMANDS ----------------
+// Splash Screen			*SPL <number>
+// Clear Screen				Z
+// Display Bitmap Image 	xi <index> x y
+// Clear All Hotspot		xc all
+// Clear Hotspot			xc <n>
+// Define Hotspot			x <n> x0 y0 x1 y1
+// Wait						w <number of milliseconds>
+// Touch Macro Assign Quiet	xmq <touch index> <macro index | name> [<macro2 index>]
+// Output String (Main)		out “<text string>”
+// Set Font 				f <fontName>
+// Text Display 			t “text string” x y T
+// ------------------------------------------------
+
+// ------------ BITMAP IDX ------------
+// IDX		NOTES
+// 1  		Splash page
+// 2		Temperature page
+// 3		Laser page
+// 4		Motor page
+// 
+// ------------------------------------
+
+
+// ---------------------------- Splash Page - TOP -----------------------------------
+#define show_splash
+*SPL 1
+#end
+
+// Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
+#define load_bar_full
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2``
+:repeat
+#end
+// ---------------------------- Splash Page - BOTTOM -----------------------------------
+
+
+// ---------------------------- Login Page - TOP ---------------------------------------
+#define display_login_page
+xi 50 0 0				// Login page bitmap
+#end
+
+#define define_hotspots_login
+xc all
+
+// x 130 100 100 150 150	// 0
+// xmq 130 ZERO 			// 0
+
+x 131 200 200 270 270	// 1
+xmq 131 ONE 			// 1
+
+x 132 290 200 360 270	// 2
+xmq 132 TWO 			// 2
+
+x 133 380 200 450 270	// 3
+xmq 133 THREE 			// 3
+
+x 134 200 295 270 365	// 4
+xmq 134 FOUR 			// 4
+
+x 135 290 295 360 365	// 5
+xmq 135 Five 			// 5
+
+x 136 380 295 450 365	// 6
+xmq 136 SIX 			// 6
+
+x 137 200 390 270 460	// 7
+xmq 137 SEVEN 			// 7
+
+x 138 290 390 360 460	// 8
+xmq 138 EIGHT 			// 8
+
+x 139 380 390 450 460	// 9
+xmq 139 NINE 			// 9
+#end
+
+#define ZERO 130
+out "lp_0\r"
+#end
+
+#define ONE 131
+out "lp_1\r"
+#end
+
+#define TWO 132
+out "lp_2\r"
+#end
+
+#define THREE 133
+out "lp_3\r"
+#end
+
+#define FOUR 134
+out "lp_4\r"
+#end
+
+#define FIVE 135
+out "lp_5\r"
+#end
+
+#define SIX 136
+out "lp_6\r"
+#end
+
+#define SEVEN 137
+out "lp_7\r"
+#end
+
+#define EIGHT 138
+out "lp_8\r"
+#end
+
+#define NINE 139
+out "lp_9\r"
+#end
+// ---------------------------- Login Page - BOTTOM --------------------------------------
+
+
+// ---------------------------- Lockout Page - TOP ---------------------------------------
+// ---------------------------- Lockout Page - BOTTOM ------------------------------------
+
+
+// ---------------------------- Temperature Page - TOP ------------------------------------
+#define define_hotspots_temperature
+xc all
+// 1
+x 131 200 200 270 270
+#end
+// ---------------------------- Temperature Page - BOTTOM ---------------------------------
+
+
+// ---------------------------- Laser Page - TOP --------------------------------------
+#define define_hotspots_laser
+xc all
+// 1
+x 131 200 200 270 270
+#end
+// ---------------------------- Laser Page - BOTTOM ------------------------------------
+
+
+// ---------------------------- Motor Page - TOP --------------------------------------
+#define define_hotspots_motor
+xc all
+// 1
+x 131 200 200 270 270
+#end
+// ---------------------------- Motor Page - BOTTOM ------------------------------------
