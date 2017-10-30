@@ -1,5 +1,5 @@
 #include <c8051f120.h>
-#include <stdio.h> 
+#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,21 +56,21 @@ unsigned char tsTxBuffer[TX_BUFFER_SIZE];
 unsigned char userCommand[RX_BUFFER_SIZE];
 
 unsigned int tsRxIn;
-unsigned int tsRxOut; 
+unsigned int tsRxOut;
 unsigned int tsTxIn;
 unsigned int tsTxOut;
 
 bit tsRxEmpty;
 bit tsTxEmpty;
-bit tsLastCharGone;						
+bit tsLastCharGone;
 
 void systemClockInit(void)
 {
     char SFRPAGE_SAVE = SFRPAGE;        										// Save Current SFR page
 	int i = 0;
-    
+
 	SFRPAGE  = CONFIG_PAGE;
-	
+
     OSCICN    = 0x83;
 
 	SFRPAGE = SFRPAGE_SAVE;             										// Restore SFRPAGE
@@ -82,10 +82,10 @@ void portInit(void)
 
    	SFRPAGE = CONFIG_PAGE;                                      				// Set SFR page
 
-	XBR0 = 0x2F;																// Enable UART0, UART1, SPI0, SMB, CEX0 - CEX4																			
-   	XBR1 = 0x01;										
-    XBR2 = 0xC4;																// Enable crossbar and disable weak pull-up												
-    
+	XBR0 = 0x2F;																// Enable UART0, UART1, SPI0, SMB, CEX0 - CEX4
+   	XBR1 = 0x01;
+    XBR2 = 0xC4;																// Enable crossbar and disable weak pull-up
+
    	P0MDOUT = 0x01;                                            					// Set TX0 pin to push-pull
 																				// TX0 = P0.0; RX0 = P0.1
 	P0 = 0xFF;																	// Initialize port P0 latch
@@ -121,7 +121,7 @@ void uart0Init(void)
 
    SFRPAGE = UART0_PAGE;
    SCON0 = 0x50;                                                				// 8-bit variable baud rate; 9th bit ignored; RX enabled
-   SSTA0 = 0x05;                                                				// Enable baud rate                                                           				
+   SSTA0 = 0x05;                                                				// Enable baud rate
                                                                 				// Use timer 2 as RX and TX baud rate source
    IE = 0x90;                                                                   // Enable all interrupts and UART0 Interrupt
 
@@ -156,7 +156,7 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 			 	tsRxIn++;														// Increment index
 			}
          	else 																// If it is CR character, it marks end of command
-		 	{																
+		 	{
 				if(tsRxBuffer[0] == '{')                                        // Splash screen indicator
 				{
 					if(tsRxBuffer[1] == 'c' && tsRxBuffer[2] == 'm' && tsRxBuffer[3] == 'p' && tsRxBuffer[4] == 'e' && tsRxBuffer[5] == '}')
@@ -167,7 +167,7 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					else
 					{
 						splashEnd = 0;                                          // End of splash screen NOT detected
-						screenReset = 0;									
+						screenReset = 0;
 					}
 				}
 				else if(tsRxBuffer[0] == 'H') 									// It is a command from touch screen controller
@@ -190,13 +190,13 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 				{
 				 	tsRxBuffer[i] = '\0';										// Delete all contents
 				}
-				
+
 				tsRxOut = 0;													// Reset index Out
 				tsRxIn = 0;														// Reset index In
-			}	
+			}
       	}
 		else																	// Reset all indexes
-		{	
+		{
 			while(tsRxOut < tsRxIn)
 			{
 				tsRxBuffer[tsRxOut] = '\0';
@@ -222,13 +222,13 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 			{
 			 	TI0 = 1;														// TI0 is not set by hardware, set it by software
 			}																	// When TI0 is set to 1, this ISR is executed again
-			
-			txWaitCounter = 0;													// Reset counter for next execution	
+
+			txWaitCounter = 0;													// Reset counter for next execution
 
 			if(tsTxOut >= TX_BUFFER_SIZE)
 			{
 			 	tsTxOut = 0;													// Reset index to 0
-			}								
+			}
 
 			if(tsTxOut == tsTxIn)												// If two indexes are equal
 			{
@@ -240,20 +240,20 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 		 	tsLastCharGone = 1;													// Last character has gone. Buffer is empty
 		}
    	}
-	
+
 	SFRPAGE = SFRPAGE_SAVE;                                 					// Restore SFR page detector
 }
 
 //-------------------------------------------------------------------------------------------------------
 // Function Name: sendCommand
-// Return Value: None 
+// Return Value: None
 // Parmeters: s (a string to send)
 // Function Description: This function sends a command from the touch screen
 //-------------------------------------------------------------------------------------------------------
 void sendCommand(const char * s)
-{	
+{
 	char SFRPAGE_SAVE = SFRPAGE;
-	
+
 	while(*s != '\0')															// Search for end of touch screen command in buffer
     {
       	if(tsTxEmpty == 1 || (tsTxOut != tsTxIn))								// Tx is empty or two indexes are not equal
@@ -269,53 +269,144 @@ void sendCommand(const char * s)
 			 	tsTxEmpty = 0;													// Now buffer has at leat 1 character, set flag
 			}
 		}
-    	
+
 		s++;																	// Point to next char to send out
     }
-																				
+
 	if(tsLastCharGone == 1)														// All characters in buffer has sent out
 	{
 		tsLastCharGone = 0;														// Reset flag to indicate no char left in buffer
-		SFRPAGE = UART0_PAGE;																			
+		SFRPAGE = UART0_PAGE;
 		TI0 = 1;                                                        		// Set this flage to call ISR to send out one character
-	}																			
-																				
+	}
+
 	SFRPAGE = SFRPAGE_SAVE;                                      				// Restore SFRPAGE
 }
+
+// Control variables
+unsigned int funcToRun = 0; // default 0
+
+// Control functions
+int get_function_code();
+
+void splash_page_load(); // function code == 11
+void login_page_load(); // function code == 21
+void login_attempts(); // function code == 22
+void login_clear_stars(); // function code == 23
+void login_disp_1_star(); // function code == 24
+void login_disp_2_star(); // function code == 25
+void login_disp_3_star(); // function code == 26
+void login_disp_4_star(); // function code == 27
+void locked_page_load(); // function code == 31
+void update_wait_time(); // function code == 32
+void login_clear_disp(); // function code == 33
 
 void main()
 {
 	int i = 0;
     char str[64];
-    
+
     disableWatchdog();
     systemClockInit();
 	portInit();
 	enableInterrupts();
 	uart0Init();
-    
+
     tsLastCharGone = 1;
     tsTxOut = tsTxIn = 0;
     tsTxEmpty = 1;
-			sprintf(str, "z\r");
-      sendCommand(str);
-			sprintf(str, "bd 1 50 100 1 \"test2\" 10 -60 1 2\r");
-      sendCommand(str);
-      sprintf(str, "xm 1 1\r");
-      sendCommand(str);
- 
-    
+
+    // load default settings
+	sprintf(str, "z\r");
+    sendCommand(str);
+	sprintf(str, "bd 1 50 100 1 \"test2\" 10 -60 1 2\r");
+    sendCommand(str);
+    sprintf(str, "xm 1 1\r");
+    sendCommand(str);
+
+
 	while(1)
 	{
-        
-		      if(tsCommandReceived)
-			{
-			//	t \"San Jose State University, 1234\" 100 100\r
-			sprintf(str, "t \"%s\" 120 120\r",userCommand);
-      sendCommand(str);
-				
-			} 
-
-			
+        if (tsCommandReceived) {
+            switch (get_function_code()) {
+                case 11: splash_page_load(); break;
+                case 21: login_page_load(); break;
+                case 22: login_attempts(); break;
+                case 23: login_clear_stars(); break;
+                case 24: login_disp_1_star(); break;
+                case 25: login_disp_2_star(); break;
+                case 26: login_disp_3_star(); break;
+                case 27: login_disp_4_star(); break;
+            }
+        }
 	}
 }
+
+// Splash Page begin ==========
+
+// function code == 11
+void splash_page_load() {
+    funcToRun = 0;
+}
+// Splash page end ============
+
+int get_function_code() {
+    // TODO, receive commands from screen
+    return 0;
+}
+
+// Login Page begin ===========
+
+// function code == 21
+void login_page_load() {
+
+}
+
+// function code == 22
+void login_attempts() {
+
+}
+
+// function code == 23
+void login_clear_stars() {
+
+}
+
+// function code == 24
+void login_disp_1_star() {
+
+}
+
+// function code == 25
+void login_disp_2_star() {
+
+}
+
+// function code == 26
+void login_disp_3_star() {
+
+}
+
+// function code == 27
+void login_disp_4_star() {
+
+}
+// Login Page end =============
+
+// Locked out Page begin ======
+
+// function code == 31
+void locked_page_load() {
+
+}
+
+// function code == 32
+void update_wait_time() {
+
+}
+
+// function code == 33
+void login_clear_disp() {
+
+}
+// Locked out Page end ========
