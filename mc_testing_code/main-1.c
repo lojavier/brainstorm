@@ -170,13 +170,13 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 						screenReset = 0;									
 					}
 				}
-				else if(tsRxBuffer[0] == '(') 									// It is a command from touch screen controller
+				else if(tsRxBuffer[0] == 'H') 									// It is a command from touch screen controller
 				{																// A command starts with '('
 					for(i = 0; i < tsRxIn; i++)
 					{
 					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
 					}
-
+					userCommand[tsRxIn]='\0';
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
@@ -297,23 +297,25 @@ void main()
     tsLastCharGone = 1;
     tsTxOut = tsTxIn = 0;
     tsTxEmpty = 1;
+			sprintf(str, "z\r");
+      sendCommand(str);
+			sprintf(str, "bd 1 50 100 1 \"test2\" 10 -60 1 2\r");
+      sendCommand(str);
+      sprintf(str, "xm 1 1\r");
+      sendCommand(str);
+ 
     
 	while(1)
 	{
-		sprintf(str, "z\r");
-        sendCommand(str);
         
-        i = 0;
-        
-        while(i < 10000)
-            i++;
-        
-        sprintf(str, "t \"San Jose State University, 1234\" 100 100\r");
-        sendCommand(str);
-        
-        i = 0;
-        
-        while(i < 10000)
-            i++;
+		      if(tsCommandReceived)
+			{
+			//	t \"San Jose State University, 1234\" 100 100\r
+			sprintf(str, "t \"%s\" 120 120\r",userCommand);
+      sendCommand(str);
+				
+			} 
+
+			
 	}
 }
