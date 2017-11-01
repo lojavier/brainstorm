@@ -28,7 +28,7 @@
 #define show_splash
 Z 				// Clear screen
 *SPL 1			// Load splash
-load_bar_full	220 275 100 03 // Display loading bar
+load_bar_full 220 275 100 03 // Display loading bar
 #end
 
 // Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
@@ -65,7 +65,8 @@ w `2`
 // ---------------------------- Login Page - TOP ---------------------------------------
 #define display_login_page
 Z 						// Clear Screen
-xi 50 0 0				// Login page bitmap
+xi 2 0 0				// Login page bitmap
+define_hotspots_login
 #end
 
 #define define_hotspots_login
@@ -87,7 +88,7 @@ x 134 200 295 270 365	// 4
 xmq 134 FOUR 			// 4
 
 x 135 290 295 360 365	// 5
-xmq 135 Five 			// 5
+xmq 135 FIVE 			// 5
 
 x 136 380 295 450 365	// 6
 xmq 136 SIX 			// 6
@@ -102,43 +103,43 @@ x 139 380 390 450 460	// 9
 xmq 139 NINE 			// 9
 #end
 
-#define ZERO 130
-out "lp_0\r"
-#end
+// #define ZERO
+// out "lp_0\r"
+// #end
 
-#define ONE 131
+#define ONE
 out "lp_1\r"
 #end
 
-#define TWO 132
+#define TWO
 out "lp_2\r"
 #end
 
-#define THREE 133
+#define THREE
 out "lp_3\r"
 #end
 
-#define FOUR 134
+#define FOUR
 out "lp_4\r"
 #end
 
-#define FIVE 135
+#define FIVE
 out "lp_5\r"
 #end
 
-#define SIX 136
+#define SIX
 out "lp_6\r"
 #end
 
-#define SEVEN 137
+#define SEVEN
 out "lp_7\r"
 #end
 
-#define EIGHT 138
+#define EIGHT
 out "lp_8\r"
 #end
 
-#define NINE 139
+#define NINE
 out "lp_9\r"
 #end
 // ---------------------------- Login Page - BOTTOM --------------------------------------
