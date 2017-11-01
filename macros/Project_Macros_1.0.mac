@@ -28,7 +28,7 @@
 #define show_splash
 Z 				// Clear screen
 *SPL 1			// Load splash
-load_bar_full	// Display loading bar
+load_bar_full	220 275 100 03 // Display loading bar
 #end
 
 // Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
