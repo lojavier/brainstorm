@@ -127,6 +127,8 @@ bd 21 580 120 5 "" -150 30 37 37
 xm 21 volume_down
 bd 22 580 0 1 "" 0 0 38 38
 xm 22 define_hotspots_temperature
+bd 23 0 0 1 "Logout" 0 72 41 41
+xm 23 logout
 #end
 
 #define volume_up
@@ -137,12 +139,17 @@ bvs +10
 bvs -10
 #end
 
+#define logout
+bc 23
+out "logout\r"
+#end
+
 //////////////////////////////////////////////////
 #define define_hotspots_temperature
 z
 xi 35 0 0
-bd 23 520 0 5 "" 0 0 39 39
-xm 23 main_page
+bd 24 520 0 5 "" 0 0 39 39
+xm 24 main_page
 #end
 
 

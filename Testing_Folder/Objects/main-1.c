@@ -189,6 +189,16 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
+				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'o' && tsRxBuffer[2] == 'g') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
 				else															// Not a command from touch screen controller
 				{
 					ackFromScreen = 1;											// Set a flag to indicate it is an ACK from screen
@@ -357,7 +367,12 @@ void splash_page_load() {
 
 int get_function_code() {
     // TODO, receive commands from screen
-		if(passcode[0]==0)
+		if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='g')
+		{
+			tsCommandReceived=0;
+			return 23;
+		}
+		else if(passcode[0]==0)
 		{
 			passcode[0]=userCommand[3]-'0';
 			tsCommandReceived=0;
@@ -398,7 +413,13 @@ void login_attempts() {
 
 // function code == 23
 void login_clear_stars() {
-
+			char str[64];
+			passcode[0]=0;
+			passcode[1]=0;
+			passcode[2]=0;
+			passcode[3]=0;
+			sprintf(str, "m display_login_page\r");
+			sendCommand(str);
 }
 
 // function code == 24
