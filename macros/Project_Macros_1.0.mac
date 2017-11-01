@@ -26,7 +26,8 @@
 
 // ---------------------------- Splash Page - TOP -----------------------------------
 #define show_splash
-xi 1
+xi 1 0 0
+out "\x00\xff"
 m load_bar_full 220 275 100 03 // Display loading bar
 #end
 
