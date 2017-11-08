@@ -1,25 +1,25 @@
 // Macro file
 
 // ---------------- MACRO COMMANDS ----------------
-// Splash Screen			*SPL <number>
-// Clear Screen				Z
-// Display Bitmap Image 	xi <index> x y
-// Clear All Hotspot		xc all
-// Clear Hotspot			xc <n>
-// Define Hotspot			x <n> x0 y0 x1 y1
-// Wait						w <number of milliseconds>
-// Touch Macro Assign Quiet	xmq <touch index> <macro index | name> [<macro2 index>]
-// Output String (Main)		out “<text string>”
-// Set Font 				f <fontName>
-// Text Display 			t “text string” x y T
+// Splash Screen            *SPL <number>
+// Clear Screen             Z
+// Display Bitmap Image     xi <index> x y
+// Clear All Hotspot        xc all
+// Clear Hotspot            xc <n>
+// Define Hotspot           x <n> x0 y0 x1 y1
+// Wait                     w <number of milliseconds>
+// Touch Macro Assign Quiet xmq <touch index> <macro index | name> [<macro2 index>]
+// Output String (Main)     out “<text string>”
+// Set Font                 f <fontName>
+// Text Display             t “text string” x y T
 // ------------------------------------------------
 
 // ------------ BITMAP IDX ------------
-// IDX		NOTES
-// 1  		Splash page
-// 2		Temperature page
-// 3		Laser page
-// 4		Motor page
+// IDX      NOTES
+// 1        Splash page
+// 2        Temperature page
+// 3        Laser page
+// 4        Motor page
 // 
 // ------------------------------------
 
@@ -64,40 +64,40 @@ w `2`
 
 // ---------------------------- Login Page - TOP ---------------------------------------
 #define display_login_page
-z 						// Clear Screen
-xi 2 0 0				// Login page bitmap
+z                       // Clear Screen
+xi 2 0 0                // Login page bitmap
 m define_hotspots_login
 #end
 
 #define define_hotspots_login
 xc all
 
-x 131 200 200 270 270	// 1
-xmq 131 ONE 			// 1
+x 131 200 200 270 270   // 1
+xmq 131 ONE             // 1
 
-x 132 290 200 360 270	// 2
-xmq 132 TWO 			// 2
+x 132 290 200 360 270   // 2
+xmq 132 TWO             // 2
 
-x 133 380 200 450 270	// 3
-xmq 133 THREE 			// 3
+x 133 380 200 450 270   // 3
+xmq 133 THREE           // 3
 
-x 134 200 295 270 365	// 4
-xmq 134 FOUR 			// 4
+x 134 200 295 270 365   // 4
+xmq 134 FOUR            // 4
 
-x 135 290 295 360 365	// 5
-xmq 135 FIVE 			// 5
+x 135 290 295 360 365   // 5
+xmq 135 FIVE            // 5
 
-x 136 380 295 450 365	// 6
-xmq 136 SIX 			// 6
+x 136 380 295 450 365   // 6
+xmq 136 SIX             // 6
 
-x 137 200 390 270 460	// 7
-xmq 137 SEVEN 			// 7
+x 137 200 390 270 460   // 7
+xmq 137 SEVEN           // 7
 
-x 138 290 390 360 460	// 8
-xmq 138 EIGHT 			// 8
+x 138 290 390 360 460   // 8
+xmq 138 EIGHT           // 8
 
-x 139 380 390 450 460	// 9
-xmq 139 NINE 			// 9
+x 139 380 390 450 460   // 9
+xmq 139 NINE            // 9
 #end
 
 #define ONE
@@ -145,7 +145,7 @@ out "lp_9\r"
 // ---------------------------- Temperature Page - TOP ------------------------------------
 #define define_hotspots_temperature
 xc all
-x 131 200 200 270 270		//TODO: eed to get coordinates
+x 131 156 103 514 304
 #end
 
 #define temp_page_load
@@ -155,8 +155,8 @@ xi 301 156 103
 
 // Update the teperature `0`->(temp)
 #define temp_update
-S FFFFFF 000000		// Set forground color to white
-t `0` 170 120 TR 	// Set the text with transparent background
+S FFFFFF 000000     // Set forground color to white
+t `0` 264 160 TR    // Set the text with transparent background
 #end
 
 // Notifies the mcu that the temperature scale has been updated
