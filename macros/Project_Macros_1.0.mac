@@ -1,4 +1,4 @@
-// Macro file
+﻿// Macro file
 
 // ---------------- MACRO COMMANDS ----------------
 // Splash Screen            *SPL <number>
@@ -169,10 +169,6 @@ xi 301 156 103
 temp_update `0`
 #end
 
-#define temp_unit_c
-xi 302 156 103
-temp_update `0`
-#end
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
 
 
