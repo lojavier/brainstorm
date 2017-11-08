@@ -126,7 +126,7 @@ xm 20 volume_up
 bd 21 580 120 5 "" -150 30 37 37
 xm 21 volume_down
 bd 22 580 0 1 "" 0 0 38 38
-xm 22 define_hotspots_temperature
+xm 22 temperature_page_load
 bd 23 0 0 1 "Logout" 0 72 41 41
 xm 23 logout
 #end
@@ -142,6 +142,11 @@ bvs -10
 #define logout
 bc 23
 out "logout\r"
+#end
+
+//c_1 means load temperature page
+#define temperature_page_load
+out "c_1\r"
 #end
 
 //////////////////////////////////////////////////
