@@ -145,8 +145,33 @@ out "lp_9\r"
 // ---------------------------- Temperature Page - TOP ------------------------------------
 #define define_hotspots_temperature
 xc all
-// 1
-x 131 200 200 270 270
+x 131 200 200 270 270		//TODO: eed to get coordinates
+#end
+
+#define temp_page_load
+zs 300 0 0 
+xi 301 156 103
+#end
+
+// Update the teperature `0`->(temp)
+#define temp_update
+S FFFFFF 000000		// Set forground color to white
+t `0` 170 120 TR 	// Set the text with transparent background
+#end
+
+// Notifies the mcu that the temperature scale has been updated
+#define update_scale
+out "ns_sel\r"
+#end
+
+#define temp_unit_c
+xi 301 156 103
+temp_update `0`
+#end
+
+#define temp_unit_c
+xi 302 156 103
+temp_update `0`
 #end
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
 
