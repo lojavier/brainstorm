@@ -135,6 +135,22 @@ out "lp_8\r"
 #define NINE
 out "lp_9\r"
 #end
+
+#define display_asterik_1
+t `*` 185 125 TR
+#end
+
+#define display_asterik_2
+t `*` 275 125 TR
+#end
+
+#define display_asterik_3
+t `*` 360 125 TR
+#end
+
+#define display_asterik_4
+t `*` 450 125 TR
+#end
 // ---------------------------- Login Page - BOTTOM --------------------------------------
 
 
