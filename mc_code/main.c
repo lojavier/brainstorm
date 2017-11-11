@@ -240,7 +240,17 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
-								else if(tsRxBuffer[0] == 'c' && tsRxBuffer[1] == '_') 									// It is a command from touch screen controller
+				else if(tsRxBuffer[0] == 'm' && tsRxBuffer[1] == 'p' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'n' && tsRxBuffer[1] == 's' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
 				{																// A command starts with '('
 					for(i = 0; i < tsRxIn; i++)
 					{
@@ -1066,8 +1076,16 @@ void login_disp_4_star(); // function code == 27
 void locked_page_load(); // function code == 31
 void update_wait_time(); // function code == 32
 void login_clear_disp(); // function code == 33
+void main_page_load();	// function code == 40
 void temp_page_load();	// function code == 41
+void motor_page_load();	// function code == 42
+void laser_page_load();	// function code == 43
+void c_to_f();	// function code == 50
+void f_to_c();	// function code == 51
+
 int is_in_temp_page=0;
+int is_in_c=1;
+int _delay=0;
 
 void main()
 {
@@ -1086,13 +1104,25 @@ void main()
     tsTxOut = tsTxIn = 0;
     tsTxEmpty = 1;
     
-		    // load default settings
-	//	sprintf(str, "z\r");
-  //  sendCommand(str);
-  //  sprintf(str, "m display_login_page\r");
-  //  sendCommand(str);
 	while(1)
 	{
+		//-----------------temperature display-------------------
+				if(is_in_temp_page && _delay%9999==0)
+				{	
+					if(is_in_c)	//C
+					{
+						roomTemp = readOneByteFromSlave(ROOM_TEMP);
+						sprintf(str, "   %-5bu", roomTemp);
+						displayText("000000", "FFFFFF", 6, str, 228, 160);
+					}
+					else	//F
+					{
+						roomTemp = readOneByteFromSlave(ROOM_TEMP);
+						sprintf(str, "   %-5bu", roomTemp*9/5+32);
+						displayText("000000", "FFFFFF", 6, str, 228, 160);
+					}
+				}
+		//----------------------------------------------------------
         if (tsCommandReceived) {
             switch (get_function_code()) {
                 case 11: bar_load(); break;
@@ -1103,9 +1133,15 @@ void main()
                 case 25: login_disp_2_star(); break;
                 case 26: login_disp_3_star(); break;
                 case 27: login_disp_4_star(); break;
+								case 40: main_page_load(); break;
 							  case 41: temp_page_load(); break;
+								case 42: motor_page_load(); break;
+								case 43: laser_page_load(); break;
+								case 50: c_to_f(); break;
+							  case 51: f_to_c(); break;
             }
         }
+				_delay++;
 	}
 }
 
@@ -1160,10 +1196,35 @@ int get_function_code() {
 			tsCommandReceived=0;
 			return 27;
 		}
-		else if(userCommand[0]=='c' && userCommand[1]=='_'&& userCommand[2]=='1')
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userCommand[4]=='a')
+		{
+			tsCommandReceived=0;
+			return 40;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='t')
 		{
 			tsCommandReceived=0;
 			return 41;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userCommand[4]=='o')
+		{
+			tsCommandReceived=0;
+			return 42;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l')
+		{
+			tsCommandReceived=0;
+			return 43;
+		}
+				else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='f')
+		{
+			tsCommandReceived=0;
+			return 50;
+		}
+				else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='c')
+		{
+			tsCommandReceived=0;
+			return 51;
 		}
     return 0;
 }
@@ -1258,16 +1319,45 @@ void login_clear_disp() {
 }
 // Locked out Page end ========
 
+void main_page_load()
+{
+			char str[64];
+			is_in_temp_page=0;
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+}
+// finction code == 40
+
 void temp_page_load()
 {
 			char str[64];
-			sprintf(str, "m define_hotspots_temperature\r");
+			sprintf(str, "m temp_page_load\r");
 			sendCommand(str);
 			is_in_temp_page=1;
-			while(is_in_temp_page){	
-			roomTemp = readOneByteFromSlave(ROOM_TEMP);
-      sprintf(str, "Room°C: %-5bu", roomTemp);
-			displayText("000000", "FFFFFF", 4, str, 100, 100);
-			}
+			is_in_c=1;
 }
 // finction code == 41
+
+void motor_page_load()
+{
+
+}
+// finction code == 42
+
+void laser_page_load()
+{
+	
+}
+// finction code == 43
+
+void c_to_f()
+{
+	is_in_c=0;
+}
+// finction code == 50
+
+void f_to_c()
+{
+	is_in_c=1;
+}
+// finction code == 51

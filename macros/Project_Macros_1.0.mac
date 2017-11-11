@@ -72,31 +72,31 @@ m define_hotspots_login
 #define define_hotspots_login
 xc all
 
-x 131 200 200 270 270   // 1
+x 131 194 195 273 274   // 1
 xmq 131 ONE             // 1
 
-x 132 290 200 360 270   // 2
+x 132 285 195 364 274   // 2
 xmq 132 TWO             // 2
 
-x 133 380 200 450 270   // 3
+x 133 374 195 453 274   // 3
 xmq 133 THREE           // 3
 
-x 134 200 295 270 365   // 4
+x 134 194 289 273 368   // 4
 xmq 134 FOUR            // 4
 
-x 135 290 295 360 365   // 5
+x 135 284 289 363 368   // 5
 xmq 135 FIVE            // 5
 
-x 136 380 295 450 365   // 6
+x 136 374 289 453 368   // 6
 xmq 136 SIX             // 6
 
-x 137 200 390 270 460   // 7
+x 137 194 383 273 462   // 7
 xmq 137 SEVEN           // 7
 
-x 138 290 390 360 460   // 8
+x 138 284 383 363 462   // 8
 xmq 138 EIGHT           // 8
 
-x 139 380 390 450 460   // 9
+x 139 374 383 453 462   // 9
 xmq 139 NINE            // 9
 #end
 
@@ -137,19 +137,19 @@ out "lp_9\r"
 #end
 
 #define display_asterik_1
-t "*" 185 125 TR
+xi 39 184 127
 #end
 
 #define display_asterik_2
-t "*" 275 125 TR
+xi 39 271 127
 #end
 
 #define display_asterik_3
-t "*" 360 125 TR
+xi 39 358 127
 #end
 
 #define display_asterik_4
-t "*" 450 125 TR
+xi 39 446 127
 #end
 // ---------------------------- Login Page - BOTTOM --------------------------------------
 
@@ -158,15 +158,17 @@ t "*" 450 125 TR
 
 #define display_main_page
 xc all
-z
 xi 34 0 0
-bd 22 170 124 1 "" 0 0 200 200
-xm 22 temp_button
-bd 23 170 234 1 "" 0 0 201 201
-xm 23 motor_button
-bd 24 170 335 1 "" 0 0 202 202
-xm 24 laser_button
-bd 25 0 0 1 "Logout" 0 72 41 41
+x 140 170 132 475 210
+xmq 140 temp_hotspot
+
+x 141 170 234 476 314
+xmq 141 motor_hotspot
+
+x 142 170 335 476 415
+xmq 142 laser_hotspot
+
+bd 25 0 0 1 "" 0 0 41 41
 xm 25 logout
 #end
 // ---------------------------- MainPage - BOTTOM ------------------------------------
@@ -176,15 +178,15 @@ bc 25
 out "logout\r"
 #end
 
-#define temp_button
+#define temp_hotspot
 out "mp_temp\r"
 #end
 
-#define motor_button
+#define motor_hotspot
 out "mp_motor\r"
 #end
 
-#define laser_button
+#define laser_hotspot
 out "mp_laser\r"
 #end
 
@@ -193,36 +195,66 @@ out "mp_laser\r"
 
 
 // ---------------------------- Temperature Page - TOP ------------------------------------
-#define define_hotspots_temperature
-xc all
-x 131 156 103 514 304
-#end
 
 #define temp_page_load
-zs 300 0 0 
-xi 301 156 103
+xc all
+z
+xi 35 0 0
+xi 210 157 104
+x 144 157 104 509 306
+xmq 144 temp_unit_f
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
 #end
+
+
+//#define define_hotspots_temperature
+//xc all
+//x 131 157 104 509 306
+//#end
+
 
 // Update the teperature `0`->(temp)
-#define temp_update
-S FFFFFF 000000     // Set forground color to white
-t `0` 264 160 TR    // Set the text with transparent background
-#end
+//#define temp_update
+//S FFFFFF 000000     // Set forground color to white
+//t `0` 264 160 TR    // Set the text with transparent background
+//#end
 
 // Notifies the mcu that the temperature scale has been updated
-#define update_scale
-out "ns_sel\r"
-#end
+//#define update_scale
+//out "ns_sel\r"
+//#end
 
-#define temp_unit_c
-xi 301 156 103
-temp_update `0`
-#end
+//#define temp_unit_c
+//xi 301 157 104
+//temp_update `0`
+//#end
 
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
 
+#define temp_unit_f
+out "ns_f\r"
+xc all
+xi 211 157 104
+x 145 157 104 509 306
+xmq 145 temp_unit_c
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
+#end
 
+#define temp_unit_c
+out "ns_c\r"
+xc all
+xi 210 157 104
+x 144 157 104 509 306
+xmq 144 temp_unit_f
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
+#end
 
+#define main_button
+out "mp_main\r"
+#end
 
 // ---------------------------- Motor Page - TOP --------------------------------------
 #define define_hotspots_motor
