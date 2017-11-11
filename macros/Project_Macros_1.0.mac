@@ -27,8 +27,8 @@
 // ---------------------------- Splash Page - TOP -----------------------------------
 #define show_splash
 xi 1 0 0
-out "\x00\xff"
-m load_bar_full 220 275 100 03 // Display loading bar
+out "load\r"
+// m load_bar_full 220 275 100 03 // Display loading bar
 #end
 
 // Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
@@ -57,7 +57,7 @@ xi `(`3`+10)` `0` `1`
 w `2`
 xi `(`3`+11)` `0` `1`
 w `2`
-:repeat
+out "login\r"
 #end
 // ---------------------------- Splash Page - BOTTOM -----------------------------------
 
@@ -137,22 +137,56 @@ out "lp_9\r"
 #end
 
 #define display_asterik_1
-t `*` 185 125 TR
+t "*" 185 125 TR
 #end
 
 #define display_asterik_2
-t `*` 275 125 TR
+t "*" 275 125 TR
 #end
 
 #define display_asterik_3
-t `*` 360 125 TR
+t "*" 360 125 TR
 #end
 
 #define display_asterik_4
-t `*` 450 125 TR
+t "*" 450 125 TR
 #end
 // ---------------------------- Login Page - BOTTOM --------------------------------------
 
+
+// ---------------------------- Main Page - TOP ---------------------------------------
+
+#define display_main_page
+xc all
+z
+xi 34 0 0
+bd 22 170 124 1 "" 0 0 200 200
+xm 22 temp_button
+bd 23 170 234 1 "" 0 0 201 201
+xm 23 motor_button
+bd 24 170 335 1 "" 0 0 202 202
+xm 24 laser_button
+bd 25 0 0 1 "Logout" 0 72 41 41
+xm 25 logout
+#end
+// ---------------------------- MainPage - BOTTOM ------------------------------------
+
+#define logout
+bc 25
+out "logout\r"
+#end
+
+#define temp_button
+out "mp_temp\r"
+#end
+
+#define motor_button
+out "mp_motor\r"
+#end
+
+#define laser_button
+out "mp_laser\r"
+#end
 
 // ---------------------------- Lockout Page - TOP ---------------------------------------
 // ---------------------------- Lockout Page - BOTTOM ------------------------------------
@@ -188,13 +222,6 @@ temp_update `0`
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
 
 
-// ---------------------------- Laser Page - TOP --------------------------------------
-#define define_hotspots_laser
-xc all
-// 1
-x 131 200 200 270 270
-#end
-// ---------------------------- Laser Page - BOTTOM ------------------------------------
 
 
 // ---------------------------- Motor Page - TOP --------------------------------------
@@ -204,3 +231,11 @@ xc all
 x 131 200 200 270 270
 #end
 // ---------------------------- Motor Page - BOTTOM ------------------------------------
+
+// ---------------------------- Laser Page - TOP --------------------------------------
+#define define_hotspots_laser
+xc all
+// 1
+x 131 200 200 270 270
+#end
+// ---------------------------- Laser Page - BOTTOM ------------------------------------
