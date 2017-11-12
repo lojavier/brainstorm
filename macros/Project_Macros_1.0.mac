@@ -3,7 +3,6 @@
 // ---------------- MACRO COMMANDS ----------------
 // Splash Screen            *SPL <number>
 // Clear Screen             Z
-// Clear Screen Special 	zs <bitmap index>
 // Display Bitmap Image     xi <index> x y
 // Clear All Hotspot        xc all
 // Clear Hotspot            xc <n>
@@ -265,7 +264,7 @@ f 16B
 s 0 0
 t "You have" 40 200 T
 s 5 0
-t `0` 145 200 T
+t "`0`" 145 200 T
 s 0 0
 t "attempt(s) left" 30 240 T
 #end
