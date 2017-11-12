@@ -311,6 +311,11 @@ xc all
 z
 xi 35 0 0
 xi 210 157 104
+
+// Display the User ID
+m display_uid
+
+// Set hotspots
 x 144 157 104 509 306
 xmq 144 temp_unit_f
 bd 26 0 0 1 "" 0 0 15 15
@@ -344,11 +349,15 @@ out "mp_main\r"
 #end
 
 // ---------------------------- Motor Page - TOP --------------------------------------
-#define define_hotspots_motor
+#define display_motor_page
 // Clear everything
 xc all
 z
 xi 36 0 0
+
+// Display the User ID
+m display_uid
+
 // Define the main page button assign the macro to it
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
@@ -356,11 +365,15 @@ xm 26 main_button
 // ---------------------------- Motor Page - BOTTOM ------------------------------------
 
 // ---------------------------- Laser Page - TOP --------------------------------------
-#define define_hotspots_laser
+#define display_laser_page
 // Clear everything
 xc all
 z
 xi 37 0 0
+
+// Display the User ID
+m display_uid
+
 // Define the main page button assign the macro to it
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
