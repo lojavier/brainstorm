@@ -31,8 +31,9 @@ out "load\r"
 // m load_bar_full 220 275 100 03 // Display loading bar
 #end
 
-// Load full bar bmps at `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
+// Parameters: `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
 #define load_bar_full
+// ---- Iteration 1 ---- 
 xi `(`3`+0)` `0` `1`
 w `2`
 xi `(`3`+1)` `0` `1`
@@ -57,7 +58,111 @@ xi `(`3`+10)` `0` `1`
 w `2`
 xi `(`3`+11)` `0` `1`
 w `2`
-out "login\r"
+
+// ---- Iteration 2 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+
+// ---- Iteration 3 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+
+// ---- Iteration 4 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+
+// ---- Iteration 5 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+out "endload\r"
 #end
 // ---------------------------- Splash Page - BOTTOM -----------------------------------
 
@@ -155,7 +260,7 @@ xi 39 446 127
 
 
 // ---------------------------- Main Page - TOP ---------------------------------------
-
+// Parameters: `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
 #define display_main_page
 xc all
 xi 34 0 0
@@ -169,13 +274,13 @@ x 142 170 335 476 415
 xmq 142 laser_hotspot
 
 bd 25 0 0 1 "" 0 0 41 41
-xm 25 logout
+xm 25 logout_hotspot
 #end
 // ---------------------------- MainPage - BOTTOM ------------------------------------
 
-#define logout
+#define logout_hotspot
 bc 25
-out "logout\r"
+out "mp_logout\r"
 #end
 
 #define temp_hotspot
@@ -196,7 +301,7 @@ out "mp_laser\r"
 
 // ---------------------------- Temperature Page - TOP ------------------------------------
 
-#define temp_page_load
+#define display_temp_page
 xc all
 z
 xi 35 0 0
@@ -206,29 +311,6 @@ xmq 144 temp_unit_f
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
 #end
-
-
-//#define define_hotspots_temperature
-//xc all
-//x 131 157 104 509 306
-//#end
-
-
-// Update the teperature `0`->(temp)
-//#define temp_update
-//S FFFFFF 000000     // Set forground color to white
-//t `0` 264 160 TR    // Set the text with transparent background
-//#end
-
-// Notifies the mcu that the temperature scale has been updated
-//#define update_scale
-//out "ns_sel\r"
-//#end
-
-//#define temp_unit_c
-//xi 301 157 104
-//temp_update `0`
-//#end
 
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
 
@@ -258,16 +340,24 @@ out "mp_main\r"
 
 // ---------------------------- Motor Page - TOP --------------------------------------
 #define define_hotspots_motor
+// Clear everything
 xc all
-// 1
-x 131 200 200 270 270
+z
+xi 36 0 0
+// Define the main page button assign the macro to it
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
 #end
 // ---------------------------- Motor Page - BOTTOM ------------------------------------
 
 // ---------------------------- Laser Page - TOP --------------------------------------
 #define define_hotspots_laser
+// Clear everything
 xc all
-// 1
-x 131 200 200 270 270
+z
+xi 37 0 0
+// Define the main page button assign the macro to it
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
 #end
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
