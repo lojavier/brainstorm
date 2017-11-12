@@ -260,10 +260,15 @@ xi 39 446 127
 
 
 // ---------------------------- Main Page - TOP ---------------------------------------
-// Parameters: `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
+// Parameters: `0`->(User ID)
 #define display_main_page
 xc all
 xi 34 0 0
+
+// Display the User ID
+m display_uid
+
+// Define the hotspots
 x 140 170 132 475 210
 xmq 140 temp_hotspot
 
@@ -361,3 +366,15 @@ bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
 #end
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
+
+//----------------------------  Helper functions ---------------------------------------
+// Parameters: `0`->(User ID)
+#define set_uid 
+set s0 `0`
+#end
+
+#define display_uid
+f 14B
+s 8 0
+t "`s0`" 525 10 T
+#end
