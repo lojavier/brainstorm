@@ -3,6 +3,7 @@
 // ---------------- MACRO COMMANDS ----------------
 // Splash Screen            *SPL <number>
 // Clear Screen             Z
+// Clear Screen Special 	zs <bitmap index>
 // Display Bitmap Image     xi <index> x y
 // Clear All Hotspot        xc all
 // Clear Hotspot            xc <n>
@@ -11,6 +12,7 @@
 // Touch Macro Assign Quiet xmq <touch index> <macro index | name> [<macro2 index>]
 // Output String (Main)     out “<text string>”
 // Set Font                 f <fontName>
+// Set Color 				s <fore> <back>
 // Text Display             t “text string” x y T
 // ------------------------------------------------
 
@@ -242,20 +244,42 @@ out "lp_9\r"
 #end
 
 #define display_asterik_1
-xi 39 184 127
+xi 39 184 124
 #end
 
 #define display_asterik_2
-xi 39 271 127
+xi 39 271 124
 #end
 
 #define display_asterik_3
-xi 39 358 127
+xi 39 359 124
 #end
 
 #define display_asterik_4
-xi 39 446 127
+xi 39 446 124
 #end
+
+#define display_login_attempts_left
+m display_login_page
+f 16B
+s 0 0
+t "You have" 40 200 T
+s 5 0
+t `0` 145 200 T
+s 0 0
+t "attempt(s) left" 30 240 T
+#end
+
+#define display_locked_page
+m display_login_page
+f 32B
+s 5 0
+t "LOCKED OUT" 180 50 T
+f 16B
+t "ADMIN LOGIN" 30 200 T
+t "REQUIRED" 40 240 T
+#end
+
 // ---------------------------- Login Page - BOTTOM --------------------------------------
 
 
