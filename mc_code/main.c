@@ -230,7 +230,7 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
-				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'o' && tsRxBuffer[2] == 'g') 									// It is a command from touch screen controller
+				else if(tsRxBuffer[0] == 'e' && tsRxBuffer[1] == 'n' && tsRxBuffer[2] == 'd') 									// It is a command from touch screen controller
 				{																// A command starts with '('
 					for(i = 0; i < tsRxIn; i++)
 					{
@@ -1083,9 +1083,12 @@ void laser_page_load();	// function code == 43
 void c_to_f();	// function code == 50
 void f_to_c();	// function code == 51
 
+int is_locked_out=0;
+int attempts=5;
 int is_in_temp_page=0;
 int is_in_c=1;
 int _delay=0;
+char userID[9];
 
 void main()
 {
@@ -1113,13 +1116,13 @@ void main()
 					{
 						roomTemp = readOneByteFromSlave(ROOM_TEMP);
 						sprintf(str, "   %-5bu", roomTemp);
-						displayText("000000", "FFFFFF", 6, str, 228, 160);
+						displayText("000000", "8D8989", 6, str, 228, 160);
 					}
 					else	//F
 					{
 						roomTemp = readOneByteFromSlave(ROOM_TEMP);
 						sprintf(str, "   %-5bu", roomTemp*9/5+32);
-						displayText("000000", "FFFFFF", 6, str, 228, 160);
+						displayText("000000", "8D8989", 6, str, 228, 160);
 					}
 				}
 		//----------------------------------------------------------
@@ -1157,17 +1160,21 @@ void bar_load() {
 
 int get_function_code() {
     // TODO, receive commands from screen
-			if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
+		if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
 		{
+			is_in_temp_page=0;
+			is_in_c=1;
+			attempts==5;
+			is_locked_out=0;
 			tsCommandReceived=0;
 			return 11;
 		}
-		else if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='g' && userCommand[3]=='i')
+		else if(userCommand[0]=='e' && userCommand[1]=='n' && userCommand[2]=='d' && userCommand[3]=='l')
 		{
 			tsCommandReceived=0;
 			return 21;
 		}
-		else if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='g' && userCommand[3]=='o')
+		else if(userCommand[0]=='m' && userCommand[1]=='p' && userCommand[2]=='_' && userCommand[3]=='l' && userCommand[4]=='o')
 		{
 			tsCommandReceived=0;
 			return 23;
@@ -1211,7 +1218,7 @@ int get_function_code() {
 			tsCommandReceived=0;
 			return 42;
 		}
-		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l')
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l' && userCommand[4]=='a')
 		{
 			tsCommandReceived=0;
 			return 43;
@@ -1250,6 +1257,8 @@ void login_clear_stars() {
 			passcode[1]=0;
 			passcode[2]=0;
 			passcode[3]=0;
+			attempts=5;
+			is_locked_out=0;
 			sprintf(str, "m display_login_page\r");
 			sendCommand(str);
 }
@@ -1280,8 +1289,19 @@ void login_disp_4_star() {
 		char str[64];
     sprintf(str, "m display_asterik_4\r");
     sendCommand(str);
-		if(passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
+		if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
 		{
+			sprintf(userID, "    J.L.");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+		}
+		else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
+		{
+			sprintf(userID, "    C.D.");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
 			sprintf(str, "m display_main_page\r");
 			sendCommand(str);
 		}
@@ -1289,14 +1309,26 @@ void login_disp_4_star() {
 		{
 			sprintf(str, "xi 40 0 0\r");
 			sendCommand(str);
+			sprintf(str, "xc all\r");
+			sendCommand(str);
 			sprintf(str, "w 2000\r");
 			sendCommand(str);
 			passcode[0]=0;
 			passcode[1]=0;
 			passcode[2]=0;
 			passcode[3]=0;
-			sprintf(str, "m display_login_page\r");
-			sendCommand(str);
+			attempts--;
+			if(attempts<=0)
+			{
+				is_locked_out=1;
+				sprintf(str, "m display_locked_page\r");
+				sendCommand(str);
+			}
+			else
+			{
+				sprintf(str, "m display_login_attempts_left %d\r", attempts);
+				sendCommand(str);
+			}
 		}
 }
 // Login Page end =============
@@ -1331,7 +1363,7 @@ void main_page_load()
 void temp_page_load()
 {
 			char str[64];
-			sprintf(str, "m temp_page_load\r");
+			sprintf(str, "m display_temp_page\r");
 			sendCommand(str);
 			is_in_temp_page=1;
 			is_in_c=1;
@@ -1340,13 +1372,17 @@ void temp_page_load()
 
 void motor_page_load()
 {
-
+			char str[64];
+			sprintf(str, "m display_motor_page\r");
+			sendCommand(str);
 }
 // finction code == 42
 
 void laser_page_load()
 {
-	
+			char str[64];
+			sprintf(str, "m display_laser_page\r");
+			sendCommand(str);
 }
 // finction code == 43
 
