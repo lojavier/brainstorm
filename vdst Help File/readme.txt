@@ -1,0 +1,1 @@
+Place Help.txt file under %LOCALAPPDATA%\VDST
