@@ -1253,11 +1253,12 @@ void login_attempts() {
 // function code == 23
 void login_clear_stars() {
 			char str[64];
+			attempts=5;
+			sprintf(userID, "");
 			passcode[0]=0;
 			passcode[1]=0;
 			passcode[2]=0;
 			passcode[3]=0;
-			attempts=5;
 			is_locked_out=0;
 			sprintf(str, "m display_login_page\r");
 			sendCommand(str);
@@ -1291,7 +1292,7 @@ void login_disp_4_star() {
     sendCommand(str);
 		if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
 		{
-			sprintf(userID, "    J.L.");
+			sprintf(userID, "C Davila");
 			sprintf(str, "m set_uid %s\r", userID);
 			sendCommand(str);
 			sprintf(str, "m display_main_page\r");
@@ -1299,7 +1300,7 @@ void login_disp_4_star() {
 		}
 		else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
 		{
-			sprintf(userID, "    C.D.");
+			sprintf(userID, "J Lin");
 			sprintf(str, "m set_uid %s\r", userID);
 			sendCommand(str);
 			sprintf(str, "m display_main_page\r");
@@ -1311,7 +1312,7 @@ void login_disp_4_star() {
 			sendCommand(str);
 			sprintf(str, "xc all\r");
 			sendCommand(str);
-			sprintf(str, "w 2000\r");
+			sprintf(str, "w 1000\r");
 			sendCommand(str);
 			passcode[0]=0;
 			passcode[1]=0;

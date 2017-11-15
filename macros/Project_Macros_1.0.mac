@@ -412,5 +412,6 @@ set s0 `0`
 #define display_uid
 f 14B
 s 8 0
-t "`s0`" 525 10 T
+ta RT
+t "`s0`" 639 1 T
 #end
