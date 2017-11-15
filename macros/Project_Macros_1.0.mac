@@ -13,6 +13,10 @@
 // Set Font                 f <fontName>
 // Set Color 				s <fore> <back>
 // Text Display             t “text string” x y T
+// External Backlight  		xbb [+|-]<level>
+// 		Bright Ctrl
+// Define Max, Min 			*maxBrite <value from 0 to 255>
+//		Brightness 			*minBrite <value from 0 to 255>
 // ------------------------------------------------
 
 // ------------ BITMAP IDX ------------
@@ -24,16 +28,18 @@
 // 
 // ------------------------------------
 
+*minBrite 255
+*maxBrite 0
+
 
 // ---------------------------- Splash Page - TOP -----------------------------------
 #define show_splash
 xi 1 0 0
 out "load\r"
-// m load_bar_full 220 275 100 03 // Display loading bar
 #end
 
 // Parameters: `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
-#define load_bar_full
+#define load_bar_once
 // ---- Iteration 1 ---- 
 xi `(`3`+0)` `0` `1`
 w `2`
@@ -59,110 +65,16 @@ xi `(`3`+10)` `0` `1`
 w `2`
 xi `(`3`+11)` `0` `1`
 w `2`
-
-// ---- Iteration 2 ---- 
 xi `(`3`+0)` `0` `1`
 w `2`
-xi `(`3`+1)` `0` `1`
-w `2`
-xi `(`3`+2)` `0` `1`
-w `2`
-xi `(`3`+3)` `0` `1`
-w `2`
-xi `(`3`+4)` `0` `1`
-w `2`
-xi `(`3`+5)` `0` `1`
-w `2`
-xi `(`3`+6)` `0` `1`
-w `2`
-xi `(`3`+7)` `0` `1`
-w `2`
-xi `(`3`+8)` `0` `1`
-w `2`
-xi `(`3`+9)` `0` `1`
-w `2`
-xi `(`3`+10)` `0` `1`
-w `2`
-xi `(`3`+11)` `0` `1`
-w `2`
+#end
 
-// ---- Iteration 3 ---- 
-xi `(`3`+0)` `0` `1`
-w `2`
-xi `(`3`+1)` `0` `1`
-w `2`
-xi `(`3`+2)` `0` `1`
-w `2`
-xi `(`3`+3)` `0` `1`
-w `2`
-xi `(`3`+4)` `0` `1`
-w `2`
-xi `(`3`+5)` `0` `1`
-w `2`
-xi `(`3`+6)` `0` `1`
-w `2`
-xi `(`3`+7)` `0` `1`
-w `2`
-xi `(`3`+8)` `0` `1`
-w `2`
-xi `(`3`+9)` `0` `1`
-w `2`
-xi `(`3`+10)` `0` `1`
-w `2`
-xi `(`3`+11)` `0` `1`
-w `2`
-
-// ---- Iteration 4 ---- 
-xi `(`3`+0)` `0` `1`
-w `2`
-xi `(`3`+1)` `0` `1`
-w `2`
-xi `(`3`+2)` `0` `1`
-w `2`
-xi `(`3`+3)` `0` `1`
-w `2`
-xi `(`3`+4)` `0` `1`
-w `2`
-xi `(`3`+5)` `0` `1`
-w `2`
-xi `(`3`+6)` `0` `1`
-w `2`
-xi `(`3`+7)` `0` `1`
-w `2`
-xi `(`3`+8)` `0` `1`
-w `2`
-xi `(`3`+9)` `0` `1`
-w `2`
-xi `(`3`+10)` `0` `1`
-w `2`
-xi `(`3`+11)` `0` `1`
-w `2`
-
-// ---- Iteration 5 ---- 
-xi `(`3`+0)` `0` `1`
-w `2`
-xi `(`3`+1)` `0` `1`
-w `2`
-xi `(`3`+2)` `0` `1`
-w `2`
-xi `(`3`+3)` `0` `1`
-w `2`
-xi `(`3`+4)` `0` `1`
-w `2`
-xi `(`3`+5)` `0` `1`
-w `2`
-xi `(`3`+6)` `0` `1`
-w `2`
-xi `(`3`+7)` `0` `1`
-w `2`
-xi `(`3`+8)` `0` `1`
-w `2`
-xi `(`3`+9)` `0` `1`
-w `2`
-xi `(`3`+10)` `0` `1`
-w `2`
-xi `(`3`+11)` `0` `1`
-w `2`
+#define load_bar_full
+load_bar_once `0` `1` `2` `3`
+load_bar_once `0` `1` `2` `3`
+load_bar_once `0` `1` `2` `3`
+load_bar_once `0` `1` `2` `3`
+load_bar_once `0` `1` `2` `3`
 out "endload\r"
 #end
 // ---------------------------- Splash Page - BOTTOM -----------------------------------
@@ -403,7 +315,7 @@ xm 26 main_button
 #end
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
 
-//----------------------------  Helper functions ---------------------------------------
+//----------------------------  Helper Functions ---------------------------------------
 // Parameters: `0`->(User ID)
 #define set_uid 
 set s0 `0`
@@ -413,4 +325,27 @@ set s0 `0`
 f 14B
 s 8 0
 t "`s0`" 525 10 T
+#end
+
+
+//----------------------------  Settings Sreen ---------------------------------------
+#define display_settings_screen
+xc all
+z
+set e0 241					// Setting default starting index of sliders
+m display_slider 200 100 0
+m display_slider 200 200 100
+m display_slider 200 300 200
+m display_slider 200 300 255
+#end
+
+// `0` -> x || `1` -> y || `2` -> slider position
+#define display_slider
+sl `e0` 3 `0` `1` 39 4 1 0 1 255 0
+sv `e0` `2`
+set e0 `(`e0`+1)`
+#end
+
+#define adjust_brightness
+xbb `0`
 #end
