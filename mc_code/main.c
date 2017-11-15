@@ -1063,8 +1063,6 @@ void smbISR (void) interrupt INTERRUPT_SMB using 2
 // Main
 //-------------------------------------------------------------------------------------------------------
 // Control functions
-int get_function_code();
-int passcode[4]={0};
 void bar_load(); // function code == 11
 void login_page_load(); // function code == 21
 void login_attempts(); // function code == 22
@@ -1083,12 +1081,14 @@ void laser_page_load();	// function code == 43
 void c_to_f();	// function code == 50
 void f_to_c();	// function code == 51
 
+int get_function_code();
+int passcode[4]={0};
 int is_locked_out=0;
 int attempts=5;
 int is_in_temp_page=0;
 int is_in_c=1;
 int _delay=0;
-char userID[9];
+char userID[64];
 
 void main()
 {
@@ -1114,15 +1114,25 @@ void main()
 				{	
 					if(is_in_c)	//C
 					{
+						//Left
 						roomTemp = readOneByteFromSlave(ROOM_TEMP);
-						sprintf(str, "   %-5bu", roomTemp);
-						displayText("000000", "8D8989", 6, str, 228, 160);
+						sprintf(str, " %-5bu", roomTemp);
+						displayText("000000", "8D8989", 6, str, 208, 160);
+						//Right
+						roomTemp = readOneByteFromSlave(ROOM_TEMP);
+						sprintf(str, " %-5bu", roomTemp);
+						displayText("000000", "8D8989", 6, str, 338, 160);
 					}
 					else	//F
 					{
+						//Left
 						roomTemp = readOneByteFromSlave(ROOM_TEMP);
-						sprintf(str, "   %-5bu", roomTemp*9/5+32);
-						displayText("000000", "8D8989", 6, str, 228, 160);
+						sprintf(str, " %-5bu", roomTemp*9/5+32);
+						displayText("000000", "8D8989", 6, str, 208, 160);
+						//Right
+						roomTemp = readOneByteFromSlave(ROOM_TEMP);
+						sprintf(str, " %-5bu", roomTemp*9/5+32);
+						displayText("000000", "8D8989", 6, str, 338, 160);
 					}
 				}
 		//----------------------------------------------------------
@@ -1374,7 +1384,7 @@ void temp_page_load()
 void motor_page_load()
 {
 			char str[64];
-			sprintf(str, "m display_motor_page\r");
+			sprintf(str, "m display_settings_screen\r");
 			sendCommand(str);
 }
 // finction code == 42
@@ -1384,6 +1394,7 @@ void laser_page_load()
 			char str[64];
 			sprintf(str, "m display_laser_page\r");
 			sendCommand(str);
+
 }
 // finction code == 43
 

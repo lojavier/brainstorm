@@ -39,7 +39,7 @@ out "load\r"
 #end
 
 // Parameters: `0`->(x) and `1`->(y) `2`->(Wait time) `3`->(Start Idx)
-#define load_bar_once
+#define load_bar_full
 // ---- Iteration 1 ---- 
 xi `(`3`+0)` `0` `1`
 w `2`
@@ -67,16 +67,128 @@ xi `(`3`+11)` `0` `1`
 w `2`
 xi `(`3`+0)` `0` `1`
 w `2`
-#end
+// ---- Iteration 2 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+xi `(`3`+0)` `0` `1`
+w `2`
 
-#define load_bar_full
-load_bar_once `0` `1` `2` `3`
-load_bar_once `0` `1` `2` `3`
-load_bar_once `0` `1` `2` `3`
-load_bar_once `0` `1` `2` `3`
-load_bar_once `0` `1` `2` `3`
+// ---- Iteration 3 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+xi `(`3`+0)` `0` `1`
+w `2`
+
+// ---- Iteration 4 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+xi `(`3`+0)` `0` `1`
+w `2`
+
+// ---- Iteration 5 ---- 
+xi `(`3`+0)` `0` `1`
+w `2`
+xi `(`3`+1)` `0` `1`
+w `2`
+xi `(`3`+2)` `0` `1`
+w `2`
+xi `(`3`+3)` `0` `1`
+w `2`
+xi `(`3`+4)` `0` `1`
+w `2`
+xi `(`3`+5)` `0` `1`
+w `2`
+xi `(`3`+6)` `0` `1`
+w `2`
+xi `(`3`+7)` `0` `1`
+w `2`
+xi `(`3`+8)` `0` `1`
+w `2`
+xi `(`3`+9)` `0` `1`
+w `2`
+xi `(`3`+10)` `0` `1`
+w `2`
+xi `(`3`+11)` `0` `1`
+w `2`
+xi `(`3`+0)` `0` `1`
+w `2`
 out "endload\r"
 #end
+
+//#define load_bar_full
+//load_bar_once `0` `1` `2` `3`
+//load_bar_once `0` `1` `2` `3`
+//load_bar_once `0` `1` `2` `3`
+//load_bar_once `0` `1` `2` `3`
+//load_bar_once `0` `1` `2` `3`
+//
+//#end
 // ---------------------------- Splash Page - BOTTOM -----------------------------------
 
 
@@ -288,7 +400,7 @@ out "mp_main\r"
 // Clear everything
 xc all
 z
-xi 36 0 0
+xi 35 0 0
 
 // Display the User ID
 m display_uid
@@ -304,7 +416,7 @@ xm 26 main_button
 // Clear everything
 xc all
 z
-xi 37 0 0
+xi 35 0 0
 
 // Display the User ID
 m display_uid
@@ -316,9 +428,9 @@ xm 26 main_button
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
 
 //----------------------------  Helper Functions ---------------------------------------
-// Parameters: `0`->(User ID)
+// Parameters: `0`->(User ID "First name initial") `1`->(User ID "Last name")
 #define set_uid 
-set s0 `0`
+set s0 "`0` `1`"
 #end
 
 #define display_uid
@@ -333,20 +445,28 @@ t "`s0`" 639 1 T
 #define display_settings_screen
 xc all
 z
+xi 36 0 0
 set e0 241					// Set default starting index of sliders
-set e1 39					// Set index of first background slider bmp
-m display_slider 200 100 0
-m display_slider 200 200 100
-m display_slider 200 300 200
-m display_slider 200 400 255
+set e1 141					// Set index of first background slider bmp
+m display_slider 227 152 0
+m display_slider 227 244 127
+m display_slider 227 341 255
+
+// Display the User ID
+m display_uid
+
+// Define the main page button assign the macro to it
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
 #end
 
 // `0` -> x || `1` -> y || `2` -> slider position
 // e0 increments && e1 increments || then resets when refresh settings screen
 #define display_slider
-sl `e0` 3 `0` `1` `e1` 4 1 0 1 255 0
+sl `e0` `e1` `0` `1` 38 16 1 0 1 255 0
 sv `e0` `2`
 set e0 `(`e0`+1)`
+set e1 `(`e1`+1)`
 #end
 
 #define adjust_brightness
