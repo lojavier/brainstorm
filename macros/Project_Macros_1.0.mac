@@ -333,16 +333,18 @@ t "`s0`" 639 1 T
 #define display_settings_screen
 xc all
 z
-set e0 241					// Setting default starting index of sliders
+set e0 241					// Set default starting index of sliders
+set e1 39					// Set index of first background slider bmp
 m display_slider 200 100 0
 m display_slider 200 200 100
 m display_slider 200 300 200
-m display_slider 200 300 255
+m display_slider 200 400 255
 #end
 
 // `0` -> x || `1` -> y || `2` -> slider position
+// e0 increments && e1 increments || then resets when refresh settings screen
 #define display_slider
-sl `e0` 3 `0` `1` 39 4 1 0 1 255 0
+sl `e0` 3 `0` `1` `e1` 4 1 0 1 255 0
 sv `e0` `2`
 set e0 `(`e0`+1)`
 #end
