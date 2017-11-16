@@ -1078,6 +1078,7 @@ void main_page_load();	// function code == 40
 void temp_page_load();	// function code == 41
 void motor_page_load();	// function code == 42
 void laser_page_load();	// function code == 43
+void setting_page_load();	// function code == 44
 void c_to_f();	// function code == 50
 void f_to_c();	// function code == 51
 
@@ -1086,6 +1087,7 @@ int passcode[4]={0};
 int is_locked_out=0;
 int attempts=5;
 int is_in_temp_page=0;
+int is_in_laser_page=0;
 int is_in_c=1;
 int _delay=0;
 char userID[64];
@@ -1109,8 +1111,14 @@ void main()
     
 	while(1)
 	{
+				//-----------------text animation display-------------------
+				if(is_in_laser_page && _delay%1000==0)
+				{	
+						sprintf(str, "m text_display\r");
+						sendCommand(str);
+				}
 		//-----------------temperature display-------------------
-				if(is_in_temp_page && _delay%9999==0)
+				if(is_in_temp_page && _delay%20000==0)
 				{	
 					if(is_in_c)	//C
 					{
@@ -1150,6 +1158,7 @@ void main()
 							  case 41: temp_page_load(); break;
 								case 42: motor_page_load(); break;
 								case 43: laser_page_load(); break;
+								case 44: setting_page_load(); break;
 								case 50: c_to_f(); break;
 							  case 51: f_to_c(); break;
             }
@@ -1173,6 +1182,7 @@ int get_function_code() {
 		if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
 		{
 			is_in_temp_page=0;
+			is_in_laser_page=0;
 			is_in_c=1;
 			attempts==5;
 			is_locked_out=0;
@@ -1232,6 +1242,11 @@ int get_function_code() {
 		{
 			tsCommandReceived=0;
 			return 43;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='s' && userCommand[4]=='e')
+		{
+			tsCommandReceived=0;
+			return 44;
 		}
 				else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='f')
 		{
@@ -1366,6 +1381,7 @@ void main_page_load()
 {
 			char str[64];
 			is_in_temp_page=0;
+			is_in_laser_page=0;
 			sprintf(str, "m display_main_page\r");
 			sendCommand(str);
 }
@@ -1384,7 +1400,7 @@ void temp_page_load()
 void motor_page_load()
 {
 			char str[64];
-			sprintf(str, "m display_settings_screen\r");
+			sprintf(str, "m display_motor_page\r");
 			sendCommand(str);
 }
 // finction code == 42
@@ -1394,9 +1410,18 @@ void laser_page_load()
 			char str[64];
 			sprintf(str, "m display_laser_page\r");
 			sendCommand(str);
+			is_in_laser_page=1;
 
 }
 // finction code == 43
+
+void setting_page_load()
+{
+			char str[64];
+			sprintf(str, "m display_settings_screen\r");
+			sendCommand(str);
+}
+// finction code == 44
 
 void c_to_f()
 {

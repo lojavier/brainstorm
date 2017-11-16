@@ -267,19 +267,19 @@ out "lp_9\r"
 #end
 
 #define display_asterik_1
-xi 39 184 124
+xi 39 183 125
 #end
 
 #define display_asterik_2
-xi 39 271 124
+xi 39 271 125
 #end
 
 #define display_asterik_3
-xi 39 359 124
+xi 39 359 125
 #end
 
 #define display_asterik_4
-xi 39 446 124
+xi 39 446 125
 #end
 
 #define display_login_attempts_left
@@ -326,13 +326,21 @@ x 142 170 335 476 415
 xmq 142 laser_hotspot
 
 bd 25 0 0 1 "" 0 0 41 41
-xm 25 logout_hotspot
+xm 25 logout_button
+
+bd 29 75 0 1 "" 0 0 42 42
+xm 29 setting_button
 #end
 // ---------------------------- MainPage - BOTTOM ------------------------------------
 
-#define logout_hotspot
+#define logout_button
 bc 25
 out "mp_logout\r"
+#end
+
+#define setting_button
+bc 29
+out "mp_setting\r"
 #end
 
 #define temp_hotspot
@@ -415,17 +423,24 @@ xm 26 main_button
 #define display_laser_page
 // Clear everything
 xc all
+S FFFFFF 000000
 z
-xi 35 0 0
+set s2 500
 
 // Display the User ID
 m display_uid
 
 // Define the main page button assign the macro to it
-bd 26 0 0 1 "" 0 0 15 15
+bd 26 0 0 1 "" 0 0 16 16
 xm 26 main_button
 #end
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
+
+#define text_display
+xi 50 120 `s2`
+w 5
+set s2 `(`s2`-1)`
+#end
 
 //----------------------------  Helper Functions ---------------------------------------
 // Parameters: `0`->(User ID "First name initial") `1`->(User ID "Last name")
@@ -439,7 +454,6 @@ s 8 0
 ta RT
 t "`s0`" 639 1 T
 #end
-
 
 //----------------------------  Settings Sreen ---------------------------------------
 #define display_settings_screen
