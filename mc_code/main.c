@@ -220,6 +220,36 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
+				else if(tsRxBuffer[0] == 's' && tsRxBuffer[1] == 't' && tsRxBuffer[2] == 'a') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'g' && tsRxBuffer[1] == 'e' && tsRxBuffer[2] == 't') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == '2' && tsRxBuffer[2] == '4') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
 				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'p' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
 				{																// A command starts with '('
 					for(i = 0; i < tsRxIn; i++)
@@ -1081,16 +1111,25 @@ void laser_page_load();	// function code == 43
 void setting_page_load();	// function code == 44
 void c_to_f();	// function code == 50
 void f_to_c();	// function code == 51
+void add_point();	// function code == 52
+void game_start();	// function code == 53
+void brightness_setting();	// function code == 54
 
 int get_function_code();
 int passcode[4]={0};
 int is_locked_out=0;
 int attempts=5;
 int is_in_temp_page=0;
+int is_in_motor_page=0;
 int is_in_laser_page=0;
+int is_in_setting_page=0;
 int is_in_c=1;
 int _delay=0;
 char userID[64];
+int stones=20;
+int duration=2000;
+int point=0;
+int brightness=120;
 
 void main()
 {
@@ -1111,7 +1150,93 @@ void main()
     
 	while(1)
 	{
-				//-----------------text animation display-------------------
+		//-----------------game display-------------------
+				if(is_in_motor_page && _delay%10000==0)
+				{
+						if(point<10)
+						{
+							sprintf(str, "%d", point);
+							displayText("000000", "FF0000", 6, str, 305,20);
+						}
+						else
+						{
+							sprintf(str, "%d", point);
+							displayText("000000", "FF0000", 6, str, 290,20);
+						}
+
+				}
+				if(is_in_motor_page && _delay%50000==0)
+				{	
+						if(stones<=20)	duration=1500;
+						if(stones<=15)	duration=1000;
+						if(stones<=10)	duration=750;
+						if(stones<=5)		duration=500;
+						if(stones<=0)	
+						{
+							is_in_motor_page=0;
+							if(point<10)
+							{
+								sprintf(str, "m lose\r");
+								sendCommand(str);
+							}
+							else
+							{
+								sprintf(str, "m win %s\r", userID);
+								sendCommand(str);
+							}
+						}
+						else
+						{
+							int number=(rand() % 10) +1;
+							switch (number)
+							{
+							case 1:
+							sprintf(str, "m stone_display 133 118 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 2:
+							sprintf(str, "m stone_display 118 159 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 3:
+							sprintf(str, "m stone_display 124 202 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 4:
+							sprintf(str, "m stone_display 130 263 %d\r", duration);
+							sendCommand(str);	
+							break;
+							case 5:
+							sprintf(str, "m stone_display 150 300 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 6:
+							sprintf(str, "m stone_display 474 120 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 7:
+							sprintf(str, "m stone_display 487 159 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 8:
+							sprintf(str, "m stone_display 483 204 %d\r", duration);
+							sendCommand(str);	
+							break;
+							case 9:
+							sprintf(str, "m stone_display 480 266 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 10:
+							sprintf(str, "m stone_display 452 306 %d\r", duration);
+							sendCommand(str);	
+							break;							
+							default:
+							break;
+							}
+							stones--;
+						}
+				}
+		//-----------------text animation display-------------------
 				if(is_in_laser_page && _delay%1000==0)
 				{	
 						sprintf(str, "m text_display\r");
@@ -1161,6 +1286,10 @@ void main()
 								case 44: setting_page_load(); break;
 								case 50: c_to_f(); break;
 							  case 51: f_to_c(); break;
+								case 52: add_point(); break;
+								case 53: game_start(); break;
+								case 54: brightness_setting(); break;
+								default: break;
             }
         }
 				_delay++;
@@ -1182,12 +1311,32 @@ int get_function_code() {
 		if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
 		{
 			is_in_temp_page=0;
+			is_in_motor_page=0;
 			is_in_laser_page=0;
+			is_in_setting_page=0;
 			is_in_c=1;
 			attempts==5;
 			is_locked_out=0;
 			tsCommandReceived=0;
 			return 11;
+		}
+		else if(userCommand[0]=='g' && userCommand[1]=='e' && userCommand[2]=='t' && userCommand[3]=='_')
+		{
+			tsCommandReceived=0;
+			return 52;
+		}
+		else if(userCommand[0]=='s' && userCommand[1]=='t' && userCommand[2]=='a' && userCommand[3]=='r')
+		{
+			tsCommandReceived=0;
+			return 53;
+		}
+		else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='1')
+		{
+			if			(userCommand[6]=='\0')	brightness=userCommand[5]-'0';
+			else if	(userCommand[7]=='\0')	brightness=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+			else														brightness=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
+			tsCommandReceived=0;
+			return 54;
 		}
 		else if(userCommand[0]=='e' && userCommand[1]=='n' && userCommand[2]=='d' && userCommand[3]=='l')
 		{
@@ -1317,7 +1466,7 @@ void login_disp_4_star() {
     sendCommand(str);
 		if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
 		{
-			sprintf(userID, "C Davila");
+			sprintf(userID, "J Lin");
 			sprintf(str, "m set_uid %s\r", userID);
 			sendCommand(str);
 			sprintf(str, "m display_main_page\r");
@@ -1325,7 +1474,7 @@ void login_disp_4_star() {
 		}
 		else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
 		{
-			sprintf(userID, "J Lin");
+			sprintf(userID, "C Davila");
 			sprintf(str, "m set_uid %s\r", userID);
 			sendCommand(str);
 			sprintf(str, "m display_main_page\r");
@@ -1381,7 +1530,9 @@ void main_page_load()
 {
 			char str[64];
 			is_in_temp_page=0;
+			is_in_motor_page=0;
 			is_in_laser_page=0;
+			is_in_setting_page=0;
 			sprintf(str, "m display_main_page\r");
 			sendCommand(str);
 }
@@ -1400,7 +1551,9 @@ void temp_page_load()
 void motor_page_load()
 {
 			char str[64];
-			sprintf(str, "m display_motor_page\r");
+			point=0;
+			stones=20;
+			sprintf(str, "m display_game_page\r");
 			sendCommand(str);
 }
 // finction code == 42
@@ -1420,6 +1573,7 @@ void setting_page_load()
 			char str[64];
 			sprintf(str, "m display_settings_screen\r");
 			sendCommand(str);
+			is_in_setting_page=1;
 }
 // finction code == 44
 
@@ -1434,3 +1588,41 @@ void f_to_c()
 	is_in_c=1;
 }
 // finction code == 51
+
+void add_point()
+{
+	point++;
+}
+// finction code == 52
+
+void game_start()
+{
+	point=0;
+	stones=20;
+	is_in_motor_page=1;
+}
+// finction code == 53
+
+void brightness_setting()
+{
+	char str[64];
+	sprintf(str, "m adjust_brightness %d\r", brightness);
+	sendCommand(str);
+	if(brightness<10)
+	{
+		sprintf(str, "  %d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+	else if(brightness<100)
+	{
+		sprintf(str, " %d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+	else
+	{
+		sprintf(str, "%d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+
+}
+// finction code == 54
