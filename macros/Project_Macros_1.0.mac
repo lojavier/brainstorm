@@ -365,16 +365,9 @@ out "mp_laser\r"
 xc all
 z
 xi 35 0 0
-xi 210 157 104
 
 // Display the User ID
 m display_uid
-
-// Set hotspots
-x 144 157 104 509 306
-xmq 144 temp_unit_f
-bd 26 0 0 1 "" 0 0 15 15
-xm 26 main_button
 #end
 
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
@@ -383,7 +376,8 @@ xm 26 main_button
 out "ns_f\r"
 xc all
 xi 211 157 104
-x 145 157 104 509 306
+// Set hotspots
+xs 145 157 104 509 306
 xmq 145 temp_unit_c
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
@@ -393,7 +387,8 @@ xm 26 main_button
 out "ns_c\r"
 xc all
 xi 210 157 104
-x 144 157 104 509 306
+// Set hotspots
+xs 144 157 104 509 306
 xmq 144 temp_unit_f
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
@@ -427,7 +422,6 @@ S FFFFFF 000000
 z
 set s2 500
 set s3 1
-set s4 5
 xs 155 120 0 520 239
 xmq 155 speed_up
 xs 156 120 240 520 480
@@ -444,18 +438,15 @@ xm 26 main_button
 
 #define text_display
 xi 50 120 `s2`
-w `s4`
 set s2 `(`s2`-`s3`)`
 #end
 
 #define speed_up
-set s3 2
-set s4 1
+set s3 `(`s3`+1)`
 #end
 
 #define speed_down
-set s3 1
-set s4 5
+set s3 `(`s3`-1)`
 #end
 
 //----------------------------  Helper Functions ---------------------------------------
@@ -521,7 +512,7 @@ f 16B
 s 0 0
 t "Use your finger as a laser beam to" 150 180 T
 t "break all the kidney stones which" 150 210 T
-t "appears on the patient's kidneys." 150 240 T
+t "appear on the patient's kidneys." 150 240 T
 f 12B
 t "Note: you'll need at least 10 points" 190 290 T
 t "to save your patient's life" 236 310 T
@@ -585,14 +576,17 @@ xi 48 238 425
 //Display message
 f 24B
 s 5 0
-t "YOU LOSE" 230 130 T
+t "YOU LOSE" 235 130 T
 f 16B
 s 0 0
-t "The kidney stones have caused both" 128 180 T
-t "urinary tract obstructions and infection" 123 210 T
-t "You have lost your patient." 128 240 T
+t "The kidney stones have caused both" 128 170 T
+t "urinary tract obstructions and infection" 123 200 T
+t "You have lost your patient." 128 230 T
 s 5 0
-t "Time of death: 12:31pm" 200 290 T
+t "Time of death: 12:31pm" 200 270 T
+s 0 0
+f 12B
+t "(Too hard? Try to warm up the patient's body temp)" 126 310 T
 f 24B
 s 0 0
 t "RETRY" 262 350 T

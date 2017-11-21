@@ -1121,6 +1121,7 @@ int is_locked_out=0;
 int attempts=5;
 int is_in_temp_page=0;
 int is_in_motor_page=0;
+int is_in_game=0;
 int is_in_laser_page=0;
 int is_in_setting_page=0;
 int is_in_c=1;
@@ -1130,6 +1131,7 @@ int stones=20;
 int duration=2000;
 int point=0;
 int brightness=120;
+int c=20;
 
 void main()
 {
@@ -1153,27 +1155,66 @@ void main()
 		//-----------------game display-------------------
 				if(is_in_motor_page && _delay%10000==0)
 				{
-						if(point<10)
+						roomTemp = readOneByteFromSlave(ROOM_TEMP);
+						c=roomTemp;				
+						if(is_in_c)
 						{
-							sprintf(str, "%d", point);
-							displayText("000000", "FF0000", 6, str, 305,20);
+							sprintf(str, "body°C:%d", c);
+							displayText("000000", "FFFFFF", 2, str, 365,-4);
 						}
 						else
 						{
-							sprintf(str, "%d", point);
-							displayText("000000", "FF0000", 6, str, 290,20);
+							sprintf(str, "body°F:%d", c*9/5+32);
+							displayText("000000", "FFFFFF", 2, str, 365,-4);							
+						}
+						if(is_in_game)
+						{
+							if(point<10)
+							{
+								sprintf(str, "%d", point);
+								displayText("000000", "FF0000", 6, str, 305,20);
+							}
+							else
+							{
+								sprintf(str, "%d", point);
+								displayText("000000", "FF0000", 6, str, 290,20);
+							}
 						}
 
 				}
-				if(is_in_motor_page && _delay%50000==0)
+				if(is_in_game && _delay%50000==0)
 				{	
-						if(stones<=20)	duration=1500;
-						if(stones<=15)	duration=1000;
-						if(stones<=10)	duration=750;
-						if(stones<=5)		duration=500;
+						if(stones<=20 && stones>15)	
+						{
+							if(c<20)	duration=700;
+							else			duration=700+((c-20)*130);
+							sprintf(str, "STAGE 1");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=15 && stones>10)	
+						{
+							if(c<20)	duration=500;
+							else			duration=500+((c-20)*100);
+							sprintf(str, "STAGE 2");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=10 && stones>5)	
+						{
+							if(c<20)	duration=300;
+							else			duration=300+((c-20)*70);
+							sprintf(str, "STAGE 3");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=5 && stones>0)		
+						{
+							if(c<20)	duration=100;
+							else			duration=100+((c-20)*40);
+							sprintf(str, "STAGE 4");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
 						if(stones<=0)	
 						{
-							is_in_motor_page=0;
+							is_in_game=0;
 							if(point<10)
 							{
 								sprintf(str, "m lose\r");
@@ -1312,6 +1353,7 @@ int get_function_code() {
 		{
 			is_in_temp_page=0;
 			is_in_motor_page=0;
+			is_in_game=0;
 			is_in_laser_page=0;
 			is_in_setting_page=0;
 			is_in_c=1;
@@ -1472,6 +1514,22 @@ void login_disp_4_star() {
 			sprintf(str, "m display_main_page\r");
 			sendCommand(str);
 		}
+		else if(is_locked_out==0 && passcode[0]==9 && passcode[1]==9 && passcode[2]==9 && passcode[3]==9)
+		{
+			sprintf(userID, "S-H Yang");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+		}
+		else if(is_locked_out==0 && passcode[0]==1 && passcode[1]==1 && passcode[2]==1 && passcode[3]==1)
+		{
+			sprintf(userID, "Y Li");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+		}
 		else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
 		{
 			sprintf(userID, "C Davila");
@@ -1531,6 +1589,7 @@ void main_page_load()
 			char str[64];
 			is_in_temp_page=0;
 			is_in_motor_page=0;
+			is_in_game=0;
 			is_in_laser_page=0;
 			is_in_setting_page=0;
 			sprintf(str, "m display_main_page\r");
@@ -1544,7 +1603,16 @@ void temp_page_load()
 			sprintf(str, "m display_temp_page\r");
 			sendCommand(str);
 			is_in_temp_page=1;
-			is_in_c=1;
+			if(is_in_c==0)
+			{
+				sprintf(str, "m temp_unit_f\r");
+				sendCommand(str);
+			}
+			else
+			{
+				sprintf(str, "m temp_unit_c\r");
+				sendCommand(str);
+			}				
 }
 // finction code == 41
 
@@ -1555,6 +1623,7 @@ void motor_page_load()
 			stones=20;
 			sprintf(str, "m display_game_page\r");
 			sendCommand(str);
+			is_in_motor_page=1;
 }
 // finction code == 42
 
@@ -1599,7 +1668,7 @@ void game_start()
 {
 	point=0;
 	stones=20;
-	is_in_motor_page=1;
+	is_in_game=1;
 }
 // finction code == 53
 
