@@ -267,19 +267,19 @@ out "lp_9\r"
 #end
 
 #define display_asterik_1
-xi 39 184 124
+xi 39 183 125
 #end
 
 #define display_asterik_2
-xi 39 271 124
+xi 39 271 125
 #end
 
 #define display_asterik_3
-xi 39 359 124
+xi 39 359 125
 #end
 
 #define display_asterik_4
-xi 39 446 124
+xi 39 446 125
 #end
 
 #define display_login_attempts_left
@@ -326,13 +326,21 @@ x 142 170 335 476 415
 xmq 142 laser_hotspot
 
 bd 25 0 0 1 "" 0 0 41 41
-xm 25 logout_hotspot
+xm 25 logout_button
+
+bd 29 75 10 1 "" 0 0 42 42
+xm 29 setting_button
 #end
 // ---------------------------- MainPage - BOTTOM ------------------------------------
 
-#define logout_hotspot
+#define logout_button
 bc 25
 out "mp_logout\r"
+#end
+
+#define setting_button
+bc 29
+out "mp_setting\r"
 #end
 
 #define temp_hotspot
@@ -357,16 +365,9 @@ out "mp_laser\r"
 xc all
 z
 xi 35 0 0
-xi 210 157 104
 
 // Display the User ID
 m display_uid
-
-// Set hotspots
-x 144 157 104 509 306
-xmq 144 temp_unit_f
-bd 26 0 0 1 "" 0 0 15 15
-xm 26 main_button
 #end
 
 // ---------------------------- Temperature Page - BOTTOM ---------------------------------
@@ -375,7 +376,8 @@ xm 26 main_button
 out "ns_f\r"
 xc all
 xi 211 157 104
-x 145 157 104 509 306
+// Set hotspots
+xs 145 157 104 509 306
 xmq 145 temp_unit_c
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
@@ -385,7 +387,8 @@ xm 26 main_button
 out "ns_c\r"
 xc all
 xi 210 157 104
-x 144 157 104 509 306
+// Set hotspots
+xs 144 157 104 509 306
 xmq 144 temp_unit_f
 bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
@@ -415,8 +418,14 @@ xm 26 main_button
 #define display_laser_page
 // Clear everything
 xc all
+S FFFFFF 000000
 z
-xi 35 0 0
+set s2 500
+set s3 1
+xs 155 120 0 520 239
+xmq 155 speed_up
+xs 156 120 240 520 480
+xmq 156 speed_down
 
 // Display the User ID
 m display_uid
@@ -426,6 +435,19 @@ bd 26 0 0 1 "" 0 0 15 15
 xm 26 main_button
 #end
 // ---------------------------- Laser Page - BOTTOM ------------------------------------
+
+#define text_display
+xi 50 120 `s2`
+set s2 `(`s2`-`s3`)`
+#end
+
+#define speed_up
+set s3 `(`s3`+1)`
+#end
+
+#define speed_down
+set s3 `(`s3`-1)`
+#end
 
 //----------------------------  Helper Functions ---------------------------------------
 // Parameters: `0`->(User ID "First name initial") `1`->(User ID "Last name")
@@ -439,7 +461,6 @@ s 8 0
 ta RT
 t "`s0`" 639 1 T
 #end
-
 
 //----------------------------  Settings Sreen ---------------------------------------
 #define display_settings_screen
@@ -473,6 +494,7 @@ set e1 `(`e1`+1)`
 xbb `0`
 #end
 
+<<<<<<< HEAD
 //--------------------------  Settings Date/Time -----------------------------------
 
 // `0` -> x || `1` -> y || `2` -> slider position || `3` -> MAX || `4` -> MIN
@@ -568,3 +590,117 @@ s 8 0
 ta CT
 t `0` 320 1 T
 #end
+=======
+//------------------ Game Page - TOP -------------------
+#define display_game_page
+xc all
+z
+xi 45 0 0
+xi 46 0 115
+xi 47 120 115
+x 149 258 348 379 390
+xmq 149 start
+
+//Display message
+f 24B
+s 5 0
+t "The Breaking Stone" 160 130 T
+f 16B
+s 0 0
+t "Use your finger as a laser beam to" 150 180 T
+t "break all the kidney stones which" 150 210 T
+t "appear on the patient's kidneys." 150 240 T
+f 12B
+t "Note: you'll need at least 10 points" 190 290 T
+t "to save your patient's life" 236 310 T
+f 24B
+t "START" 263 350 T
+
+// Display the User ID
+m display_uid
+
+// Define the main page button assign the macro to it
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
+#end
+
+// ---------------------------- Game Page - BOTTOM ------------------------------------
+
+// `0` -> x || `1` -> y || `2` -> stone duration
+
+#define stone_display
+xi 46 0 115
+bd 30 `0` `1` 1 "" 0 0 43 44
+xm 30 add_point
+w `2`
+bc 30
+xi 46 0 115
+#end
+
+#define add_point
+bc 30
+out "get_point\r"
+#end
+
+//------------------win----------------------
+// Parameters: `0`->(User ID "First name initial") `1`->(User ID "Last name")
+#define win
+xi 47 120 115
+x 149 258 348 379 390
+xmq 149 start
+
+//Display message
+f 24B
+s 5 0
+t "YOU WIN" 245 130 T
+f 16B
+s 0 0
+t "You have broken enough kidney" 150 180 T
+t "stones and saved your patient's life." 150 210 T
+t "Well done, Dr. `1`" 150 280 T
+f 24B
+t "RETRY" 262 350 T
+#end
+
+//--------------lose----------------------
+#define lose
+xi 47 120 115
+x 149 258 348 379 390
+xmq 149 start
+xi 48 316 405
+xi 48 238 425
+
+//Display message
+f 24B
+s 5 0
+t "YOU LOSE" 235 130 T
+f 16B
+s 0 0
+t "The kidney stones have caused both" 128 170 T
+t "urinary tract obstructions and infection" 123 200 T
+t "You have lost your patient." 128 230 T
+s 5 0
+t "Time of death: 12:31pm" 200 270 T
+s 0 0
+f 12B
+t "(Too hard? Try to warm up the patient's body temp)" 126 310 T
+f 24B
+s 0 0
+t "RETRY" 262 350 T
+#end
+
+#define start
+xc all
+xi 45 0 0
+
+// Display the User ID
+m display_uid
+
+// Define the main page button assign the macro to it
+bd 26 0 0 1 "" 0 0 15 15
+xm 26 main_button
+
+out "start\r"
+#end
+
+>>>>>>> bc064d9a44433d86234c74786df3b64f72ee590e
