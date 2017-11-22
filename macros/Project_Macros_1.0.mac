@@ -13,6 +13,7 @@
 // Set Font                 f <fontName>
 // Set Color 				s <fore> <back>
 // Text Display             t “text string” x y T
+// Set Text Alignment 		ta [L|C|R][T|C|B]
 // External Backlight  		xbb [+|-]<level>
 // 		Bright Ctrl
 // Define Max, Min 			*maxBrite <value from 0 to 255>
@@ -29,8 +30,7 @@
 // ------------------------------------
 
 *minBrite 255
-*maxBrite 0
-
+*maxBrite 1
 
 // ---------------------------- Splash Page - TOP -----------------------------------
 #define show_splash
@@ -471,4 +471,100 @@ set e1 `(`e1`+1)`
 
 #define adjust_brightness
 xbb `0`
+#end
+
+//--------------------------  Settings Date/Time -----------------------------------
+
+// `0` -> x || `1` -> y || `2` -> slider position || `3` -> MAX || `4` -> MIN
+#define display_date_time_slider
+sl `e0` `e1` `0` `1` 38 16 1 0 1 `3` `4`
+sv `e0` `2`
+set e0 `(`e0`+1)`
+set e1 `(`e1`+1)`
+#end
+
+// `0` -> x0 || `1` -> y0 || `2` -> x1 || `3` -> y1
+#define define_hotspots_date_time
+x 150 `0` `1` `2` `3`   // Month
+xmq 150 MONTH           // Month
+
+x 151 `(`0`+75)` `1` `(`2`+75)` `3`		// Day
+xmq 151 DAY           					// Day
+
+x 152 `(`0`+150)` `1` `(`2`+150)` `3`	// Year
+xmq 152 YEAR           					// Year
+#end
+
+// `0` -> x0 || `1` -> y0 || `2` -> x1 || `3` -> y1
+#define define_hotspots_time
+x 153 `0` `1` `2` `3`   // Hour
+xmq 153 HOUR           	// Hour
+
+x 154 `(`0`+50)` `1` `(`2`+50)` `3`		// Minute
+xmq 154 MINUTE         					// Minute
+
+x 155 `(`0`+100)` `1` `(`2`+100)` `3`	// Second
+xmq 155 SECOND          				// Second
+
+x 156 `(`0`+150)` `1` `(`2`+150)` `3`   // AM / PM
+xmq 156 AMPM           					// AM / PM
+#end
+
+#define MONTH
+out "dt_month\r"
+m display_date_select 300 300
+#end
+
+#define DAY
+out "dt_day\r"
+m display_date_select 320 300
+#end
+
+#define YEAR
+out "dt_year\r"
+m display_date_select 340 300
+#end
+
+#define HOUR
+out "dt_hour\r"
+m display_time_select 300 350
+#end
+
+#define MINUTE
+out "dt_minute\r"
+m display_time_select 315 350
+#end
+
+#define SECOND
+out "dt_second\r"
+m display_time_select 330 350
+#end
+
+#define AMPM
+out "dt_ampm\r"
+m display_time_select 345 350
+#end
+
+#define display_date_select
+xi 39 `0` `1`					// Overlay bmp when date row selected
+#end
+
+#define display_time_select
+xi 39 `0` `1`					// Overlay bmp when time row selected
+#end
+
+// `0` -> date || `1` -> time
+#define display_config_date_time
+f 14B
+s 8 0
+ta CT
+t `0` 320 300 T
+t `1` 320 320 T
+#end
+
+#define display_date_time
+f 14B
+s 8 0
+ta CT
+t `0` 320 1 T
 #end
