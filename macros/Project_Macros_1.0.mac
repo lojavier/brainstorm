@@ -181,14 +181,43 @@ w `2`
 out "endload\r"
 #end
 
-//#define load_bar_full
-//load_bar_once `0` `1` `2` `3`
-//load_bar_once `0` `1` `2` `3`
-//load_bar_once `0` `1` `2` `3`
-//load_bar_once `0` `1` `2` `3`
-//load_bar_once `0` `1` `2` `3`
-//
-//#end
+// #define load_bar_full
+// m load_bar_once `0` `1` `2` `3`
+// m load_bar_once `0` `1` `2` `3`
+// m load_bar_once `0` `1` `2` `3`
+// m load_bar_once `0` `1` `2` `3`
+// m load_bar_once `0` `1` `2` `3`
+// out "endload\r"
+// #end
+
+// #define load_bar_once
+// xi `(`3`+0)` `0` `1`
+// w `2`
+// xi `(`3`+1)` `0` `1`
+// w `2`
+// xi `(`3`+2)` `0` `1`
+// w `2`
+// xi `(`3`+3)` `0` `1`
+// w `2`
+// xi `(`3`+4)` `0` `1`
+// w `2`
+// xi `(`3`+5)` `0` `1`
+// w `2`
+// xi `(`3`+6)` `0` `1`
+// w `2`
+// xi `(`3`+7)` `0` `1`
+// w `2`
+// xi `(`3`+8)` `0` `1`
+// w `2`
+// xi `(`3`+9)` `0` `1`
+// w `2`
+// xi `(`3`+10)` `0` `1`
+// w `2`
+// xi `(`3`+11)` `0` `1`
+// w `2`
+// xi `(`3`+0)` `0` `1`
+// w `2`
+// #end
 // ---------------------------- Splash Page - BOTTOM -----------------------------------
 
 
@@ -494,7 +523,6 @@ set e1 `(`e1`+1)`
 xbb `0`
 #end
 
-<<<<<<< HEAD
 //--------------------------  Settings Date/Time -----------------------------------
 
 // `0` -> x || `1` -> y || `2` -> slider position || `3` -> MAX || `4` -> MIN
@@ -590,7 +618,7 @@ s 8 0
 ta CT
 t `0` 320 1 T
 #end
-=======
+
 //------------------ Game Page - TOP -------------------
 #define display_game_page
 xc all
@@ -702,5 +730,3 @@ xm 26 main_button
 
 out "start\r"
 #end
-
->>>>>>> bc064d9a44433d86234c74786df3b64f72ee590e
