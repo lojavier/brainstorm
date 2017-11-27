@@ -562,15 +562,15 @@ sbit 		RHW 						= P7^7;								// SMB error line
 
 #define		SETTINGS_DATE_FG			"00FF00"
 #define		SETTINGS_DATE_BG			"000000"
-#define		SETTINGS_DATE_FONT			2
-#define		SETTINGS_DATE_X				22
-#define		SETTINGS_DATE_Y				262
+#define		SETTINGS_DATE_FONT			5
+//#define		SETTINGS_DATE_X				22
+//#define		SETTINGS_DATE_Y				262
 
 #define		SETTINGS_TIME_FG			"00FF00"
 #define		SETTINGS_TIME_BG			SETTINGS_DATE_BG
 #define		SETTINGS_TIME_FONT			SETTINGS_DATE_FONT
 #define		SETTINGS_TIME_X				SETTINGS_DATE_X
-#define		SETTINGS_TIME_Y				SETTINGS_DATE_Y + 20
+#define		SETTINGS_TIME_Y				SETTINGS_DATE_Y + 42
 
 #define		RTC_START_ADDR				0x00
 #define		SECONDS						0

@@ -29,8 +29,8 @@
 // 
 // ------------------------------------
 
-*minBrite 255
-*maxBrite 1
+*minBrite 0
+*maxBrite 255
 
 // ---------------------------- Splash Page - TOP -----------------------------------
 #define show_splash
@@ -449,7 +449,7 @@ xm 26 main_button
 xc all
 S FFFFFF 000000
 z
-set s2 500
+set s2 470
 set s3 1
 xs 155 120 0 520 239
 xmq 155 speed_up
@@ -492,15 +492,18 @@ t "`s0`" 639 1 T
 #end
 
 //----------------------------  Settings Sreen ---------------------------------------
+// `0` -> brightness
 #define display_settings_screen
 xc all
 z
 xi 36 0 0
 set e0 241					// Set default starting index of sliders
 set e1 141					// Set index of first background slider bmp
-m display_slider 227 152 0
+m display_slider 227 152 `0`
 m display_slider 227 244 127
 m display_slider 227 341 255
+m define_hotspots_date_time 163 393 228 433
+m define_hotspots_time 163 437 236 477
 
 // Display the User ID
 m display_uid
@@ -513,7 +516,7 @@ xm 26 main_button
 // `0` -> x || `1` -> y || `2` -> slider position
 // e0 increments && e1 increments || then resets when refresh settings screen
 #define display_slider
-sl `e0` `e1` `0` `1` 38 16 1 0 1 255 0
+sl `e0` `e1` `0` `1` 38 16 1 0 1 255 1
 sv `e0` `2`
 set e0 `(`e0`+1)`
 set e1 `(`e1`+1)`
@@ -525,99 +528,67 @@ xbb `0`
 
 //--------------------------  Settings Date/Time -----------------------------------
 
-// `0` -> x || `1` -> y || `2` -> slider position || `3` -> MAX || `4` -> MIN
+// `0` -> slider position || `1` -> MAX || `2` -> MIN
 #define display_date_time_slider
-sl `e0` `e1` `0` `1` 38 16 1 0 1 `3` `4`
-sv `e0` `2`
-set e0 `(`e0`+1)`
-set e1 `(`e1`+1)`
+sl 243 143 227 341 38 16 1 0 1 `1` `2`
+sv 243 `0`
 #end
 
 // `0` -> x0 || `1` -> y0 || `2` -> x1 || `3` -> y1
 #define define_hotspots_date_time
-x 150 `0` `1` `2` `3`   // Month
-xmq 150 MONTH           // Month
+xs 150 `0` `1` `2` `3`   				// Month
+xmq 150 MONTH           				// Month
 
-x 151 `(`0`+75)` `1` `(`2`+75)` `3`		// Day
+xs 151 `(`0`+76)` `1` `(`2`+83)` `3`			// Day
 xmq 151 DAY           					// Day
 
-x 152 `(`0`+150)` `1` `(`2`+150)` `3`	// Year
+xs 152 `(`0`+149)` `1` `(`2`+202)` `3`			// Year
 xmq 152 YEAR           					// Year
 #end
 
 // `0` -> x0 || `1` -> y0 || `2` -> x1 || `3` -> y1
 #define define_hotspots_time
-x 153 `0` `1` `2` `3`   // Hour
-xmq 153 HOUR           	// Hour
+xs 153 `0` `1` `2` `3`  				// Hour
+xmq 153 HOUR           					// Hour
 
-x 154 `(`0`+50)` `1` `(`2`+50)` `3`		// Minute
+xs 154 `(`0`+74)` `1` `(`2`+104)` `3`			// Minute
 xmq 154 MINUTE         					// Minute
 
-x 155 `(`0`+100)` `1` `(`2`+100)` `3`	// Second
+xs 155 `(`0`+178)` `1` `(`2`+194)` `3`			// Second
 xmq 155 SECOND          				// Second
 
-x 156 `(`0`+150)` `1` `(`2`+150)` `3`   // AM / PM
+xs 156 `(`0`+268)` `1` `(`2`+262)` `3`   		// AM / PM
 xmq 156 AMPM           					// AM / PM
 #end
 
 #define MONTH
-out "dt_month\r"
-m display_date_select 300 300
+out "dt_Month\r"
 #end
 
 #define DAY
 out "dt_day\r"
-m display_date_select 320 300
 #end
 
 #define YEAR
 out "dt_year\r"
-m display_date_select 340 300
 #end
 
 #define HOUR
 out "dt_hour\r"
-m display_time_select 300 350
 #end
 
 #define MINUTE
 out "dt_minute\r"
-m display_time_select 315 350
 #end
 
 #define SECOND
 out "dt_second\r"
-m display_time_select 330 350
 #end
 
 #define AMPM
 out "dt_ampm\r"
-m display_time_select 345 350
 #end
 
-#define display_date_select
-xi 39 `0` `1`					// Overlay bmp when date row selected
-#end
-
-#define display_time_select
-xi 39 `0` `1`					// Overlay bmp when time row selected
-#end
-
-// `0` -> date || `1` -> time
-#define display_config_date_time
-f 14B
-s 8 0
-ta CT
-t `0` 320 300 T
-t `1` 320 320 T
-#end
-
-#define display_date_time
-f 14B
-s 8 0
-ta CT
-t `0` 320 1 T
-#end
 
 //------------------ Game Page - TOP -------------------
 #define display_game_page
@@ -691,6 +662,7 @@ t "RETRY" 262 350 T
 #end
 
 //--------------lose----------------------
+// Parameters: `0`->(hours) `1`->(minutes) `2`->(AM/PM)
 #define lose
 xi 47 120 115
 x 149 258 348 379 390
@@ -708,7 +680,7 @@ t "The kidney stones have caused both" 128 170 T
 t "urinary tract obstructions and infection" 123 200 T
 t "You have lost your patient." 128 230 T
 s 5 0
-t "Time of death: 12:31pm" 200 270 T
+t "Time of death: `0`:`1``2`" 200 270 T
 s 0 0
 f 12B
 t "(Too hard? Try to warm up the patient's body temp)" 126 310 T

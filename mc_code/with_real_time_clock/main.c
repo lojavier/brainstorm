@@ -3,6 +3,9 @@
 //-------------------------------------------------------------------------------------------------------
 // Global Declarations
 //-------------------------------------------------------------------------------------------------------
+int	SETTINGS_DATE_X	=163;
+int	SETTINGS_DATE_Y	=393;
+
 unsigned char tsByte;
 
 bit splashEnd = 0;
@@ -119,14 +122,14 @@ bit amPmUpdated;
 bit timeUpdated;
 bit monthDateYearUpdated;
 
-const char code * dayOfWeek[] = 	{/*0*/	"NON",
-									 /*1*/	"SUN",
-									 /*2*/	"MON", 
-									 /*3*/	"TUE",
-									 /*4*/	"WED", 
-									 /*5*/	"THU",
-									 /*6*/	"FRI", 
-									 /*7*/	"SAT"};	
+const char code * dayOfWeek[] = 	{
+									 /*0*/	"SUN",
+									 /*1*/	"MON", 
+									 /*2*/	"TUE",
+									 /*3*/	"WED", 
+									 /*4*/	"THU",
+									 /*5*/	"FRI", 
+									 /*6*/	"SAT"};	
 
 const char code * monthOfYear[] = 	{/*0*/	"NON",
 									 /*1*/	"JAN",
@@ -280,6 +283,96 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
 					}
 
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'o' && tsRxBuffer[2] == 'a') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 's' && tsRxBuffer[1] == 't' && tsRxBuffer[2] == 'a') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'g' && tsRxBuffer[1] == 'e' && tsRxBuffer[2] == 't') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == '2' && tsRxBuffer[2] == '4') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'p' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'e' && tsRxBuffer[1] == 'n' && tsRxBuffer[2] == 'd') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'm' && tsRxBuffer[1] == 'p' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'n' && tsRxBuffer[1] == 's' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
+					ackFromScreen = 0;											// This is a command, NOT an ACK
+					tsCommandReceived = 1;										// Set flag when a complete command is received
+				}
+				else if(tsRxBuffer[0] == 'd' && tsRxBuffer[1] == 't' && tsRxBuffer[2] == '_') 									// It is a command from touch screen controller
+				{																// A command starts with '('
+					for(i = 0; i < tsRxIn; i++)
+					{
+					 	userCommand[i] = tsRxBuffer[i];							// Copy to command array for later evaluation
+					}
+					userCommand[tsRxIn]='\0';
 					ackFromScreen = 0;											// This is a command, NOT an ACK
 					tsCommandReceived = 1;										// Set flag when a complete command is received
 				}
@@ -1795,11 +1888,11 @@ void displayClock(void)
 	//{
         getClockData();
 
-        sprintf(str, "%s %02bu, 20%02bu", monthOfYear[month], date, year);
+        sprintf(str, "%s %02bu, 20%02bu %s", monthOfYear[month], date, year, dayOfWeek[day]);
         displayText(SETTINGS_DATE_FG, SETTINGS_DATE_BG, SETTINGS_DATE_FONT, str, SETTINGS_DATE_X, SETTINGS_DATE_Y);
         monthDateYearUpdated = CLEAR;
         
-        sprintf(str, "%2bu:%02bu:%02bu %cM ", hours, minutes, seconds, amPm);
+        sprintf(str, "%2bu : %02bu : %02bu %cM ", hours, minutes, seconds, amPm);
         displayText(SETTINGS_TIME_FG, SETTINGS_TIME_BG, SETTINGS_TIME_FONT, str, SETTINGS_TIME_X, SETTINGS_TIME_Y);
 	//}
 	/*else if(screen == CLOCK_SETUP_PAGE)
@@ -1822,12 +1915,60 @@ void displayClock(void)
 //-------------------------------------------------------------------------------------------------------
 // Main
 //-------------------------------------------------------------------------------------------------------
+// Control functions
+void bar_load(); // function code == 11
+void login_page_load(); // function code == 21
+void login_attempts(); // function code == 22
+void login_clear_stars(); // function code == 23
+void login_disp_1_star(); // function code == 24
+void login_disp_2_star(); // function code == 25
+void login_disp_3_star(); // function code == 26
+void login_disp_4_star(); // function code == 27
+void locked_page_load(); // function code == 31
+void update_wait_time(); // function code == 32
+void login_clear_disp(); // function code == 33
+void main_page_load();	// function code == 40
+void temp_page_load();	// function code == 41
+void motor_page_load();	// function code == 42
+void laser_page_load();	// function code == 43
+void setting_page_load();	// function code == 44
+void c_to_f();	// function code == 50
+void f_to_c();	// function code == 51
+void add_point();	// function code == 52
+void game_start();	// function code == 53
+void brightness_setting();	// function code == 54
+void time_setting();	// function code == 55
+void set_clock();	// function code == 56
+
+
+int get_function_code();
+int passcode[4]={0};
+int is_locked_out=0;
+int attempts=5;
+int is_in_temp_page=0;
+int is_in_motor_page=0;
+int is_in_game=0;
+int is_in_laser_page=0;
+int is_in_main_page=0;
+int is_in_setting_page=0;
+int is_in_c=1;
+int _delay=0;
+char userID[64];
+int stones=20;
+int duration=2000;
+int point=0;
+int brightness=120;
+int c=20;
+int set_time=0;
+double dayweek;
+int select=0;
+int clock_value;
 
 void main()
 {
 	int i = 0;
     char str[SPRINTF_SIZE];
-    int testCounter = 0;
+	  int testCounter = 0;
     
     disableWatchdog();
     systemClockInit();
@@ -1843,21 +1984,695 @@ void main()
     
 	while(1)
 	{
-		scanUserInput();                                                        // Detect a string input from the touch screen
-        
-        roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
-        
-        sprintf(str, "Room°C: %-5bu", roomTemp2);
-		displayText("000000", "FFFFFF", 4, str, 100, 100);
-        
-        while(i < 10000)
-            i++;
-        
-        roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
-        
-        sprintf(str, "Room°C: %-5bu", roomTemp2);
-		displayText("000000", "FFFFFF", 4, str, 200, 200);
-        
-        displayClock();
+		//------------------clock display in main page------------------
+				if(_delay%10000==0 && is_in_main_page)
+				{
+        getClockData();   
+        sprintf(str, "%2bu:%02bu%cM ", hours, minutes, amPm);
+        displayText("000000", "F7F9F8", 2, str, 160, 0);
+				sprintf(str, "20%02bu/%02bu/%02bu", year, month, date);
+        displayText("000000", "F7F9F8", 2, str, 150, 20);
+        monthDateYearUpdated = CLEAR;
+				}
+		//------------------time display------------------
+				if(is_in_setting_page && _delay%10000==0)
+				{
+					displayClock();															// Display clock data on the screen
+					switch(select)
+					{
+						case 0: break;
+						case 1: sprintf(str, "xi 16 163 393\r"); sendCommand(str); break;
+						case 2: sprintf(str, "xi 16 237 393\r"); sendCommand(str); break;
+						case 3: sprintf(str, "xi 17 318 393\r"); sendCommand(str); break;
+						case 4: sprintf(str, "xi 16 163 437\r"); sendCommand(str); break;
+						case 5: sprintf(str, "xi 16 258 437\r"); sendCommand(str); break;
+						case 6: sprintf(str, "xi 16 362 437\r"); sendCommand(str); break;
+						case 7: break;
+						default: break;
+					}
+		//			sprintf(str, "%s", amPm);
+		//			displayText("000000", "FFFFFF", 4, str, 123, 0);
+		/*		if(!set_time)
+				{
+					
+					seconds=0;
+					minutes=23;
+					hours=4;
+					amPm='A';
+					date=27;
+					month=11;
+					year=17;
+					century=20;
+					timeMode=1;
+					if(month==1 || month==2)								day=(date+1+2*(month+12)+3*((month+12)+1)/5+(year-1)+(year-1)/4-(year-1)/100+(year-1)/400)%7;
+					else																		day=(date+1+2*month+3*(month+1)/5+year+year/4-year/100+year/400)%7;
+					setClock();
+					set_time=1;
+				}*/
+				}
+		//-----------------game display-------------------
+				if(is_in_motor_page && _delay%10000==0)
+				{
+						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						c=roomTemp;				
+						if(is_in_c)
+						{
+							sprintf(str, "body°C:%d", c);
+							displayText("000000", "FFFFFF", 2, str, 365,-4);
+						}
+						else
+						{
+							sprintf(str, "body°F:%d", c*9/5+32);
+							displayText("000000", "FFFFFF", 2, str, 365,-4);							
+						}
+						if(is_in_game)
+						{
+							if(point<10)
+							{
+								sprintf(str, "%d", point);
+								displayText("000000", "FF0000", 6, str, 305,20);
+							}
+							else
+							{
+								sprintf(str, "%d", point);
+								displayText("000000", "FF0000", 6, str, 290,20);
+							}
+						}
+
+				}
+				if(is_in_game && _delay%50000==0)
+				{	
+						if(stones<=20 && stones>15)	
+						{
+							if(c<20)	duration=700;
+							else			duration=700+((c-20)*130);
+							sprintf(str, "STAGE 1");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=15 && stones>10)	
+						{
+							if(c<20)	duration=500;
+							else			duration=500+((c-20)*100);
+							sprintf(str, "STAGE 2");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=10 && stones>5)	
+						{
+							if(c<20)	duration=300;
+							else			duration=300+((c-20)*70);
+							sprintf(str, "STAGE 3");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						else if(stones<=5 && stones>0)		
+						{
+							if(c<20)	duration=100;
+							else			duration=100+((c-20)*40);
+							sprintf(str, "STAGE 4");
+							displayText("000000", "FFFFFF", 4, str, 260,80);
+						}
+						if(stones<=0)	
+						{
+							is_in_game=0;
+							if(point<10)
+							{
+								sprintf(str, "m lose %2bu %02bu %cM\r",  hours, minutes, amPm);
+								sendCommand(str);
+							}
+							else
+							{
+								sprintf(str, "m win %s\r", userID);
+								sendCommand(str);
+							}
+						}
+						else
+						{
+							int number=(rand() % 10) +1;
+							switch (number)
+							{
+							case 1:
+							sprintf(str, "m stone_display 133 118 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 2:
+							sprintf(str, "m stone_display 118 159 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 3:
+							sprintf(str, "m stone_display 124 202 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 4:
+							sprintf(str, "m stone_display 130 263 %d\r", duration);
+							sendCommand(str);	
+							break;
+							case 5:
+							sprintf(str, "m stone_display 150 300 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 6:
+							sprintf(str, "m stone_display 474 120 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 7:
+							sprintf(str, "m stone_display 487 159 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 8:
+							sprintf(str, "m stone_display 483 204 %d\r", duration);
+							sendCommand(str);	
+							break;
+							case 9:
+							sprintf(str, "m stone_display 480 266 %d\r", duration);
+							sendCommand(str);
+							break;
+							case 10:
+							sprintf(str, "m stone_display 452 306 %d\r", duration);
+							sendCommand(str);	
+							break;							
+							default:
+							break;
+							}
+							stones--;
+						}
+				}
+		//-----------------text animation display-------------------
+				if(is_in_laser_page && _delay%2000==0)
+				{	
+						sprintf(str, "m text_display\r");
+						sendCommand(str);
+				}
+		//-----------------temperature display-------------------
+				if(is_in_temp_page && _delay%20000==0)
+				{	
+					if(is_in_c)	//C
+					{
+						//Left
+						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						sprintf(str, " %-5bu", roomTemp);
+						displayText("000000", "8D8989", 6, str, 208, 160);
+						//Right
+						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						sprintf(str, " %-5bu", roomTemp);
+						displayText("000000", "8D8989", 6, str, 338, 160);
+					}
+					else	//F
+					{
+						//Left
+						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						sprintf(str, " %-5bu", roomTemp*9/5+32);
+						displayText("000000", "8D8989", 6, str, 208, 160);
+						//Right
+						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						sprintf(str, " %-5bu", roomTemp*9/5+32);
+						displayText("000000", "8D8989", 6, str, 338, 160);
+					}
+				}
+		//----------------------------------------------------------
+        if (tsCommandReceived) {
+            switch (get_function_code()) {
+                case 11: bar_load(); break;
+                case 21: login_page_load(); break;
+                case 22: login_attempts(); break;
+                case 23: login_clear_stars(); break;
+                case 24: login_disp_1_star(); break;
+                case 25: login_disp_2_star(); break;
+                case 26: login_disp_3_star(); break;
+                case 27: login_disp_4_star(); break;
+								case 40: main_page_load(); break;
+							  case 41: temp_page_load(); break;
+								case 42: motor_page_load(); break;
+								case 43: laser_page_load(); break;
+								case 44: setting_page_load(); break;
+								case 50: c_to_f(); break;
+							  case 51: f_to_c(); break;
+								case 52: add_point(); break;
+								case 53: game_start(); break;
+								case 54: brightness_setting(); break;
+								case 55: time_setting(); break;
+								case 56: set_clock(); break;
+								default: break;
+            }
+        }
+				_delay++;
 	}
 }
+
+// Splash Page begin ==========
+
+// function code == 11
+void bar_load() {
+		char str[64];
+    sprintf(str, "m load_bar_full 220 275 100 03\r");
+    sendCommand(str);
+}
+// Splash page end ============
+
+int get_function_code() {
+    // TODO, receive commands from screen
+		if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
+		{
+			is_in_temp_page=0;
+			is_in_motor_page=0;
+			is_in_game=0;
+			is_in_laser_page=0;
+			is_in_setting_page=0;
+			is_in_main_page=0;
+			is_in_c=1;
+			attempts==5;
+			is_locked_out=0;
+			select=0;
+			tsCommandReceived=0;
+			return 11;
+		}
+		else if(userCommand[0]=='g' && userCommand[1]=='e' && userCommand[2]=='t' && userCommand[3]=='_')
+		{
+			tsCommandReceived=0;
+			return 52;
+		}
+		else if(userCommand[0]=='s' && userCommand[1]=='t' && userCommand[2]=='a' && userCommand[3]=='r')
+		{
+			tsCommandReceived=0;
+			return 53;
+		}
+		else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='1')
+		{
+			if			(userCommand[6]=='\0')	brightness=userCommand[5]-'0';
+			else if	(userCommand[7]=='\0')	brightness=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+			else														brightness=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
+			tsCommandReceived=0;
+			return 54;
+		}
+		else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='3')
+		{
+			if			(userCommand[6]=='\0')	clock_value=userCommand[5]-'0';
+			else 														clock_value=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+			tsCommandReceived=0;
+			return 56;
+		}
+		else if(userCommand[0]=='d' && userCommand[1]=='t' && userCommand[2]=='_')
+		{
+			switch (userCommand[3])
+			{
+					case 'M': select=1; break;
+          case 'd': select=2; break;
+          case 'y': select=3; break;
+          case 'h': select=4; break;
+          case 'm': select=5; break;
+          case 's': select=6; break;
+					case 'a': select=7; break;
+					default: break;
+      }
+			tsCommandReceived=0;
+			return 55;
+		}
+		else if(userCommand[0]=='e' && userCommand[1]=='n' && userCommand[2]=='d' && userCommand[3]=='l')
+		{
+			tsCommandReceived=0;
+			return 21;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p' && userCommand[2]=='_' && userCommand[3]=='l' && userCommand[4]=='o')
+		{
+			tsCommandReceived=0;
+			return 23;
+		}
+		else if(passcode[0]==0)
+		{
+			passcode[0]=userCommand[3]-'0';
+			tsCommandReceived=0;
+			return 24;
+		}
+		else if(passcode[1]==0)
+		{
+			passcode[1]=userCommand[3]-'0';
+			tsCommandReceived=0;
+			return 25;
+		}
+		else if(passcode[2]==0)
+		{
+			passcode[2]=userCommand[3]-'0';
+			tsCommandReceived=0;
+			return 26;
+		}
+		else if(passcode[3]==0)
+		{
+			passcode[3]=userCommand[3]-'0';
+			tsCommandReceived=0;
+			return 27;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userCommand[4]=='a')
+		{
+			tsCommandReceived=0;
+			return 40;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='t')
+		{
+			tsCommandReceived=0;
+			return 41;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userCommand[4]=='o')
+		{
+			tsCommandReceived=0;
+			return 42;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l' && userCommand[4]=='a')
+		{
+			tsCommandReceived=0;
+			return 43;
+		}
+		else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='s' && userCommand[4]=='e')
+		{
+			tsCommandReceived=0;
+			return 44;
+		}
+				else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='f')
+		{
+			tsCommandReceived=0;
+			return 50;
+		}
+				else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='c')
+		{
+			tsCommandReceived=0;
+			return 51;
+		}
+    return 0;
+}
+
+// Login Page begin ===========
+
+// function code == 21
+void login_page_load() {
+			char str[64];
+			sprintf(str, "m display_login_page\r");
+			sendCommand(str);
+}
+
+// function code == 22
+void login_attempts() {
+
+}
+
+// function code == 23
+void login_clear_stars() {
+			char str[64];
+			attempts=5;
+			sprintf(userID, "");
+			passcode[0]=0;
+			passcode[1]=0;
+			passcode[2]=0;
+			passcode[3]=0;
+			is_locked_out=0;
+			is_in_main_page=0;
+			sprintf(str, "m display_login_page\r");
+			sendCommand(str);
+}
+
+// function code == 24
+void login_disp_1_star() {
+		char str[64];
+    sprintf(str, "m display_asterik_1\r");
+    sendCommand(str);
+}
+
+// function code == 25
+void login_disp_2_star() {
+		char str[64];
+    sprintf(str, "m display_asterik_2\r");
+    sendCommand(str);
+}
+
+// function code == 26
+void login_disp_3_star() {
+		char str[64];
+    sprintf(str, "m display_asterik_3\r");
+    sendCommand(str);
+}
+
+// function code == 27
+void login_disp_4_star() {
+		char str[64];
+    sprintf(str, "m display_asterik_4\r");
+    sendCommand(str);
+		if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
+		{
+			sprintf(userID, "J Lin");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+			is_in_main_page=1;
+		}
+		else if(is_locked_out==0 && passcode[0]==9 && passcode[1]==9 && passcode[2]==9 && passcode[3]==9)
+		{
+			sprintf(userID, "S-H Yang");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+			is_in_main_page=1;
+		}
+		else if(is_locked_out==0 && passcode[0]==1 && passcode[1]==1 && passcode[2]==1 && passcode[3]==1)
+		{
+			sprintf(userID, "Y Li");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+			is_in_main_page=1;
+		}
+		else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
+		{
+			sprintf(userID, "C Davila");
+			sprintf(str, "m set_uid %s\r", userID);
+			sendCommand(str);
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+			is_in_main_page=1;
+		}
+		else
+		{
+			sprintf(str, "xi 40 0 0\r");
+			sendCommand(str);
+			sprintf(str, "xc all\r");
+			sendCommand(str);
+			sprintf(str, "w 1000\r");
+			sendCommand(str);
+			passcode[0]=0;
+			passcode[1]=0;
+			passcode[2]=0;
+			passcode[3]=0;
+			attempts--;
+			if(attempts<=0)
+			{
+				is_locked_out=1;
+				sprintf(str, "m display_locked_page\r");
+				sendCommand(str);
+			}
+			else
+			{
+				sprintf(str, "m display_login_attempts_left %d\r", attempts);
+				sendCommand(str);
+			}
+		}
+}
+// Login Page end =============
+
+// Locked out Page begin ======
+
+// function code == 31
+void locked_page_load() {
+
+}
+
+// function code == 32
+void update_wait_time() {
+
+}
+
+// function code == 33
+void login_clear_disp() {
+
+}
+// Locked out Page end ========
+
+void main_page_load()
+{
+			char str[64];
+			is_in_temp_page=0;
+			is_in_motor_page=0;
+			is_in_game=0;
+			is_in_laser_page=0;
+			is_in_setting_page=0;
+			select=0;
+			sprintf(str, "m display_main_page\r");
+			sendCommand(str);
+			is_in_main_page=1;
+}
+// finction code == 40
+
+void temp_page_load()
+{
+			char str[64];
+			sprintf(str, "m display_temp_page\r");
+			sendCommand(str);
+			is_in_temp_page=1;
+			is_in_main_page=0;
+			if(is_in_c==0)
+			{
+				sprintf(str, "m temp_unit_f\r");
+				sendCommand(str);
+			}
+			else
+			{
+				sprintf(str, "m temp_unit_c\r");
+				sendCommand(str);
+			}				
+}
+// finction code == 41
+
+void motor_page_load()
+{
+			char str[64];
+			point=0;
+			stones=20;
+			sprintf(str, "m display_game_page\r");
+			sendCommand(str);
+			is_in_motor_page=1;
+			is_in_main_page=0;
+}
+// finction code == 42
+
+void laser_page_load()
+{
+			char str[64];
+			sprintf(str, "m display_laser_page\r");
+			sendCommand(str);
+			is_in_laser_page=1;
+			is_in_main_page=0;
+
+}
+// finction code == 43
+
+void setting_page_load()
+{
+			char str[64];
+			sprintf(str, "m display_settings_screen %d\r", brightness);
+			sendCommand(str);
+			is_in_setting_page=1;
+			is_in_main_page=0;
+}
+// finction code == 44
+
+void c_to_f()
+{
+	is_in_c=0;
+}
+// finction code == 50
+
+void f_to_c()
+{
+	is_in_c=1;
+}
+// finction code == 51
+
+void add_point()
+{
+	point++;
+}
+// finction code == 52
+
+void game_start()
+{
+	point=0;
+	stones=20;
+	is_in_game=1;
+}
+// finction code == 53
+
+void brightness_setting()
+{
+	char str[64];
+	sprintf(str, "m adjust_brightness %d\r", brightness);
+	sendCommand(str);
+/*	
+	if(brightness<10)
+	{
+		sprintf(str, "  %d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+	else if(brightness<100)
+	{
+		sprintf(str, " %d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+	else
+	{
+		sprintf(str, "%d", brightness);
+		displayText("000000", "F7F9F8", 3, str, 305,118);
+	}
+*/
+}
+// finction code == 54
+
+void time_setting()
+{
+	char str[64];
+	switch(select)
+	{
+			case 0: break;
+			case 1: sprintf(str, "m display_date_time_slider %02bu 12 1\r", month); sendCommand(str); break;
+			case 2: if(month==1 || month==3 ||month==5 || month==7 ||month==8 || month==10 || month==12)
+							{
+								sprintf(str, "m display_date_time_slider %02bu 31 1\r", date); sendCommand(str); break;
+							}
+							else if(month==4 || month==6 ||month==9 || month==11)
+							{
+								sprintf(str, "m display_date_time_slider %02bu 30 1\r", date); sendCommand(str); break;
+							}
+							else if(month==2 && year%4==0)
+							{
+								sprintf(str, "m display_date_time_slider %02bu 29 1\r", date); sendCommand(str); break;
+							}
+							else
+							{
+								sprintf(str, "m display_date_time_slider %02bu 28 1\r", date); sendCommand(str); break;
+							}
+			case 3: sprintf(str, "m display_date_time_slider %02bu 99 0\r", year); sendCommand(str); break;
+			case 4: sprintf(str, "m display_date_time_slider %02bu 12 1\r", hours); sendCommand(str); break;
+			case 5: sprintf(str, "m display_date_time_slider %02bu 59 0\r", minutes); sendCommand(str); break;
+			case 6: sprintf(str, "m display_date_time_slider %02bu 59 0\r", seconds); sendCommand(str); break;
+			case 7: if(amPm=='P')
+							{
+								amPm='A'; 
+							}
+							else
+							{
+								amPm='P'; 
+							}
+							setClock(); 
+							break;
+			default: break;
+	}
+
+}
+// finction code == 55
+
+void set_clock()
+{
+	char str[64];
+	switch(select)
+	{
+			case 0: break;
+			case 1: month=clock_value; break;
+			case 2: date=clock_value; break;
+			case 3: year=clock_value; break;
+			case 4: hours=clock_value; break;
+			case 5: minutes=clock_value; break;
+			case 6: seconds=clock_value; break;
+			case 7: break;
+			default: break;
+	}
+	if(month==1 || month==2)								day=(date+1+2*(month+12)+3*((month+12)+1)/5+(year-1)+(year-1)/4-(year-1)/100+(year-1)/400)%7;
+	else																		day=(date+1+2*month+3*(month+1)/5+year+year/4-year/100+year/400)%7;
+	setClock();
+}
+// finction code == 56
