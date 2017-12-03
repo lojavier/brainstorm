@@ -560,13 +560,13 @@ sbit 		RHW 						= P7^7;								// SMB error line
 
 #define		START_INDEX					0
 
-#define		SETTINGS_DATE_FG			"00FF00"
-#define		SETTINGS_DATE_BG			"000000"
+//#define		SETTINGS_DATE_FG			"00FF00"
+//#define		SETTINGS_DATE_BG			"000000"
 #define		SETTINGS_DATE_FONT			5
 //#define		SETTINGS_DATE_X				22
 //#define		SETTINGS_DATE_Y				262
 
-#define		SETTINGS_TIME_FG			"00FF00"
+//#define		SETTINGS_TIME_FG			"00FF00"
 #define		SETTINGS_TIME_BG			SETTINGS_DATE_BG
 #define		SETTINGS_TIME_FONT			SETTINGS_DATE_FONT
 #define		SETTINGS_TIME_X				SETTINGS_DATE_X

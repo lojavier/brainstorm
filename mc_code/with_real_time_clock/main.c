@@ -5,6 +5,10 @@
 //-------------------------------------------------------------------------------------------------------
 int	SETTINGS_DATE_X	=163;
 int	SETTINGS_DATE_Y	=393;
+char SETTINGS_DATE_FG[7] = "00FF00";
+char SETTINGS_DATE_BG[7] = "000000";
+char SETTINGS_TIME_FG[7] = "00FF00";
+
 
 unsigned char tsByte;
 
@@ -439,6 +443,34 @@ void uart0Interrupt(void) interrupt INTERRUPT_UART_0 using 2
 	
 	SFRPAGE = SFRPAGE_SAVE;                                 					// Restore SFR page detector
 }
+//--------------------------------------------------------------------------------------------------------------------------
+signed char bdata slaveFlags1;														// Declare a set of 16 flags on slave
+sbit waterPumpErr				= 	slaveFlags1^0;										// Starting byte address = 0x2E
+sbit airFlowSensorErr			=	slaveFlags1^1;										// bit address = 0x70
+sbit pressureSensorErr			=	slaveFlags1^2;
+sbit roomTempSensorErr			=	slaveFlags1^3;
+sbit waterInTempSensorErr		=	slaveFlags1^4;
+sbit waterOutTempSensorErr		=	slaveFlags1^5;
+sbit slaveRestarted				=	slaveFlags1^6;
+sbit slaveWatchdogReset			=	slaveFlags1^7;
+
+unsigned char bdata slaveFlags0;	
+sbit lowWaterPressure 			= 	slaveFlags0^0;
+sbit hiRoomTemp					=	slaveFlags0^1;										// If powerErr and this flag set, power is over 20%. Otherwise, power is under 20%
+sbit hiWaterInTemp				=	slaveFlags0^2;										// Set when power has error (hi or low). loHiPowerErr indicates hi or low
+sbit hiWaterOutTemp				=	slaveFlags0^3;
+sbit hiLaserTemp     			=	slaveFlags0^4;
+sbit lowAirFlow					=	slaveFlags0^5;
+sbit reserved6					=	slaveFlags0^6;
+sbit reserved7					=	slaveFlags0^7;
+
+
+void checkSlaveFlags(void)
+{	
+	slaveFlags1 = readOneByteFromSlave(SLAVE_FLAGS_1);
+	slaveFlags0 = readOneByteFromSlave(SLAVE_FLAGS_0);
+}
+
 
 //-------------------------------------------------------------------------------------------------------
 // Function Name: sendCommand
@@ -1939,10 +1971,10 @@ void game_start();	// function code == 53
 void brightness_setting();	// function code == 54
 void time_setting();	// function code == 55
 void set_clock();	// function code == 56
-
+void contrast_setting();	// function code == 57
 
 int get_function_code();
-int passcode[4]={0};
+int passcode[4]={-1};
 int is_locked_out=0;
 int attempts=5;
 int is_in_temp_page=0;
@@ -1963,35 +1995,48 @@ int set_time=0;
 double dayweek;
 int select=0;
 int clock_value;
-
+int contrast=255;
+int xyz=0;
+	
 void main()
 {
-	int i = 0;
+		int i = 0;
     char str[SPRINTF_SIZE];
 	  int testCounter = 0;
-    
+	
     disableWatchdog();
     systemClockInit();
-	portInit();
-	enableInterrupts();
-	uart0Init();
+		portInit();
+		enableInterrupts();
+		uart0Init();
     smbInit();
-    timer3Init();
-    
+    timer3Init(); 
+  
     tsLastCharGone = 1;
     tsTxOut = tsTxIn = 0;
     tsTxEmpty = 1;
-    
+	
+	
+		day=0;
+    contrast_setting();
+	
 	while(1)
 	{
 		//------------------clock display in main page------------------
-				if(_delay%10000==0 && is_in_main_page)
+				if(_delay%10000==0 && (is_in_main_page || is_in_temp_page))
 				{
         getClockData();   
-        sprintf(str, "%2bu:%02bu%cM ", hours, minutes, amPm);
-        displayText("000000", "F7F9F8", 2, str, 160, 0);
+        sprintf(str, "%2bu:%02bu%cM", hours, minutes, amPm);
+        displayText("000000", "F7F9F8", 2, str, 277, 0);
 				sprintf(str, "20%02bu/%02bu/%02bu", year, month, date);
-        displayText("000000", "F7F9F8", 2, str, 150, 20);
+        displayText("000000", "F7F9F8", 2, str, 265, 20);
+        monthDateYearUpdated = CLEAR;
+				}
+				else if(_delay%10000==0 && is_in_motor_page)
+				{
+        getClockData();   
+        sprintf(str, "%2bu:%02bu%cM", hours, minutes, amPm);
+        displayText("000000", "FFFFFF", 2, str, 190, -4);
         monthDateYearUpdated = CLEAR;
 				}
 		//------------------time display------------------
@@ -2034,7 +2079,7 @@ void main()
 				if(is_in_motor_page && _delay%10000==0)
 				{
 						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						c=roomTemp;				
+						c=roomTemp;
 						if(is_in_c)
 						{
 							sprintf(str, "body°C:%d", c);
@@ -2060,7 +2105,7 @@ void main()
 						}
 
 				}
-				if(is_in_game && _delay%50000==0)
+				if(is_in_game && _delay%40000==0)
 				{	
 						if(stones<=20 && stones>15)	
 						{
@@ -2095,6 +2140,7 @@ void main()
 							is_in_game=0;
 							if(point<10)
 							{
+								getClockData();
 								sprintf(str, "m lose %2bu %02bu %cM\r",  hours, minutes, amPm);
 								sendCommand(str);
 							}
@@ -2164,27 +2210,66 @@ void main()
 		//-----------------temperature display-------------------
 				if(is_in_temp_page && _delay%20000==0)
 				{	
+					checkSlaveFlags();
+					/*
+					sprintf(str, "flag:%c", slaveFlags1^3);
+					displayText("000000", "FFFFFF", 2, str, 100,0);
+					sprintf(str, "flag:%c", slaveFlags1^4);
+					displayText("000000", "FFFFFF", 2, str, 100,20);
+					*/
 					if(is_in_c)	//C
 					{
 						//Left
+						if(slaveFlags1=='v')
+						{
 						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
 						sprintf(str, " %-5bu", roomTemp);
 						displayText("000000", "8D8989", 6, str, 208, 160);
+						}
+						else
+						{
+						sprintf(str, "ERR", roomTemp);
+						displayText("000000", "8D8989", 6, str, 208, 160);	
+						}
 						//Right
-						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						if(slaveFlags1=='v')
+						{
+						//roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
 						sprintf(str, " %-5bu", roomTemp);
 						displayText("000000", "8D8989", 6, str, 338, 160);
+						}
+						else
+						{
+						sprintf(str, "ERR", roomTemp);
+						displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
 					}
 					else	//F
 					{
 						//Left
+						if(slaveFlags1=='v')
+						{
 						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
 						sprintf(str, " %-5bu", roomTemp*9/5+32);
 						displayText("000000", "8D8989", 6, str, 208, 160);
+						}
+						else
+						{
+						sprintf(str, "ERR", roomTemp);
+						displayText("000000", "8D8989", 6, str, 208, 160);	
+						}
 						//Right
-						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
+						if(slaveFlags1=='v')
+						{
+						//roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
 						sprintf(str, " %-5bu", roomTemp*9/5+32);
 						displayText("000000", "8D8989", 6, str, 338, 160);
+						}
+						else
+						{
+						sprintf(str, "ERR", roomTemp);
+						displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
 					}
 				}
 		//----------------------------------------------------------
@@ -2210,6 +2295,7 @@ void main()
 								case 54: brightness_setting(); break;
 								case 55: time_setting(); break;
 								case 56: set_clock(); break;
+								case 57: contrast_setting(); break;
 								default: break;
             }
         }
@@ -2269,6 +2355,14 @@ int get_function_code() {
 			tsCommandReceived=0;
 			return 56;
 		}
+		else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='2')
+		{
+			if			(userCommand[6]=='\0')	contrast=userCommand[5]-'0';
+			else if	(userCommand[7]=='\0')	contrast=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+			else														contrast=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
+			tsCommandReceived=0;
+			return 57;
+		}
 		else if(userCommand[0]=='d' && userCommand[1]=='t' && userCommand[2]=='_')
 		{
 			switch (userCommand[3])
@@ -2295,25 +2389,25 @@ int get_function_code() {
 			tsCommandReceived=0;
 			return 23;
 		}
-		else if(passcode[0]==0)
+		else if(passcode[0]==-1)
 		{
 			passcode[0]=userCommand[3]-'0';
 			tsCommandReceived=0;
 			return 24;
 		}
-		else if(passcode[1]==0)
+		else if(passcode[1]==-1)
 		{
 			passcode[1]=userCommand[3]-'0';
 			tsCommandReceived=0;
 			return 25;
 		}
-		else if(passcode[2]==0)
+		else if(passcode[2]==-1)
 		{
 			passcode[2]=userCommand[3]-'0';
 			tsCommandReceived=0;
 			return 26;
 		}
-		else if(passcode[3]==0)
+		else if(passcode[3]==-1)
 		{
 			passcode[3]=userCommand[3]-'0';
 			tsCommandReceived=0;
@@ -2362,6 +2456,13 @@ int get_function_code() {
 // function code == 21
 void login_page_load() {
 			char str[64];
+			sprintf(userID, "");
+			passcode[0]=-1;
+			passcode[1]=-1;
+			passcode[2]=-1;
+			passcode[3]=-1;
+			is_locked_out=0;
+			is_in_main_page=0;
 			sprintf(str, "m display_login_page\r");
 			sendCommand(str);
 }
@@ -2376,10 +2477,10 @@ void login_clear_stars() {
 			char str[64];
 			attempts=5;
 			sprintf(userID, "");
-			passcode[0]=0;
-			passcode[1]=0;
-			passcode[2]=0;
-			passcode[3]=0;
+			passcode[0]=-1;
+			passcode[1]=-1;
+			passcode[2]=-1;
+			passcode[3]=-1;
 			is_locked_out=0;
 			is_in_main_page=0;
 			sprintf(str, "m display_login_page\r");
@@ -2456,10 +2557,10 @@ void login_disp_4_star() {
 			sendCommand(str);
 			sprintf(str, "w 1000\r");
 			sendCommand(str);
-			passcode[0]=0;
-			passcode[1]=0;
-			passcode[2]=0;
-			passcode[3]=0;
+			passcode[0]=-1;
+			passcode[1]=-1;
+			passcode[2]=-1;
+			passcode[3]=-1;
 			attempts--;
 			if(attempts<=0)
 			{
@@ -2512,10 +2613,10 @@ void main_page_load()
 void temp_page_load()
 {
 			char str[64];
+			is_in_main_page=0;
 			sprintf(str, "m display_temp_page\r");
 			sendCommand(str);
 			is_in_temp_page=1;
-			is_in_main_page=0;
 			if(is_in_c==0)
 			{
 				sprintf(str, "m temp_unit_f\r");
@@ -2532,22 +2633,22 @@ void temp_page_load()
 void motor_page_load()
 {
 			char str[64];
+			is_in_main_page=0;
 			point=0;
 			stones=20;
 			sprintf(str, "m display_game_page\r");
 			sendCommand(str);
 			is_in_motor_page=1;
-			is_in_main_page=0;
 }
 // finction code == 42
 
 void laser_page_load()
 {
 			char str[64];
+			is_in_main_page=0;
 			sprintf(str, "m display_laser_page\r");
 			sendCommand(str);
 			is_in_laser_page=1;
-			is_in_main_page=0;
 
 }
 // finction code == 43
@@ -2555,10 +2656,10 @@ void laser_page_load()
 void setting_page_load()
 {
 			char str[64];
-			sprintf(str, "m display_settings_screen %d\r", brightness);
+			is_in_main_page=0;
+			sprintf(str, "m display_settings_screen %d %d\r", brightness, contrast);
 			sendCommand(str);
 			is_in_setting_page=1;
-			is_in_main_page=0;
 }
 // finction code == 44
 
@@ -2676,3 +2777,27 @@ void set_clock()
 	setClock();
 }
 // finction code == 56
+
+void contrast_setting()
+{
+	char str[64];
+	if(contrast<16)
+	{
+		sprintf(SETTINGS_DATE_FG, "000%X00", contrast);
+		sprintf(SETTINGS_TIME_FG, "000%X00", contrast);
+		sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
+	}
+	else if(contrast>239)
+	{
+		sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
+		sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
+		sprintf(SETTINGS_DATE_BG, "0%X0%X0%X", 255-contrast, 255-contrast, 255-contrast);
+	}
+	else
+	{
+		sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
+		sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
+		sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
+	}
+}
+// finction code == 57
