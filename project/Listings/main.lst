@@ -1,4 +1,4 @@
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 1   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 1   
 
 
 C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   51          unsigned int tsTxOut;
   52          
   53          bit tsRxEmpty;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 2   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 2   
 
   54          bit tsTxEmpty;
   55          bit tsLastCharGone; 
@@ -126,7 +126,7 @@ line level    source
  112          unsigned char adjustedDay;
  113          unsigned char adjustedDate;
  114          unsigned char adjustedMonth;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 3   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 3   
 
  115          unsigned char adjustedYear;
  116          unsigned char adjustedCentury;
@@ -190,7 +190,7 @@ line level    source
  174   1        char SFRPAGE_SAVE = SFRPAGE;                                        // Save Current SFR page
  175   1      
  176   1          SFRPAGE = CONFIG_PAGE;                                              // Set SFR page
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 4   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 4   
 
  177   1      
  178   1        XBR0 = 0x2F;                                // Enable UART0, UART1, SPI0, SMB, CEX0 - CEX4                                      
@@ -254,7 +254,7 @@ line level    source
  232   1         SFRPAGE = UART0_PAGE;
  233   1         SCON0 = 0x50;                                                        // 8-bit variable baud rate; 9th bit i
              -gnored; RX enabled
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 5   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 5   
 
  234   1         SSTA0 = 0x05;                                                        // Enable baud rate                   
              -                                                
@@ -318,7 +318,7 @@ line level    source
  289   5      
  290   5                ackFromScreen = 0;                      // This is a command, NOT an ACK
  291   5                tsCommandReceived = 1;                    // Set flag when a complete command is received
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 6   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 6   
 
  292   5              }
  293   4              else if(tsRxBuffer[0] == 'l' && tsRxBuffer[1] == 'o' && tsRxBuffer[2] == 'a')                   // It is a comm
@@ -382,7 +382,7 @@ line level    source
  345   5                for(i = 0; i < tsRxIn; i++)
  346   5                {
  347   6                  userCommand[i] = tsRxBuffer[i];             // Copy to command array for later evaluation
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 7   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 7   
 
  348   6                }
  349   5                userCommand[tsRxIn]='\0';
@@ -446,7 +446,7 @@ line level    source
  404   4            }
  405   3            tsRxOut = 0;
  406   3            tsRxIn = 0;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 8   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 8   
 
  407   3            tsCommandReceived = 0;
  408   3          }
@@ -510,7 +510,7 @@ line level    source
  461          sbit hiWaterOutTemp       = slaveFlags0^3;
  462          sbit hiLaserTemp          = slaveFlags0^4;
  463          sbit lowAirFlow         = slaveFlags0^5;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 9   
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 9   
 
  464          sbit reserved6          = slaveFlags0^6;
  465          sbit reserved7          = slaveFlags0^7;
@@ -574,7 +574,7 @@ line level    source
  521          {
  522   1        char str[TS_BUFFER_SIZE];                         // String
  523   1          
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 10  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 10  
 
  524   1        sprintf(str, "S %s %s\r", fg, bg);                      // Set forground and background color
  525   1        sendCommand(str);                           
@@ -638,7 +638,7 @@ line level    source
  583   2          if(userCommand[0] == '(')                       // Check for an actual command followed by this '(' character
  584   2          {
  585   3            switch (userCommand[1])                         // Scan a command type
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 11  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 11  
 
  586   3            {
  587   4              case '1':                           // Main page
@@ -702,7 +702,7 @@ line level    source
  645   4            }
  646   3          }
  647   2          else                                  // Not a command, empty buffer with null
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 12  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 12  
 
  648   2          {
  649   3            i = 0;
@@ -766,7 +766,7 @@ line level    source
  707          // Return Value: None 
  708          // Parmeters: None
  709          // Function Description: This function initializes the SMB bus 
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 13  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 13  
 
  710          //-------------------------------------------------------------------------------------------------------
  711          void smbInit(void)
@@ -830,7 +830,7 @@ line level    source
  766   1          SFRPAGE = SFRPAGE_SAVE;                                             // Restore SFR page
  767   1      }
  768          
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 14  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 14  
 
  769          //-------------------------------------------------------------------------------------------------------
  770          // Function Name: timer3ISR
@@ -894,7 +894,7 @@ line level    source
  827          // Return Value: None 
  828          // Parmeters: target, startAddr, bytes
  829          // Function Description: This function reads data byte from the real time clock DS3232
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 15  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 15  
 
  830          //-------------------------------------------------------------------------------------------------------
  831          void readBytesFromRealTimeClock(unsigned char startAddr, unsigned char numBytes)
@@ -958,7 +958,7 @@ line level    source
  887   2                  while(eepromReadDone == 0);                                           // Wait until EEPROM writ
              -e completed
  888   2                  break;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 16  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 16  
 
  889   2              default:
  890   2                  break;  
@@ -1022,7 +1022,7 @@ line level    source
              -ch statement.
  944          //-------------------------------------------------------------------------------------------------------
  945          void smbISR (void) interrupt INTERRUPT_SMB using 2
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 17  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 17  
 
  946          {
  947   1          bit FAIL = 0;                                                       // Used by the ISR to flag failed trans
@@ -1086,7 +1086,7 @@ line level    source
 1002   2      
 1003   2      //-------------------------------------------------------------------------------------------------------
 1004   2      // Master Transmitter: Slave address + WRITE transmitted.  NACK received. Restart the transfer
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 18  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 18  
 
 1005   2      //-------------------------------------------------------------------------------------------------------
 1006   2              case SMB_ADDR_W_TX_NACK_RX:
@@ -1150,7 +1150,7 @@ line level    source
 1064   2              case SMB_DATA_TX_ACK_RX:
 1065   2                if(slaveAddr == MCU_SLAVE_ADDR)
 1066   2            {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 19  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 19  
 
 1067   3              if(TxCounter < numBytesWR)
 1068   3                  {
@@ -1214,7 +1214,7 @@ line level    source
 1124   4                STO = 1;
 1125   4                SMB_BUSY = 0;
 1126   4                FAIL = 1;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 20  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 20  
 
 1127   4              } 
 1128   3            }
@@ -1278,7 +1278,7 @@ line level    source
 1184   3            }
 1185   2                  else if(slaveAddr == REAL_TIME_CLOCK_ADDR)
 1186   2            {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 21  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 21  
 
 1187   3              if(realTimeClockCount < MAX_NACK_RETRY)
 1188   3              {
@@ -1342,7 +1342,7 @@ line level    source
 1244   4                sharedDataRx[startAddr + RxCounter] = SMB0DAT;          // RTC
 1245   4                rtcReadDone = 0;
 1246   4                
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 22  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 22  
 
 1247   4                AA = 1;                             // Send ACK to indicate byte received
 1248   4                RxCounter++;                          // Increment the byte counter
@@ -1406,7 +1406,7 @@ line level    source
 1305   2      //-------------------------------------------------------------------------------------------------------
 1306   2      // Master Transmitter: Arbitration lost
 1307   2      //-------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 23  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 23  
 
 1308   2              case SMB_ARBITRATION_LOST:
 1309   2                FAIL = 1;                                                     // Indicate failed transfer
@@ -1470,7 +1470,7 @@ line level    source
 1367          { 
 1368   1        unsigned char hoursAux;
 1369   1        
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 24  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 24  
 
 1370   1        sharedDataTx[RTC_START_ADDR + SECONDS] = convertDecimalToBCD(seconds);        // Load all data from PC to arr
              -ay before writing
@@ -1534,7 +1534,7 @@ line level    source
 1424   2          timeMode = TWELVE_HR_MODE;
 1425   2      
 1426   2          if(tempHours & 0x20)                              // PM/AM bit (bit 5) is set --> PM
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 25  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 25  
 
 1427   2          {
 1428   3            amPm = 'P';
@@ -1598,7 +1598,7 @@ line level    source
 1482   2        }
 1483   1        else if(amPm == 'A')
 1484   1        {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 26  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 26  
 
 1485   2          if(hours == 12)
 1486   2          {
@@ -1662,7 +1662,7 @@ line level    source
 1541   2        }
 1542   1        else if(realTimeClockItems == YEAR_ADJUST)
 1543   1        {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 27  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 27  
 
 1544   2          adjustedYear++;
 1545   2          yearUpdated = SET;
@@ -1726,7 +1726,7 @@ line level    source
 1599   1        else
 1600   1        {}
 1601   1      }
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 28  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 28  
 
 1602          
 1603          //-------------------------------------------------------------------------------------------------------
@@ -1790,7 +1790,7 @@ line level    source
 1657   2          {
 1658   3            adjustedHours--;                              // Check if it is greater than 0 before decrementing
 1659   3          }                                       // to avoid a negative number
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 29  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 29  
 
 1660   2          else
 1661   2          {
@@ -1854,7 +1854,7 @@ line level    source
 1716   1        char str[SPRINTF_SIZE];
 1717   1        
 1718   1        realTimeClockItems++;                               // Move to next item
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 30  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 30  
 
 1719   1        
 1720   1        if(realTimeClockItems == MONTH_ADJUST)
@@ -1918,7 +1918,7 @@ line level    source
 1766   2          displayText(TITLE_DISPLAY_FG, TITLE_DISPLAY_BG, TITLE_DISPLAY_FONT, "PRESS DONE", TITLE_DISPLAY_X, TITLE
              -_DISPLAY_Y);
 1767   2          displayText(VALUE_DISPLAY_FG, VALUE_DISPLAY_BG, VALUE_DISPLAY_FONT, "----", VALUE_DISPLAY_X, VALUE_DISPL
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 31  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 31  
 
              -AY_Y);
 1768   2        }
@@ -1982,7 +1982,7 @@ line level    source
 1821   3            
 1822   3            if(adjustedAmPm == 'P')
 1823   3            {                                 
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 32  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 32  
 
 1824   4              hoursAux = hoursAux | 0x60;                       // Set AM/PM bit --> PM mode
 1825   4            }
@@ -2046,7 +2046,7 @@ line level    source
 1881          // Function Description: This function converts a decimal number to a BCD when writing the new value to th
              -e real time clock
 1882          //-------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 33  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 33  
 
 1883          unsigned char convertDecimalToBCD(unsigned char decimal)
 1884          {
@@ -2110,7 +2110,7 @@ line level    source
 1939   1      
 1940   1            sprintf(str, "%2bu:%02bu:%02bu %cM ", hours, minutes, seconds, amPm);
 1941   1            displayText(TIME_DISPLAY_FG, TIME_DISPLAY_BG, TIME_DISPLAY_FONT, str, TIME_DISPLAY_X, TIME_DISPLAY_Y);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 34  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 34  
 
 1942   1            timeUpdated = CLEAR;
 1943   1          }
@@ -2174,7 +2174,7 @@ line level    source
 2000            
 2001          void main()
 2002          {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 35  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 35  
 
 2003   1          int i = 0;
 2004   1          char str[SPRINTF_SIZE];
@@ -2238,7 +2238,7 @@ line level    source
 2062   3                
 2063   3                seconds=0;
 2064   3                minutes=23;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 36  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 36  
 
 2065   3                hours=4;
 2066   3                amPm='A';
@@ -2257,8 +2257,8 @@ line level    source
 2078   2          //-----------------game display-------------------
 2079   2              if(is_in_motor_page && _delay%10000==0)
 2080   2              {
-2081   3                  roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-2082   3                  c=roomTemp;
+2081   3                  roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2082   3                  c=roomTemp1;
 2083   3                  if(is_in_c)
 2084   3                  {
 2085   4                    sprintf(str, "body°C:%d", c);
@@ -2302,7 +2302,7 @@ line level    source
 2123   4                  }
 2124   3                  else if(stones<=10 && stones>5) 
 2125   3                  {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 37  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 37  
 
 2126   4                    if(c<20)  duration=300;
 2127   4                    else      duration=300+((c-20)*70);
@@ -2366,7 +2366,7 @@ line level    source
 2185   5                    break;
 2186   5                    case 8:
 2187   5                    sprintf(str, "m stone_display 483 204 %d\r", duration);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 38  
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 38  
 
 2188   5                    sendCommand(str); 
 2189   5                    break;
@@ -2394,636 +2394,684 @@ line level    source
 2211   2              if(is_in_temp_page && _delay%20000==0)
 2212   2              { 
 2213   3                checkSlaveFlags();
-2214   3                /*
-2215   3                sprintf(str, "flag:%c", slaveFlags1^3);
-2216   3                displayText("000000", "FFFFFF", 2, str, 100,0);
-2217   3                sprintf(str, "flag:%c", slaveFlags1^4);
-2218   3                displayText("000000", "FFFFFF", 2, str, 100,20);
-2219   3                */
-2220   3                if(is_in_c) //C
-2221   3                {
-2222   4                  //Left
-2223   4                  if(slaveFlags1=='v')
-2224   4                  {
-2225   5                  roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-2226   5                  sprintf(str, " %-5bu", roomTemp);
-2227   5                  displayText("000000", "8D8989", 6, str, 208, 160);
-2228   5                  }
-2229   4                  else
-2230   4                  {
-2231   5                  sprintf(str, "ERR", roomTemp);
-2232   5                  displayText("000000", "8D8989", 6, str, 208, 160);  
-2233   5                  }
-2234   4                  //Right
-2235   4                  if(slaveFlags1=='v')
-2236   4                  {
-2237   5                  //roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-2238   5                  sprintf(str, " %-5bu", roomTemp);
-2239   5                  displayText("000000", "8D8989", 6, str, 338, 160);
-2240   5                  }
-2241   4                  else
-2242   4                  {
-2243   5                  sprintf(str, "ERR", roomTemp);
-2244   5                  displayText("000000", "8D8989", 6, str, 338, 160);  
-2245   5                  }
-2246   4                }
-2247   3                else  //F
-2248   3                {
-2249   4                  //Left
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 39  
+2214   3                //----------------for testing only-------------
+2215   3                sprintf(str, "flag:%c", slaveFlags1);
+2216   3                displayText("000000", "F7F9F8", 2, str, 100,0);
+2217   3                //---------------------------------------------
+2218   3                if(is_in_c) //C
+2219   3                {
+2220   4                  // if temp1 & temp2 on
+2221   4                  if(slaveFlags1=='?')  //need test
+2222   4                  {
+2223   5                    //Left
+2224   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2225   5                    sprintf(str, " %-5bu", roomTemp1);
+2226   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2227   5                    //Right
+2228   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2229   5                    sprintf(str, " %-5bu", roomTemp2);
+2230   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2231   5                  }
+2232   4                  // if only temp1 on
+2233   4                  else if (slaveFlags1=='~')    //need change to 'v'
+2234   4                  {
+2235   5                    //Left
+2236   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2237   5                    sprintf(str, " %-5bu", roomTemp1);
+2238   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2239   5                    //Right
+2240   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2241   5                    sprintf(str, " ERR", roomTemp2);
+2242   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2243   5                  }
+2244   4                  // if only temp2 on
+2245   4                  else if (slaveFlags1=='!')    //need test
+2246   4                  {
+2247   5                    //Left
+2248   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2249   5                    sprintf(str, " ERR", roomTemp1);
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 39  
 
-2250   4                  if(slaveFlags1=='v')
-2251   4                  {
-2252   5                  roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-2253   5                  sprintf(str, " %-5bu", roomTemp*9/5+32);
-2254   5                  displayText("000000", "8D8989", 6, str, 208, 160);
+2250   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2251   5                    //Right
+2252   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2253   5                    sprintf(str, " %-5bu", roomTemp2);
+2254   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
 2255   5                  }
-2256   4                  else
-2257   4                  {
-2258   5                  sprintf(str, "ERR", roomTemp);
-2259   5                  displayText("000000", "8D8989", 6, str, 208, 160);  
-2260   5                  }
-2261   4                  //Right
-2262   4                  if(slaveFlags1=='v')
-2263   4                  {
-2264   5                  //roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-2265   5                  sprintf(str, " %-5bu", roomTemp*9/5+32);
-2266   5                  displayText("000000", "8D8989", 6, str, 338, 160);
+2256   4                  // both temp1 & temp2 off
+2257   4                  else
+2258   4                  {
+2259   5                    //Left
+2260   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2261   5                    sprintf(str, " ERR", roomTemp1);
+2262   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2263   5                    //Right
+2264   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2265   5                    sprintf(str, " ERR", roomTemp2);
+2266   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
 2267   5                  }
-2268   4                  else
-2269   4                  {
-2270   5                  sprintf(str, "ERR", roomTemp);
-2271   5                  displayText("000000", "8D8989", 6, str, 338, 160);  
-2272   5                  }
-2273   4                }
-2274   3              }
-2275   2          //----------------------------------------------------------
-2276   2              if (tsCommandReceived) {
-2277   3                  switch (get_function_code()) {
-2278   4                      case 11: bar_load(); break;
-2279   4                      case 21: login_page_load(); break;
-2280   4                      case 22: login_attempts(); break;
-2281   4                      case 23: login_clear_stars(); break;
-2282   4                      case 24: login_disp_1_star(); break;
-2283   4                      case 25: login_disp_2_star(); break;
-2284   4                      case 26: login_disp_3_star(); break;
-2285   4                      case 27: login_disp_4_star(); break;
-2286   4                      case 40: main_page_load(); break;
-2287   4                      case 41: temp_page_load(); break;
-2288   4                      case 42: motor_page_load(); break;
-2289   4                      case 43: laser_page_load(); break;
-2290   4                      case 44: setting_page_load(); break;
-2291   4                      case 50: c_to_f(); break;
-2292   4                      case 51: f_to_c(); break;
-2293   4                      case 52: add_point(); break;
-2294   4                      case 53: game_start(); break;
-2295   4                      case 54: brightness_setting(); break;
-2296   4                      case 55: time_setting(); break;
-2297   4                      case 56: set_clock(); break;
-2298   4                      case 57: contrast_setting(); break;
-2299   4                      default: break;
-2300   4                  }
-2301   3              }
-2302   2              _delay++;
-2303   2        }
-2304   1      }
-2305          
-2306          // Splash Page begin ==========
-2307          
-2308          // function code == 11
-2309          void bar_load() {
-2310   1          char str[64];
-2311   1          sprintf(str, "m load_bar_full 220 275 100 03\r");
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 40  
+2268   4                }
+2269   3                else  //F
+2270   3                {
+2271   4                  // if temp1 & temp2 on
+2272   4                  if(slaveFlags1=='?')  //need test
+2273   4                  {
+2274   5                    //Left
+2275   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2276   5                    sprintf(str, " %-5bu", roomTemp1*9/5+32);
+2277   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2278   5                    //Right
+2279   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2280   5                    sprintf(str, " %-5bu", roomTemp2*9/5+32);
+2281   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2282   5                  }
+2283   4                  // if only temp1 on
+2284   4                  else if (slaveFlags1=='~')    //need change to 'v'
+2285   4                  {
+2286   5                    //Left
+2287   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2288   5                    sprintf(str, " %-5bu", roomTemp1*9/5+32);
+2289   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2290   5                    //Right
+2291   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2292   5                    sprintf(str, " ERR", roomTemp2*9/5+32);
+2293   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2294   5                  }
+2295   4                  // if only temp2 on
+2296   4                  else if (slaveFlags1=='!')    //need test
+2297   4                  {
+2298   5                    //Left
+2299   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+2300   5                    sprintf(str, " ERR", roomTemp1*9/5+32);
+2301   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2302   5                    //Right
+2303   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2304   5                    sprintf(str, " %-5bu", roomTemp2*9/5+32);
+2305   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2306   5                  }
+2307   4                  // both temp1 & temp2 off
+2308   4                  else
+2309   4                  {
+2310   5                    //Left
+2311   5                    roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 40  
 
-2312   1          sendCommand(str);
-2313   1      }
-2314          // Splash page end ============
-2315          
-2316          int get_function_code() {
-2317   1          // TODO, receive commands from screen
-2318   1          if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
-2319   1          {
-2320   2            is_in_temp_page=0;
-2321   2            is_in_motor_page=0;
-2322   2            is_in_game=0;
-2323   2            is_in_laser_page=0;
-2324   2            is_in_setting_page=0;
-2325   2            is_in_main_page=0;
-2326   2            is_in_c=1;
-2327   2            attempts==5;
-*** WARNING C275 IN LINE 2327 OF ..\mc_code\with_real_time_clock\main.c: expression with possibly no effect
-2328   2            is_locked_out=0;
-2329   2            select=0;
-2330   2            tsCommandReceived=0;
-2331   2            return 11;
-2332   2          }
-2333   1          else if(userCommand[0]=='g' && userCommand[1]=='e' && userCommand[2]=='t' && userCommand[3]=='_')
-2334   1          {
-2335   2            tsCommandReceived=0;
-2336   2            return 52;
-2337   2          }
-2338   1          else if(userCommand[0]=='s' && userCommand[1]=='t' && userCommand[2]=='a' && userCommand[3]=='r')
-2339   1          {
-2340   2            tsCommandReceived=0;
-2341   2            return 53;
-2342   2          }
-2343   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='1')
-2344   1          {
-2345   2            if      (userCommand[6]=='\0')  brightness=userCommand[5]-'0';
-2346   2            else if (userCommand[7]=='\0')  brightness=(userCommand[5]-'0')*10 + userCommand[6]-'0';
-2347   2            else                            brightness=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
-2348   2            tsCommandReceived=0;
-2349   2            return 54;
-2350   2          }
-2351   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='3')
-2352   1          {
-2353   2            if      (userCommand[6]=='\0')  clock_value=userCommand[5]-'0';
-2354   2            else                            clock_value=(userCommand[5]-'0')*10 + userCommand[6]-'0';
-2355   2            tsCommandReceived=0;
-2356   2            return 56;
-2357   2          }
-2358   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='2')
-2359   1          {
-2360   2            if      (userCommand[6]=='\0')  contrast=userCommand[5]-'0';
-2361   2            else if (userCommand[7]=='\0')  contrast=(userCommand[5]-'0')*10 + userCommand[6]-'0';
-2362   2            else                            contrast=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
-2363   2            tsCommandReceived=0;
-2364   2            return 57;
-2365   2          }
-2366   1          else if(userCommand[0]=='d' && userCommand[1]=='t' && userCommand[2]=='_')
-2367   1          {
-2368   2            switch (userCommand[3])
-2369   2            {
-2370   3                case 'M': select=1; break;
-2371   3                case 'd': select=2; break;
-2372   3                case 'y': select=3; break;
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 41  
+2312   5                    sprintf(str, " ERR", roomTemp1*9/5+32);
+2313   5                    displayText("000000", "8D8989", 6, str, 208, 160);        
+2314   5                    //Right
+2315   5                    roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+2316   5                    sprintf(str, " ERR", roomTemp2*9/5+32);
+2317   5                    displayText("000000", "8D8989", 6, str, 338, 160);  
+2318   5                  }
+2319   4                }
+2320   3              }
+2321   2          //----------------------------------------------------------
+2322   2              if (tsCommandReceived) {
+2323   3                  switch (get_function_code()) {
+2324   4                      case 11: bar_load(); break;
+2325   4                      case 21: login_page_load(); break;
+2326   4                      case 22: login_attempts(); break;
+2327   4                      case 23: login_clear_stars(); break;
+2328   4                      case 24: login_disp_1_star(); break;
+2329   4                      case 25: login_disp_2_star(); break;
+2330   4                      case 26: login_disp_3_star(); break;
+2331   4                      case 27: login_disp_4_star(); break;
+2332   4                      case 40: main_page_load(); break;
+2333   4                      case 41: temp_page_load(); break;
+2334   4                      case 42: motor_page_load(); break;
+2335   4                      case 43: laser_page_load(); break;
+2336   4                      case 44: setting_page_load(); break;
+2337   4                      case 50: c_to_f(); break;
+2338   4                      case 51: f_to_c(); break;
+2339   4                      case 52: add_point(); break;
+2340   4                      case 53: game_start(); break;
+2341   4                      case 54: brightness_setting(); break;
+2342   4                      case 55: time_setting(); break;
+2343   4                      case 56: set_clock(); break;
+2344   4                      case 57: contrast_setting(); break;
+2345   4                      default: break;
+2346   4                  }
+2347   3              }
+2348   2              _delay++;
+2349   2        }
+2350   1      }
+2351          
+2352          // Splash Page begin ==========
+2353          
+2354          // function code == 11
+2355          void bar_load() {
+2356   1          char str[64];
+2357   1          sprintf(str, "m load_bar_full 220 275 100 03\r");
+2358   1          sendCommand(str);
+2359   1      }
+2360          // Splash page end ============
+2361          
+2362          int get_function_code() {
+2363   1          // TODO, receive commands from screen
+2364   1          if(userCommand[0]=='l' && userCommand[1]=='o' && userCommand[2]=='a')
+2365   1          {
+2366   2            is_in_temp_page=0;
+2367   2            is_in_motor_page=0;
+2368   2            is_in_game=0;
+2369   2            is_in_laser_page=0;
+2370   2            is_in_setting_page=0;
+2371   2            is_in_main_page=0;
+2372   2            is_in_c=1;
+2373   2            attempts==5;
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 41  
 
-2373   3                case 'h': select=4; break;
-2374   3                case 'm': select=5; break;
-2375   3                case 's': select=6; break;
-2376   3                case 'a': select=7; break;
-2377   3                default: break;
-2378   3            }
-2379   2            tsCommandReceived=0;
-2380   2            return 55;
-2381   2          }
-2382   1          else if(userCommand[0]=='e' && userCommand[1]=='n' && userCommand[2]=='d' && userCommand[3]=='l')
-2383   1          {
-2384   2            tsCommandReceived=0;
-2385   2            return 21;
-2386   2          }
-2387   1          else if(userCommand[0]=='m' && userCommand[1]=='p' && userCommand[2]=='_' && userCommand[3]=='l' && user
-             -Command[4]=='o')
-2388   1          {
-2389   2            tsCommandReceived=0;
-2390   2            return 23;
-2391   2          }
-2392   1          else if(passcode[0]==-1)
-2393   1          {
-2394   2            passcode[0]=userCommand[3]-'0';
-2395   2            tsCommandReceived=0;
-2396   2            return 24;
-2397   2          }
-2398   1          else if(passcode[1]==-1)
-2399   1          {
-2400   2            passcode[1]=userCommand[3]-'0';
+*** WARNING C275 IN LINE 2373 OF ..\mc_code\with_real_time_clock\main.c: expression with possibly no effect
+2374   2            is_locked_out=0;
+2375   2            select=0;
+2376   2            tsCommandReceived=0;
+2377   2            return 11;
+2378   2          }
+2379   1          else if(userCommand[0]=='g' && userCommand[1]=='e' && userCommand[2]=='t' && userCommand[3]=='_')
+2380   1          {
+2381   2            tsCommandReceived=0;
+2382   2            return 52;
+2383   2          }
+2384   1          else if(userCommand[0]=='s' && userCommand[1]=='t' && userCommand[2]=='a' && userCommand[3]=='r')
+2385   1          {
+2386   2            tsCommandReceived=0;
+2387   2            return 53;
+2388   2          }
+2389   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='1')
+2390   1          {
+2391   2            if      (userCommand[6]=='\0')  brightness=userCommand[5]-'0';
+2392   2            else if (userCommand[7]=='\0')  brightness=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+2393   2            else                            brightness=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
+2394   2            tsCommandReceived=0;
+2395   2            return 54;
+2396   2          }
+2397   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='3')
+2398   1          {
+2399   2            if      (userCommand[6]=='\0')  clock_value=userCommand[5]-'0';
+2400   2            else                            clock_value=(userCommand[5]-'0')*10 + userCommand[6]-'0';
 2401   2            tsCommandReceived=0;
-2402   2            return 25;
+2402   2            return 56;
 2403   2          }
-2404   1          else if(passcode[2]==-1)
+2404   1          else if(userCommand[0]=='l' && userCommand[1]=='2' && userCommand[2]=='4' && userCommand[3]=='2')
 2405   1          {
-2406   2            passcode[2]=userCommand[3]-'0';
-2407   2            tsCommandReceived=0;
-2408   2            return 26;
-2409   2          }
-2410   1          else if(passcode[3]==-1)
-2411   1          {
-2412   2            passcode[3]=userCommand[3]-'0';
-2413   2            tsCommandReceived=0;
-2414   2            return 27;
-2415   2          }
-2416   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userC
+2406   2            if      (userCommand[6]=='\0')  contrast=userCommand[5]-'0';
+2407   2            else if (userCommand[7]=='\0')  contrast=(userCommand[5]-'0')*10 + userCommand[6]-'0';
+2408   2            else                            contrast=(userCommand[5]-'0')*100 +(userCommand[6]-'0')*10 + userCommand[7]-'0';
+2409   2            tsCommandReceived=0;
+2410   2            return 57;
+2411   2          }
+2412   1          else if(userCommand[0]=='d' && userCommand[1]=='t' && userCommand[2]=='_')
+2413   1          {
+2414   2            switch (userCommand[3])
+2415   2            {
+2416   3                case 'M': select=1; break;
+2417   3                case 'd': select=2; break;
+2418   3                case 'y': select=3; break;
+2419   3                case 'h': select=4; break;
+2420   3                case 'm': select=5; break;
+2421   3                case 's': select=6; break;
+2422   3                case 'a': select=7; break;
+2423   3                default: break;
+2424   3            }
+2425   2            tsCommandReceived=0;
+2426   2            return 55;
+2427   2          }
+2428   1          else if(userCommand[0]=='e' && userCommand[1]=='n' && userCommand[2]=='d' && userCommand[3]=='l')
+2429   1          {
+2430   2            tsCommandReceived=0;
+2431   2            return 21;
+2432   2          }
+2433   1          else if(userCommand[0]=='m' && userCommand[1]=='p' && userCommand[2]=='_' && userCommand[3]=='l' && user
+             -Command[4]=='o')
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 42  
+
+2434   1          {
+2435   2            tsCommandReceived=0;
+2436   2            return 23;
+2437   2          }
+2438   1          else if(passcode[0]==-1)
+2439   1          {
+2440   2            passcode[0]=userCommand[3]-'0';
+2441   2            tsCommandReceived=0;
+2442   2            return 24;
+2443   2          }
+2444   1          else if(passcode[1]==-1)
+2445   1          {
+2446   2            passcode[1]=userCommand[3]-'0';
+2447   2            tsCommandReceived=0;
+2448   2            return 25;
+2449   2          }
+2450   1          else if(passcode[2]==-1)
+2451   1          {
+2452   2            passcode[2]=userCommand[3]-'0';
+2453   2            tsCommandReceived=0;
+2454   2            return 26;
+2455   2          }
+2456   1          else if(passcode[3]==-1)
+2457   1          {
+2458   2            passcode[3]=userCommand[3]-'0';
+2459   2            tsCommandReceived=0;
+2460   2            return 27;
+2461   2          }
+2462   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userC
              -ommand[4]=='a')
-2417   1          {
-2418   2            tsCommandReceived=0;
-2419   2            return 40;
-2420   2          }
-2421   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='t')
-2422   1          {
-2423   2            tsCommandReceived=0;
-2424   2            return 41;
-2425   2          }
-2426   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userC
+2463   1          {
+2464   2            tsCommandReceived=0;
+2465   2            return 40;
+2466   2          }
+2467   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='t')
+2468   1          {
+2469   2            tsCommandReceived=0;
+2470   2            return 41;
+2471   2          }
+2472   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='m' && userC
              -ommand[4]=='o')
-2427   1          {
-2428   2            tsCommandReceived=0;
-2429   2            return 42;
-2430   2          }
-2431   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l' && userC
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 42  
-
+2473   1          {
+2474   2            tsCommandReceived=0;
+2475   2            return 42;
+2476   2          }
+2477   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='l' && userC
              -ommand[4]=='a')
-2432   1          {
-2433   2            tsCommandReceived=0;
-2434   2            return 43;
-2435   2          }
-2436   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='s' && userC
+2478   1          {
+2479   2            tsCommandReceived=0;
+2480   2            return 43;
+2481   2          }
+2482   1          else if(userCommand[0]=='m' && userCommand[1]=='p'&& userCommand[2]=='_' && userCommand[3]=='s' && userC
              -ommand[4]=='e')
-2437   1          {
-2438   2            tsCommandReceived=0;
-2439   2            return 44;
-2440   2          }
-2441   1              else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='f')
-2442   1          {
-2443   2            tsCommandReceived=0;
-2444   2            return 50;
-2445   2          }
-2446   1              else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='c')
-2447   1          {
-2448   2            tsCommandReceived=0;
-2449   2            return 51;
-2450   2          }
-2451   1          return 0;
-2452   1      }
-2453          
-2454          // Login Page begin ===========
-2455          
-2456          // function code == 21
-2457          void login_page_load() {
-2458   1            char str[64];
-2459   1            sprintf(userID, "");
-2460   1            passcode[0]=-1;
-2461   1            passcode[1]=-1;
-2462   1            passcode[2]=-1;
-2463   1            passcode[3]=-1;
-2464   1            is_locked_out=0;
-2465   1            is_in_main_page=0;
-2466   1            sprintf(str, "m display_login_page\r");
-2467   1            sendCommand(str);
-2468   1      }
-2469          
-2470          // function code == 22
-2471          void login_attempts() {
-2472   1      
-2473   1      }
-2474          
-2475          // function code == 23
-2476          void login_clear_stars() {
-2477   1            char str[64];
-2478   1            attempts=5;
-2479   1            sprintf(userID, "");
-2480   1            passcode[0]=-1;
-2481   1            passcode[1]=-1;
-2482   1            passcode[2]=-1;
-2483   1            passcode[3]=-1;
-2484   1            is_locked_out=0;
-2485   1            is_in_main_page=0;
-2486   1            sprintf(str, "m display_login_page\r");
-2487   1            sendCommand(str);
-2488   1      }
-2489          
-2490          // function code == 24
-2491          void login_disp_1_star() {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 43  
+2483   1          {
+2484   2            tsCommandReceived=0;
+2485   2            return 44;
+2486   2          }
+2487   1              else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='f')
+2488   1          {
+2489   2            tsCommandReceived=0;
+2490   2            return 50;
+2491   2          }
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 43  
 
-2492   1          char str[64];
-2493   1          sprintf(str, "m display_asterik_1\r");
-2494   1          sendCommand(str);
-2495   1      }
-2496          
-2497          // function code == 25
-2498          void login_disp_2_star() {
-2499   1          char str[64];
-2500   1          sprintf(str, "m display_asterik_2\r");
-2501   1          sendCommand(str);
-2502   1      }
-2503          
-2504          // function code == 26
-2505          void login_disp_3_star() {
-2506   1          char str[64];
-2507   1          sprintf(str, "m display_asterik_3\r");
-2508   1          sendCommand(str);
-2509   1      }
-2510          
-2511          // function code == 27
-2512          void login_disp_4_star() {
-2513   1          char str[64];
-2514   1          sprintf(str, "m display_asterik_4\r");
-2515   1          sendCommand(str);
-2516   1          if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
-2517   1          {
-2518   2            sprintf(userID, "J Lin");
-2519   2            sprintf(str, "m set_uid %s\r", userID);
-2520   2            sendCommand(str);
-2521   2            sprintf(str, "m display_main_page\r");
-2522   2            sendCommand(str);
-2523   2            is_in_main_page=1;
-2524   2          }
-2525   1          else if(is_locked_out==0 && passcode[0]==9 && passcode[1]==9 && passcode[2]==9 && passcode[3]==9)
-2526   1          {
-2527   2            sprintf(userID, "S-H Yang");
-2528   2            sprintf(str, "m set_uid %s\r", userID);
-2529   2            sendCommand(str);
-2530   2            sprintf(str, "m display_main_page\r");
-2531   2            sendCommand(str);
-2532   2            is_in_main_page=1;
-2533   2          }
-2534   1          else if(is_locked_out==0 && passcode[0]==1 && passcode[1]==1 && passcode[2]==1 && passcode[3]==1)
-2535   1          {
-2536   2            sprintf(userID, "Y Li");
-2537   2            sprintf(str, "m set_uid %s\r", userID);
-2538   2            sendCommand(str);
-2539   2            sprintf(str, "m display_main_page\r");
-2540   2            sendCommand(str);
-2541   2            is_in_main_page=1;
-2542   2          }
-2543   1          else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
-2544   1          {
-2545   2            sprintf(userID, "C Davila");
-2546   2            sprintf(str, "m set_uid %s\r", userID);
-2547   2            sendCommand(str);
-2548   2            sprintf(str, "m display_main_page\r");
-2549   2            sendCommand(str);
-2550   2            is_in_main_page=1;
-2551   2          }
-2552   1          else
-2553   1          {
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 44  
+2492   1              else if(userCommand[0]=='n' && userCommand[1]=='s'&& userCommand[2]=='_' && userCommand[3]=='c')
+2493   1          {
+2494   2            tsCommandReceived=0;
+2495   2            return 51;
+2496   2          }
+2497   1          return 0;
+2498   1      }
+2499          
+2500          // Login Page begin ===========
+2501          
+2502          // function code == 21
+2503          void login_page_load() {
+2504   1            char str[64];
+2505   1            sprintf(userID, "");
+2506   1            passcode[0]=-1;
+2507   1            passcode[1]=-1;
+2508   1            passcode[2]=-1;
+2509   1            passcode[3]=-1;
+2510   1            is_locked_out=0;
+2511   1            is_in_main_page=0;
+2512   1            sprintf(str, "m display_login_page\r");
+2513   1            sendCommand(str);
+2514   1      }
+2515          
+2516          // function code == 22
+2517          void login_attempts() {
+2518   1      
+2519   1      }
+2520          
+2521          // function code == 23
+2522          void login_clear_stars() {
+2523   1            char str[64];
+2524   1            attempts=5;
+2525   1            sprintf(userID, "");
+2526   1            passcode[0]=-1;
+2527   1            passcode[1]=-1;
+2528   1            passcode[2]=-1;
+2529   1            passcode[3]=-1;
+2530   1            is_locked_out=0;
+2531   1            is_in_main_page=0;
+2532   1            sprintf(str, "m display_login_page\r");
+2533   1            sendCommand(str);
+2534   1      }
+2535          
+2536          // function code == 24
+2537          void login_disp_1_star() {
+2538   1          char str[64];
+2539   1          sprintf(str, "m display_asterik_1\r");
+2540   1          sendCommand(str);
+2541   1      }
+2542          
+2543          // function code == 25
+2544          void login_disp_2_star() {
+2545   1          char str[64];
+2546   1          sprintf(str, "m display_asterik_2\r");
+2547   1          sendCommand(str);
+2548   1      }
+2549          
+2550          // function code == 26
+2551          void login_disp_3_star() {
+2552   1          char str[64];
+2553   1          sprintf(str, "m display_asterik_3\r");
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 44  
 
-2554   2            sprintf(str, "xi 40 0 0\r");
-2555   2            sendCommand(str);
-2556   2            sprintf(str, "xc all\r");
-2557   2            sendCommand(str);
-2558   2            sprintf(str, "w 1000\r");
-2559   2            sendCommand(str);
-2560   2            passcode[0]=-1;
-2561   2            passcode[1]=-1;
-2562   2            passcode[2]=-1;
-2563   2            passcode[3]=-1;
-2564   2            attempts--;
-2565   2            if(attempts<=0)
-2566   2            {
-2567   3              is_locked_out=1;
-2568   3              sprintf(str, "m display_locked_page\r");
-2569   3              sendCommand(str);
-2570   3            }
-2571   2            else
-2572   2            {
-2573   3              sprintf(str, "m display_login_attempts_left %d\r", attempts);
-2574   3              sendCommand(str);
-2575   3            }
-2576   2          }
-2577   1      }
-2578          // Login Page end =============
-2579          
-2580          // Locked out Page begin ======
-2581          
-2582          // function code == 31
-2583          void locked_page_load() {
-2584   1      
-2585   1      }
-2586          
-2587          // function code == 32
-2588          void update_wait_time() {
-2589   1      
-2590   1      }
-2591          
-2592          // function code == 33
-2593          void login_clear_disp() {
-2594   1      
-2595   1      }
-2596          // Locked out Page end ========
-2597          
-2598          void main_page_load()
-2599          {
-2600   1            char str[64];
-2601   1            is_in_temp_page=0;
-2602   1            is_in_motor_page=0;
-2603   1            is_in_game=0;
-2604   1            is_in_laser_page=0;
-2605   1            is_in_setting_page=0;
-2606   1            select=0;
-2607   1            sprintf(str, "m display_main_page\r");
-2608   1            sendCommand(str);
-2609   1            is_in_main_page=1;
-2610   1      }
-2611          // finction code == 40
-2612          
-2613          void temp_page_load()
-2614          {
-2615   1            char str[64];
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 45  
+2554   1          sendCommand(str);
+2555   1      }
+2556          
+2557          // function code == 27
+2558          void login_disp_4_star() {
+2559   1          char str[64];
+2560   1          sprintf(str, "m display_asterik_4\r");
+2561   1          sendCommand(str);
+2562   1          if(is_locked_out==0 && passcode[0]==1 && passcode[1]==2 && passcode[2]==3 && passcode[3]==4)
+2563   1          {
+2564   2            sprintf(userID, "J Lin");
+2565   2            sprintf(str, "m set_uid %s\r", userID);
+2566   2            sendCommand(str);
+2567   2            sprintf(str, "m display_main_page\r");
+2568   2            sendCommand(str);
+2569   2            is_in_main_page=1;
+2570   2          }
+2571   1          else if(is_locked_out==0 && passcode[0]==9 && passcode[1]==9 && passcode[2]==9 && passcode[3]==9)
+2572   1          {
+2573   2            sprintf(userID, "S-H Yang");
+2574   2            sprintf(str, "m set_uid %s\r", userID);
+2575   2            sendCommand(str);
+2576   2            sprintf(str, "m display_main_page\r");
+2577   2            sendCommand(str);
+2578   2            is_in_main_page=1;
+2579   2          }
+2580   1          else if(is_locked_out==0 && passcode[0]==1 && passcode[1]==1 && passcode[2]==1 && passcode[3]==1)
+2581   1          {
+2582   2            sprintf(userID, "Y Li");
+2583   2            sprintf(str, "m set_uid %s\r", userID);
+2584   2            sendCommand(str);
+2585   2            sprintf(str, "m display_main_page\r");
+2586   2            sendCommand(str);
+2587   2            is_in_main_page=1;
+2588   2          }
+2589   1          else if(is_locked_out==1 && passcode[0]==6 && passcode[1]==7 && passcode[2]==8 && passcode[3]==9)
+2590   1          {
+2591   2            sprintf(userID, "C Davila");
+2592   2            sprintf(str, "m set_uid %s\r", userID);
+2593   2            sendCommand(str);
+2594   2            sprintf(str, "m display_main_page\r");
+2595   2            sendCommand(str);
+2596   2            is_in_main_page=1;
+2597   2          }
+2598   1          else
+2599   1          {
+2600   2            sprintf(str, "xi 40 0 0\r");
+2601   2            sendCommand(str);
+2602   2            sprintf(str, "xc all\r");
+2603   2            sendCommand(str);
+2604   2            sprintf(str, "w 1000\r");
+2605   2            sendCommand(str);
+2606   2            passcode[0]=-1;
+2607   2            passcode[1]=-1;
+2608   2            passcode[2]=-1;
+2609   2            passcode[3]=-1;
+2610   2            attempts--;
+2611   2            if(attempts<=0)
+2612   2            {
+2613   3              is_locked_out=1;
+2614   3              sprintf(str, "m display_locked_page\r");
+2615   3              sendCommand(str);
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 45  
 
-2616   1            is_in_main_page=0;
-2617   1            sprintf(str, "m display_temp_page\r");
-2618   1            sendCommand(str);
-2619   1            is_in_temp_page=1;
-2620   1            if(is_in_c==0)
-2621   1            {
-2622   2              sprintf(str, "m temp_unit_f\r");
-2623   2              sendCommand(str);
-2624   2            }
-2625   1            else
-2626   1            {
-2627   2              sprintf(str, "m temp_unit_c\r");
-2628   2              sendCommand(str);
-2629   2            }       
-2630   1      }
-2631          // finction code == 41
+2616   3            }
+2617   2            else
+2618   2            {
+2619   3              sprintf(str, "m display_login_attempts_left %d\r", attempts);
+2620   3              sendCommand(str);
+2621   3            }
+2622   2          }
+2623   1      }
+2624          // Login Page end =============
+2625          
+2626          // Locked out Page begin ======
+2627          
+2628          // function code == 31
+2629          void locked_page_load() {
+2630   1      
+2631   1      }
 2632          
-2633          void motor_page_load()
-2634          {
-2635   1            char str[64];
-2636   1            is_in_main_page=0;
-2637   1            point=0;
-2638   1            stones=20;
-2639   1            sprintf(str, "m display_game_page\r");
-2640   1            sendCommand(str);
-2641   1            is_in_motor_page=1;
-2642   1      }
-2643          // finction code == 42
-2644          
-2645          void laser_page_load()
-2646          {
-2647   1            char str[64];
-2648   1            is_in_main_page=0;
-2649   1            sprintf(str, "m display_laser_page\r");
-2650   1            sendCommand(str);
-2651   1            is_in_laser_page=1;
-2652   1      
-2653   1      }
-2654          // finction code == 43
-2655          
-2656          void setting_page_load()
-2657          {
-2658   1            char str[64];
-2659   1            is_in_main_page=0;
-2660   1            sprintf(str, "m display_settings_screen %d %d\r", brightness, contrast);
-2661   1            sendCommand(str);
-2662   1            is_in_setting_page=1;
-2663   1      }
-2664          // finction code == 44
-2665          
-2666          void c_to_f()
-2667          {
-2668   1        is_in_c=0;
-2669   1      }
-2670          // finction code == 50
-2671          
-2672          void f_to_c()
-2673          {
-2674   1        is_in_c=1;
-2675   1      }
-2676          // finction code == 51
-2677          
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 46  
+2633          // function code == 32
+2634          void update_wait_time() {
+2635   1      
+2636   1      }
+2637          
+2638          // function code == 33
+2639          void login_clear_disp() {
+2640   1      
+2641   1      }
+2642          // Locked out Page end ========
+2643          
+2644          void main_page_load()
+2645          {
+2646   1            char str[64];
+2647   1            is_in_temp_page=0;
+2648   1            is_in_motor_page=0;
+2649   1            is_in_game=0;
+2650   1            is_in_laser_page=0;
+2651   1            is_in_setting_page=0;
+2652   1            select=0;
+2653   1            sprintf(str, "m display_main_page\r");
+2654   1            sendCommand(str);
+2655   1            is_in_main_page=1;
+2656   1      }
+2657          // finction code == 40
+2658          
+2659          void temp_page_load()
+2660          {
+2661   1            char str[64];
+2662   1            is_in_main_page=0;
+2663   1            sprintf(str, "m display_temp_page\r");
+2664   1            sendCommand(str);
+2665   1            is_in_temp_page=1;
+2666   1            if(is_in_c==0)
+2667   1            {
+2668   2              sprintf(str, "m temp_unit_f\r");
+2669   2              sendCommand(str);
+2670   2            }
+2671   1            else
+2672   1            {
+2673   2              sprintf(str, "m temp_unit_c\r");
+2674   2              sendCommand(str);
+2675   2            }       
+2676   1      }
+2677          // finction code == 41
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 46  
 
-2678          void add_point()
-2679          {
-2680   1        point++;
-2681   1      }
-2682          // finction code == 52
-2683          
-2684          void game_start()
-2685          {
-2686   1        point=0;
-2687   1        stones=20;
-2688   1        is_in_game=1;
-2689   1      }
-2690          // finction code == 53
-2691          
-2692          void brightness_setting()
-2693          {
-2694   1        char str[64];
-2695   1        sprintf(str, "m adjust_brightness %d\r", brightness);
-2696   1        sendCommand(str);
-2697   1      /*  
-2698   1        if(brightness<10)
-2699   1        {
-2700   1          sprintf(str, "  %d", brightness);
-2701   1          displayText("000000", "F7F9F8", 3, str, 305,118);
-2702   1        }
-2703   1        else if(brightness<100)
-2704   1        {
-2705   1          sprintf(str, " %d", brightness);
-2706   1          displayText("000000", "F7F9F8", 3, str, 305,118);
-2707   1        }
-2708   1        else
-2709   1        {
-2710   1          sprintf(str, "%d", brightness);
-2711   1          displayText("000000", "F7F9F8", 3, str, 305,118);
-2712   1        }
-2713   1      */
-2714   1      }
-2715          // finction code == 54
-2716          
-2717          void time_setting()
-2718          {
-2719   1        char str[64];
-2720   1        switch(select)
-2721   1        {
-2722   2            case 0: break;
-2723   2            case 1: sprintf(str, "m display_date_time_slider %02bu 12 1\r", month); sendCommand(str); break;
-2724   2            case 2: if(month==1 || month==3 ||month==5 || month==7 ||month==8 || month==10 || month==12)
-2725   2                    {
-2726   3                      sprintf(str, "m display_date_time_slider %02bu 31 1\r", date); sendCommand(str); break;
-2727   3                    }
-2728   2                    else if(month==4 || month==6 ||month==9 || month==11)
-2729   2                    {
-2730   3                      sprintf(str, "m display_date_time_slider %02bu 30 1\r", date); sendCommand(str); break;
-2731   3                    }
-2732   2                    else if(month==2 && year%4==0)
-2733   2                    {
-2734   3                      sprintf(str, "m display_date_time_slider %02bu 29 1\r", date); sendCommand(str); break;
-2735   3                    }
-2736   2                    else
-2737   2                    {
-2738   3                      sprintf(str, "m display_date_time_slider %02bu 28 1\r", date); sendCommand(str); break;
-2739   3                    }
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 47  
+2678          
+2679          void motor_page_load()
+2680          {
+2681   1            char str[64];
+2682   1            is_in_main_page=0;
+2683   1            point=0;
+2684   1            stones=20;
+2685   1            sprintf(str, "m display_game_page\r");
+2686   1            sendCommand(str);
+2687   1            is_in_motor_page=1;
+2688   1      }
+2689          // finction code == 42
+2690          
+2691          void laser_page_load()
+2692          {
+2693   1            char str[64];
+2694   1            is_in_main_page=0;
+2695   1            sprintf(str, "m display_laser_page\r");
+2696   1            sendCommand(str);
+2697   1            is_in_laser_page=1;
+2698   1      
+2699   1      }
+2700          // finction code == 43
+2701          
+2702          void setting_page_load()
+2703          {
+2704   1            char str[64];
+2705   1            is_in_main_page=0;
+2706   1            sprintf(str, "m display_settings_screen %d %d\r", brightness, contrast);
+2707   1            sendCommand(str);
+2708   1            is_in_setting_page=1;
+2709   1      }
+2710          // finction code == 44
+2711          
+2712          void c_to_f()
+2713          {
+2714   1        is_in_c=0;
+2715   1      }
+2716          // finction code == 50
+2717          
+2718          void f_to_c()
+2719          {
+2720   1        is_in_c=1;
+2721   1      }
+2722          // finction code == 51
+2723          
+2724          void add_point()
+2725          {
+2726   1        point++;
+2727   1      }
+2728          // finction code == 52
+2729          
+2730          void game_start()
+2731          {
+2732   1        point=0;
+2733   1        stones=20;
+2734   1        is_in_game=1;
+2735   1      }
+2736          // finction code == 53
+2737          
+2738          void brightness_setting()
+2739          {
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 47  
 
-2740   2            case 3: sprintf(str, "m display_date_time_slider %02bu 99 0\r", year); sendCommand(str); break;
-2741   2            case 4: sprintf(str, "m display_date_time_slider %02bu 12 1\r", hours); sendCommand(str); break;
-2742   2            case 5: sprintf(str, "m display_date_time_slider %02bu 59 0\r", minutes); sendCommand(str); break;
-2743   2            case 6: sprintf(str, "m display_date_time_slider %02bu 59 0\r", seconds); sendCommand(str); break;
-2744   2            case 7: if(amPm=='P')
-2745   2                    {
-2746   3                      amPm='A'; 
-2747   3                    }
-2748   2                    else
-2749   2                    {
-2750   3                      amPm='P'; 
-2751   3                    }
-2752   2                    setClock(); 
-2753   2                    break;
-2754   2            default: break;
-2755   2        }
-2756   1      
-2757   1      }
-2758          // finction code == 55
-2759          
-2760          void set_clock()
-2761          {
-2762   1        char str[64];
-2763   1        switch(select)
-2764   1        {
-2765   2            case 0: break;
-2766   2            case 1: month=clock_value; break;
-2767   2            case 2: date=clock_value; break;
-2768   2            case 3: year=clock_value; break;
-2769   2            case 4: hours=clock_value; break;
-2770   2            case 5: minutes=clock_value; break;
-2771   2            case 6: seconds=clock_value; break;
-2772   2            case 7: break;
-2773   2            default: break;
-2774   2        }
-2775   1        if(month==1 || month==2)                day=(date+1+2*(month+12)+3*((month+12)+1)/5+(year-1)+(year-1)/4-(year-1)/
-             -100+(year-1)/400)%7;
-2776   1        else                                    day=(date+1+2*month+3*(month+1)/5+year+year/4-year/100+year/400)%7;
-2777   1        setClock();
-2778   1      }
-*** WARNING C280 IN LINE 2762 OF ..\mc_code\with_real_time_clock\main.c: 'str': unreferenced local variable
-2779          // finction code == 56
-2780          
-2781          void contrast_setting()
-2782          {
-2783   1        char str[64];
-2784   1        if(contrast<16)
-2785   1        {
-2786   2          sprintf(SETTINGS_DATE_FG, "000%X00", contrast);
-2787   2          sprintf(SETTINGS_TIME_FG, "000%X00", contrast);
-2788   2          sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
-2789   2        }
-2790   1        else if(contrast>239)
-2791   1        {
-2792   2          sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
-2793   2          sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
-2794   2          sprintf(SETTINGS_DATE_BG, "0%X0%X0%X", 255-contrast, 255-contrast, 255-contrast);
-2795   2        }
-2796   1        else
-2797   1        {
-2798   2          sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
-2799   2          sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
-C51 COMPILER V9.56.0.0   MAIN                                                              12/03/2017 11:59:49 PAGE 48  
-
-2800   2          sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
+2740   1        char str[64];
+2741   1        sprintf(str, "m adjust_brightness %d\r", brightness);
+2742   1        sendCommand(str);
+2743   1      /*  
+2744   1        if(brightness<10)
+2745   1        {
+2746   1          sprintf(str, "  %d", brightness);
+2747   1          displayText("000000", "F7F9F8", 3, str, 305,118);
+2748   1        }
+2749   1        else if(brightness<100)
+2750   1        {
+2751   1          sprintf(str, " %d", brightness);
+2752   1          displayText("000000", "F7F9F8", 3, str, 305,118);
+2753   1        }
+2754   1        else
+2755   1        {
+2756   1          sprintf(str, "%d", brightness);
+2757   1          displayText("000000", "F7F9F8", 3, str, 305,118);
+2758   1        }
+2759   1      */
+2760   1      }
+2761          // finction code == 54
+2762          
+2763          void time_setting()
+2764          {
+2765   1        char str[64];
+2766   1        switch(select)
+2767   1        {
+2768   2            case 0: break;
+2769   2            case 1: sprintf(str, "m display_date_time_slider %02bu 12 1\r", month); sendCommand(str); break;
+2770   2            case 2: if(month==1 || month==3 ||month==5 || month==7 ||month==8 || month==10 || month==12)
+2771   2                    {
+2772   3                      sprintf(str, "m display_date_time_slider %02bu 31 1\r", date); sendCommand(str); break;
+2773   3                    }
+2774   2                    else if(month==4 || month==6 ||month==9 || month==11)
+2775   2                    {
+2776   3                      sprintf(str, "m display_date_time_slider %02bu 30 1\r", date); sendCommand(str); break;
+2777   3                    }
+2778   2                    else if(month==2 && year%4==0)
+2779   2                    {
+2780   3                      sprintf(str, "m display_date_time_slider %02bu 29 1\r", date); sendCommand(str); break;
+2781   3                    }
+2782   2                    else
+2783   2                    {
+2784   3                      sprintf(str, "m display_date_time_slider %02bu 28 1\r", date); sendCommand(str); break;
+2785   3                    }
+2786   2            case 3: sprintf(str, "m display_date_time_slider %02bu 99 0\r", year); sendCommand(str); break;
+2787   2            case 4: sprintf(str, "m display_date_time_slider %02bu 12 1\r", hours); sendCommand(str); break;
+2788   2            case 5: sprintf(str, "m display_date_time_slider %02bu 59 0\r", minutes); sendCommand(str); break;
+2789   2            case 6: sprintf(str, "m display_date_time_slider %02bu 59 0\r", seconds); sendCommand(str); break;
+2790   2            case 7: if(amPm=='P')
+2791   2                    {
+2792   3                      amPm='A'; 
+2793   3                    }
+2794   2                    else
+2795   2                    {
+2796   3                      amPm='P'; 
+2797   3                    }
+2798   2                    setClock(); 
+2799   2                    break;
+2800   2            default: break;
 2801   2        }
-2802   1      }
-*** WARNING C280 IN LINE 2783 OF ..\mc_code\with_real_time_clock\main.c: 'str': unreferenced local variable
-2803          // finction code == 57
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 48  
+
+2802   1      
+2803   1      }
+2804          // finction code == 55
+2805          
+2806          void set_clock()
+2807          {
+2808   1        char str[64];
+2809   1        switch(select)
+2810   1        {
+2811   2            case 0: break;
+2812   2            case 1: month=clock_value; break;
+2813   2            case 2: date=clock_value; break;
+2814   2            case 3: year=clock_value; break;
+2815   2            case 4: hours=clock_value; break;
+2816   2            case 5: minutes=clock_value; break;
+2817   2            case 6: seconds=clock_value; break;
+2818   2            case 7: break;
+2819   2            default: break;
+2820   2        }
+2821   1        if(month==1 || month==2)                day=(date+1+2*(month+12)+3*((month+12)+1)/5+(year-1)+(year-1)/4-(year-1)/
+             -100+(year-1)/400)%7;
+2822   1        else                                    day=(date+1+2*month+3*(month+1)/5+year+year/4-year/100+year/400)%7;
+2823   1        setClock();
+2824   1      }
+*** WARNING C280 IN LINE 2808 OF ..\mc_code\with_real_time_clock\main.c: 'str': unreferenced local variable
+2825          // finction code == 56
+2826          
+2827          void contrast_setting()
+2828          {
+2829   1        char str[64];
+2830   1        if(contrast<16)
+2831   1        {
+2832   2          sprintf(SETTINGS_DATE_FG, "000%X00", contrast);
+2833   2          sprintf(SETTINGS_TIME_FG, "000%X00", contrast);
+2834   2          sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
+2835   2        }
+2836   1        else if(contrast>239)
+2837   1        {
+2838   2          sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
+2839   2          sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
+2840   2          sprintf(SETTINGS_DATE_BG, "0%X0%X0%X", 255-contrast, 255-contrast, 255-contrast);
+2841   2        }
+2842   1        else
+2843   1        {
+2844   2          sprintf(SETTINGS_DATE_FG, "00%X00", contrast);
+2845   2          sprintf(SETTINGS_TIME_FG, "00%X00", contrast);
+2846   2          sprintf(SETTINGS_DATE_BG, "%X%X%X", 255-contrast, 255-contrast, 255-contrast);
+2847   2        }
+2848   1      }
+*** WARNING C280 IN LINE 2829 OF ..\mc_code\with_real_time_clock\main.c: 'str': unreferenced local variable
+2849          // finction code == 57
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =  12763    ----
-   CONSTANT SIZE    =   1718    ----
+   CODE SIZE        =  13329    ----
+   CONSTANT SIZE    =   1727    ----
    XDATA SIZE       =   3644    1780
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      2    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =     20       1
 END OF MODULE INFORMATION.
+
+C51 COMPILER V9.56.0.0   MAIN                                                              12/04/2017 13:34:57 PAGE 49  
 
 
 C51 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)

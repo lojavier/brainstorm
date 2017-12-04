@@ -2078,8 +2078,8 @@ void main()
 		//-----------------game display-------------------
 				if(is_in_motor_page && _delay%10000==0)
 				{
-						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						c=roomTemp;
+						roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+						c=roomTemp1;
 						if(is_in_c)
 						{
 							sprintf(str, "body°C:%d", c);
@@ -2211,64 +2211,110 @@ void main()
 				if(is_in_temp_page && _delay%20000==0)
 				{	
 					checkSlaveFlags();
-					/*
-					sprintf(str, "flag:%c", slaveFlags1^3);
-					displayText("000000", "FFFFFF", 2, str, 100,0);
-					sprintf(str, "flag:%c", slaveFlags1^4);
-					displayText("000000", "FFFFFF", 2, str, 100,20);
-					*/
+					//----------------for testing only-------------
+					sprintf(str, "flag:%c", slaveFlags1);
+					displayText("000000", "F7F9F8", 2, str, 100,0);
+					//---------------------------------------------
 					if(is_in_c)	//C
 					{
-						//Left
-						if(slaveFlags1=='v')
+						// if temp1 & temp2 on
+						if(slaveFlags1=='?')	//need test
 						{
-						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						sprintf(str, " %-5bu", roomTemp);
-						displayText("000000", "8D8989", 6, str, 208, 160);
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " %-5bu", roomTemp1);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " %-5bu", roomTemp2);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
+						// if only temp1 on
+						else if (slaveFlags1=='~')		//need change to 'v'
+						{
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " %-5bu", roomTemp1);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " ERR", roomTemp2);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
+						// if only temp2 on
+						else if (slaveFlags1=='!')		//need test
+						{
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " ERR", roomTemp1);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " %-5bu", roomTemp2);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
+						// both temp1 & temp2 off
 						else
 						{
-						sprintf(str, "ERR", roomTemp);
-						displayText("000000", "8D8989", 6, str, 208, 160);	
-						}
-						//Right
-						if(slaveFlags1=='v')
-						{
-						//roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						sprintf(str, " %-5bu", roomTemp);
-						displayText("000000", "8D8989", 6, str, 338, 160);
-						}
-						else
-						{
-						sprintf(str, "ERR", roomTemp);
-						displayText("000000", "8D8989", 6, str, 338, 160);	
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " ERR", roomTemp1);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " ERR", roomTemp2);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 					}
 					else	//F
 					{
-						//Left
-						if(slaveFlags1=='v')
+						// if temp1 & temp2 on
+						if(slaveFlags1=='?')	//need test
 						{
-						roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						sprintf(str, " %-5bu", roomTemp*9/5+32);
-						displayText("000000", "8D8989", 6, str, 208, 160);
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " %-5bu", roomTemp1*9/5+32);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " %-5bu", roomTemp2*9/5+32);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
+						// if only temp1 on
+						else if (slaveFlags1=='~')		//need change to 'v'
+						{
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " %-5bu", roomTemp1*9/5+32);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " ERR", roomTemp2*9/5+32);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
+						// if only temp2 on
+						else if (slaveFlags1=='!')		//need test
+						{
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " ERR", roomTemp1*9/5+32);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " %-5bu", roomTemp2*9/5+32);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
+						}
+						// both temp1 & temp2 off
 						else
 						{
-						sprintf(str, "ERR", roomTemp);
-						displayText("000000", "8D8989", 6, str, 208, 160);	
-						}
-						//Right
-						if(slaveFlags1=='v')
-						{
-						//roomTemp = readOneByteFromSlave(ROOM_TEMP_1);
-						sprintf(str, " %-5bu", roomTemp*9/5+32);
-						displayText("000000", "8D8989", 6, str, 338, 160);
-						}
-						else
-						{
-						sprintf(str, "ERR", roomTemp);
-						displayText("000000", "8D8989", 6, str, 338, 160);	
+							//Left
+							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
+							sprintf(str, " ERR", roomTemp1*9/5+32);
+							displayText("000000", "8D8989", 6, str, 208, 160);				
+							//Right
+							roomTemp2 = readOneByteFromSlave(ROOM_TEMP_2);
+							sprintf(str, " ERR", roomTemp2*9/5+32);
+							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 					}
 				}
