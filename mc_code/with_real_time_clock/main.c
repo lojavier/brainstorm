@@ -2207,18 +2207,20 @@ void main()
 						sprintf(str, "m text_display\r");
 						sendCommand(str);
 				}
-		//-----------------temperature display-------------------
+		//-----------------temperature display-------------------	
 				if(is_in_temp_page && _delay%20000==0)
 				{	
 					checkSlaveFlags();
+					/*
 					//----------------for testing only-------------
 					sprintf(str, "flag:%c", slaveFlags1);
 					displayText("000000", "F7F9F8", 2, str, 100,0);
 					//---------------------------------------------
+					*/
 					if(is_in_c)	//C
 					{
 						// if temp1 & temp2 on
-						if(slaveFlags1=='?')	//need test
+						if(slaveFlags1=='f')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2230,7 +2232,7 @@ void main()
 							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 						// if only temp1 on
-						else if (slaveFlags1=='~')		//need change to 'v'
+						else if (slaveFlags1=='v')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2242,7 +2244,7 @@ void main()
 							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 						// if only temp2 on
-						else if (slaveFlags1=='!')		//need test
+						else if (slaveFlags1=='n')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2269,7 +2271,7 @@ void main()
 					else	//F
 					{
 						// if temp1 & temp2 on
-						if(slaveFlags1=='?')	//need test
+						if(slaveFlags1=='f')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2281,7 +2283,7 @@ void main()
 							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 						// if only temp1 on
-						else if (slaveFlags1=='~')		//need change to 'v'
+						else if (slaveFlags1=='v')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2293,7 +2295,7 @@ void main()
 							displayText("000000", "8D8989", 6, str, 338, 160);	
 						}
 						// if only temp2 on
-						else if (slaveFlags1=='!')		//need test
+						else if (slaveFlags1=='n')
 						{
 							//Left
 							roomTemp1 = readOneByteFromSlave(ROOM_TEMP_1);
@@ -2511,6 +2513,10 @@ void login_page_load() {
 			is_in_main_page=0;
 			sprintf(str, "m display_login_page\r");
 			sendCommand(str);
+			sprintf(str, "bd 5 0 0 1 \"\" 0 0 37 37\r");
+			sendCommand(str);
+			sprintf(str, "xm 5 power_off_button\r");
+			sendCommand(str);
 }
 
 // function code == 22
@@ -2530,6 +2536,10 @@ void login_clear_stars() {
 			is_locked_out=0;
 			is_in_main_page=0;
 			sprintf(str, "m display_login_page\r");
+			sendCommand(str);
+			sprintf(str, "bd 5 0 0 1 \"\" 0 0 37 37\r");
+			sendCommand(str);
+			sprintf(str, "xm 5 power_off_button\r");
 			sendCommand(str);
 }
 
@@ -2617,6 +2627,10 @@ void login_disp_4_star() {
 			else
 			{
 				sprintf(str, "m display_login_attempts_left %d\r", attempts);
+				sendCommand(str);
+				sprintf(str, "bd 5 0 0 1 \"\" 0 0 37 37\r");
+				sendCommand(str);
+				sprintf(str, "xm 5 power_off_button\r");
 				sendCommand(str);
 			}
 		}

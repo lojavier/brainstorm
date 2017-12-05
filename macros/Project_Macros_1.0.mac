@@ -124,9 +124,6 @@ xmq 129 ZERO            // 0
 
 x 130 365 406 424 465   // #
 xmq 130 POUND           // #
-
-bd 5 0 0 1 "" 0 0 37 37
-xm 5 power_off_button
 #end
 
 #define ONE
@@ -195,6 +192,7 @@ xi 39 409 109
 
 #define power_off_button
 v off
+z
 xs 159 0 0 640 480
 xmq 159 power_on
 #end
@@ -218,6 +216,7 @@ t "attempt(s) left" 30 240 T
 
 #define display_locked_page
 m display_login_page
+bc 5
 f 32B
 s 5 0
 t "LOCKED OUT" 180 50 T
@@ -242,13 +241,13 @@ bd 29 75 10 1 "" 0 0 42 42
 xm 29 setting_button
 
 // Define the hotspots
-x 140 170 132 475 210
+xs 140 169 131 476 211
 xmq 140 temp_hotspot
 
-x 141 170 234 476 314
+xs 141 169 233 477 315
 xmq 141 motor_hotspot
 
-x 142 170 335 476 415
+xs 142 170 343 477 425
 xmq 142 laser_hotspot
 
 // Display the User ID
