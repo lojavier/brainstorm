@@ -1,3 +1,0 @@
-".\Objects\main-1.obj" 
-TO ".\Objects\TeamProject" 
-PRINT(".\Listings\TeamProject.m51") RAMSIZE(256) 
